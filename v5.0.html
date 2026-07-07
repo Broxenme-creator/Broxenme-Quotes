@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BROXENME QUOTES</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"; import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, query, where, onSnapshot, updateDoc, arrayUnion, arrayRemove, orderBy } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js"; import { getStorage, ref, uploadBytes, getDownloadURL
+        } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js"; // PASTE YOUR FIREBASE CONFIG HERE const firebaseConfig = {apiKey: "PASTE",authDomain: "PASTE",projectId: "PASTE",storageBucket: "PASTE",messagingSenderId: "PASTE",appId:
+        "PASTE"}; const app = initializeApp(firebaseConfig); const db = getFirestore(app); const auth = getAuth(app); const storage = getStorage(app); window.db=db; window.auth=auth; window.storage=storage; window.collection=collection; window.addDoc=addDoc;
+        window.deleteDoc=deleteDoc; window.doc=doc; window.query=query; window.where=where; window.onSnapshot=onSnapshot; window.updateDoc=updateDoc; window.arrayUnion=arrayUnion; window.arrayRemove=arrayRemove; window.orderBy=orderBy; window.createUserWithEmailAndPassword=createUserWithEmailAndPassword;
+        window.signInWithEmailAndPassword=signInWithEmailAndPassword; window.signOut=signOut; window.onAuthStateChanged=onAuthStateChanged; window.updateProfile=updateProfile; window.ref=ref; window.uploadBytes=uploadBytes; window.getDownloadURL=getDownloadURL;
+    </script>
+
+    <style>
+         :root {
+            --bg: #171819;
+            --text: #f5f5f5;
+            --card: #222425;
+            --accent: #ADFF2F;
+            --muted: #888;
+            --danger: #ff4d4d;
+        }
+        
+        .light {
+            --bg: #f8f9fa;
+            --text: #171819;
+            --card: #ffffff;
+            --accent: #4CAF50;
+            --muted: #555;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            background: var(--bg);
+            color: var(--text);
+            background-image: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920');
+            background-attachment: fixed;
+            background-size: cover;
+            transition: 0.3s;
+        }
+        
+        h1,
+        h2 {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            flex-wrap: wrap;
+        }
+        
+        nav h1 {
+            font-size: 1.4rem;
+            letter-spacing: 2px;
+            cursor: pointer;
+        }
+        
+        nav ul {
+            display: flex;
+            gap: 1rem;
+            list-style: none;
+            flex-wrap: wrap;
+        }
+        
+        nav a {
+            color: var(--text);
+            text-decoration: none;
+        }
+        
+        nav a:hover {
+            color: var(--accent);
+        }
+        
+        .nav-right {
+            display: flex;
+            gap: 0.8rem;
+            align-items: center;
+        }
+        
+        .nav-btn {
+            background: none;
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+        
+        .btn {
+            background: var(--accent);
+            color: var(--bg);
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            margin-top: 1rem;
+            font-weight: bold;
+        }
+        
+        .btn.danger {
+            background: var(--danger);
+            color: #fff;
+        }
+        
+        .hero {
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            background: rgba(0, 0, 0, 0.5);
+        }
+        
+        #dailyQuote {
+            font-size: clamp(1.1rem, 3vw, 1.5rem);
+            max-width: 700px;
+            color: var(--accent);
+            transition: opacity 0.5s;
+        }
+        
+        section {
+            padding: 3rem 5%;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: clamp(1.5rem, 4vw, 2rem);
+            margin-bottom: 2rem;
+        }
+        
+        .categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+        }
+        
+        .cat-card {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            cursor: pointer;
+            height: 160px;
+        }
+        
+        .cat-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.6);
+        }
+        
+        .cat-card span {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-weight: bold;
+            color: #fff;
+        }
+        
+        .quote-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .quote-card {
+            background: rgba(34, 36, 37, 0.85);
+            padding: 1.5rem;
+            border-radius: 15px;
+            animation: fadeIn 0.5s ease;
+            position: relative;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .quote-actions {
+            margin-top: 1rem;
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .quote-actions button {
+            background: none;
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+        
+        .quote-actions button.liked {
+            background: var(--accent);
+            color: var(--bg);
+        }
+        
+        .quote-actions button.del {
+            border-color: var(--danger);
+            color: var(--danger);
+        }
+        
+        .generator {
+            background: rgba(34, 36, 37, 0.85);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .generator input,
+        .generator textarea {
+            margin: 0.5rem;
+            padding: 0.6rem 1rem;
+            border-radius: 10px;
+            border: none;
+            width: 90%;
+            max-width: 400px;
+            background: var(--bg);
+            color: var(--text);
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            justify-content: center;
+            align-items: center;
+            z-index: 200;
+        }
+        
+        .modal-content {
+            background: var(--card);
+            padding: 2rem;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        
+        .comment-box {
+            margin-top: 1rem;
+            border-top: 1px solid var(--muted);
+            padding-top: 1rem;
+        }
+        
+        .comment-box input {
+            width: 70%;
+            padding: 0.5rem;
+            border-radius: 10px;
+            border: none;
+            background: var(--bg);
+            color: var(--text);
+        }
+        
+        .profile-pic {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--accent);
+        }
+        
+        .chat-box {
+            height: 300px;
+            overflow-y: auto;
+            background: var(--card);
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+        }
+        
+        .chat-msg {
+            margin-bottom: 0.5rem;
+        }
+        
+        .user-tag {
+            color: var(--accent);
+            font-weight: bold;
+        }
+        
+        .quote-export {
+            width: 600px;
+            padding: 40px;
+            background: linear-gradient(135deg, #ADFF2F, #4CAF50);
+            color: #000;
+            border-radius: 20px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .quote-export h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .watermark {
+            position: absolute;
+            bottom: 10px;
+            right: 20px;
+            font-size: 0.8rem;
+            opacity: 0.6;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <h1 onclick="showSection('home')">BROXENME QUOTES</h1>
+        <ul>
+            <li><a href="#" onclick="showSection('home')">Home</a></li>
+            <li><a href="#" onclick="showSection('categories')">Categories</a></li>
+            <li><a href="#" onclick="showSection('chat')">Chat</a></li>
+            <li><a href="#" onclick="showSection('generator')">Create</a></li>
+            <li><a href="#" onclick="showSection('quotes')">Community</a></li>
+        </ul>
+        <div class="nav-right">
+            <img id="navPic" class="profile-pic" src="https://i.imgur.com/I80W1Qb.png" style="display:none;width:40px;height:40px">
+            <span id="userEmail"></span>
+            <button class="nav-btn" id="authBtn" onclick="openModal('login')">Login</button>
+            <button class="nav-btn" onclick="showSection('profile')">Profile</button>
+            <button class="nav-btn" onclick="openAdmin()">Admin</button>
+            <button class="nav-btn" id="themeToggle" onclick="toggleTheme()">🌙</button>
+        </div>
+    </nav>
+
+    <section class="hero" id="home">
+        <h2>Daily Inspiration</h2>
+        <p id="dailyQuote">Loading...</p>
+        <span id="quoteAuthor"></span>
+        <button class="btn" onclick="fetchDailyQuote()">New Quote</button>
+    </section>
+
+    <section id="categories" style="display:none;">
+        <h2 class="section-title">Categories</h2>
+        <div class="categories">
+            <div class="cat-card" onclick="filterCategory('Life')"><img src="https://images.unsplash.com/photo-1506784365847-bbad939e9335?w=400"><span>Life</span></div>
+            <div class="cat-card" onclick="filterCategory('Relationships')"><img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=400"><span>Relationships</span></div>
+            <div class="cat-card" onclick="filterCategory('Business')"><img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=400"><span>Business</span></div>
+            <div class="cat-card" onclick="filterCategory('Motivation')"><img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=400"><span>Motivation</span></div>
+        </div>
+    </section>
+
+    <section id="chat" style="display:none;">
+        <h2 class="section-title">Thoughts Wall 💭</h2>
+        <div class="generator">
+            <div class="chat-box" id="chatBox"></div>
+            <input id="chatInput" placeholder="Share your thoughts...">
+            <button class="btn" onclick="sendChat()">Send</button>
+        </div>
+    </section>
+
+    <section id="generator" style="display:none;">
+        <h2 class="section-title">Submit Your Quote</h2>
+        <div class="generator">
+            <textarea id="userQuoteText" placeholder="Write your quote..."></textarea>
+            <input type="text" id="userQuoteAuthor" placeholder="Author Name">
+            <select id="userQuoteCategory"><option>Life</option><option>Relationships</option><option>Business</option><option>Motivation</option></select>
+            <button class="btn" onclick="submitUserQuote()">Save Quote</button>
+        </div>
+    </section>
+
+    <section id="quotes" style="display:none;">
+        <h2 class="section-title">Community Quotes</h2>
+        <div class="quote-grid" id="quoteGrid"></div>
+        <div id="exportArea" style="position:absolute;left:-9999px;"></div>
+    </section>
+
+    <section id="profile" style="display:none;">
+        <h2 class="section-title">Your Profile</h2>
+        <div class="generator">
+            <img id="profilePic" class="profile-pic" src="https://i.imgur.com/I80W1Qb.png">
+            <input type="file" id="picUpload" accept="image/*" onchange="uploadPic()">
+            <h3 id="profileName">Guest</h3>
+            <p>Following: <span id="followingCount">0</span> | Your Quotes: <span id="myQuoteCount">0</span></p>
+            <button class="btn danger" onclick="logout()">Logout</button>
+        </div>
+        <h3 style="text-align:center;margin-top:2rem">My Submitted Quotes</h3>
+        <div class="quote-grid" id="myQuotesGrid"></div>
+    </section>
+
+    <div class="modal" id="authModal">
+        <div class="modal-content">
+            <h2 id="modalTitle">Login</h2>
+            <input type="email" id="email" placeholder="Email">
+            <input type="password" id="password" placeholder="Password">
+            <button class="btn" onclick="submitAuth()">Submit</button>
+            <p style="cursor:pointer;margin-top:1rem" onclick="toggleAuthMode()">Switch to Signup</p>
+            <button onclick="closeModal()">Close</button>
+        </div>
+    </div>
+
+    <div class="modal" id="adminModal">
+        <div class="modal-content">
+            <h2>Admin Panel</h2>
+            <input type="password" id="adminPass" placeholder="Admin Password: broxenme2026">
+            <button class="btn" onclick="checkAdmin()">Enter</button>
+            <div id="adminData" style="display:none;">
+                <h3>All Quotes</h3>
+                <div id="allQuotesList"></div>
+            </div>
+            <button onclick="closeAdmin()">Close</button>
+        </div>
+    </div>
+
+    <script type="module">
+        let currentUser = null; let isLoginMode = true; let following = JSON.parse(localStorage.getItem('following')) || []; onAuthStateChanged(auth, (user) => { if (user) { currentUser = user; document.getElementById('userEmail').innerText = user.displayName
+        || user.email.split('@')[0]; document.getElementById('profileName').innerText = user.displayName || user.email; document.getElementById('authBtn').innerText = 'Logout'; document.getElementById('authBtn').onclick = logout; if(user.photoURL){ document.getElementById('profilePic').src=user.photoURL;
+        document.getElementById('navPic').src=user.photoURL; document.getElementById('navPic').style.display='block'; } document.getElementById('followingCount').innerText = following.length; loadUserQuotes(); loadChat(); } else { currentUser = null;
+        document.getElementById('authBtn').innerText = 'Login'; document.getElementById('authBtn').onclick = () => openModal('login'); document.getElementById('userEmail').innerText = ''; } }); window.uploadPic = async () => { const file = document.getElementById('picUpload').files[0];
+        if(!file ||!currentUser) return; const storageRef = ref(storage, `profilePics/${currentUser.uid}`); await uploadBytes(storageRef, file); const url = await getDownloadURL(storageRef); await updateProfile(currentUser, {photoURL: url}); document.getElementById('profilePic').src
+        = url; document.getElementById('navPic').src = url; } window.toggleAuthMode = () => { isLoginMode =!isLoginMode; document.getElementById('modalTitle').innerText = isLoginMode? 'Login' : 'Signup'; } window.submitAuth = async () => { const email
+        = document.getElementById('email').value; const password = document.getElementById('password').value; try { if(isLoginMode) await signInWithEmailAndPassword(auth, email, password); else {const cred = await createUserWithEmailAndPassword(auth,
+        email, password); await updateProfile(cred.user, {displayName: email.split('@')[0]});} closeModal(); } catch(e) { alert(e.message) } } window.logout = () => signOut(auth); window.submitUserQuote = async () => { if(!currentUser) return alert('Login
+        first!'); const text = document.getElementById('userQuoteText').value; const author = document.getElementById('userQuoteAuthor').value || currentUser.displayName; const category = document.getElementById('userQuoteCategory').value; if(!text) return
+        alert('Write a quote!'); await addDoc(collection(db, "quotes"), { text, author, category, authorPic: currentUser.photoURL || '', userId: currentUser.uid, likes: [], comments: [], createdAt: new Date() }); document.getElementById('userQuoteText').value
+        = ''; alert('Quote saved!'); } window.loadUserQuotes = () => { if(!currentUser) return; const q = query(collection(db, "quotes"), where("userId", "==", currentUser.uid)); onSnapshot(q, (snapshot) => { const quotes = snapshot.docs.map(doc => ({id:
+        doc.id,...doc.data()})); document.getElementById('myQuoteCount').innerText = quotes.length; document.getElementById('myQuotesGrid').innerHTML = quotes.map(q => renderQuoteCard(q, true)).join(''); }); } function renderQuoteCard(q, isMine=false){
+        const liked = currentUser && q.likes.includes(currentUser.uid); const isFollowing = following.includes(q.userId); return `
+        <div class="quote-card">
+            <div style="display:flex;gap:10px;align-items:center">
+                <img class="profile-pic" style="width:40px;height:40px" src="${q.authorPic || 'https://i.imgur.com/I80W1Qb.png'}">
+                <div>
+                    <p>"${q.text}"</p><span>- ${q.author}</span> <small style="color:var(--muted)">#${q.category || 'General'}</small></div>
+            </div>
+            <div class="quote-actions">
+                ${currentUser? `<button class="${liked?'liked':''}" onclick="likeQuote('${q.id}', this)">❤️ ${q.likes.length}</button>` : ''}
+                <button onclick="toggleComments('${q.id}')">💬 ${q.comments.length}</button>
+                <button onclick="shareWhatsApp('${q.text}','${q.author}')">📱 Share</button>
+                <button onclick="exportQuoteImage('${q.id}')">📸 Image</button> ${!isMine && currentUser? `<button onclick="toggleFollow('${q.userId}')">${isFollowing?'Unfollow':'Follow'}</button>` : ''} ${isMine? `<button class="del" onclick="deleteQuote('${q.id}')">🗑️</button>`
+                : ''}
+            </div>
+            <div class="comment-box" id="comments-${q.id}" style="display:none;">
+                ${q.comments.map(c=>`
+                <p><b>${c.user}:</b> ${c.text}</p>`).join('')} ${currentUser? `<input id="comment-input-${q.id}" placeholder="Add comment"><button class="btn" style="padding:0.4rem" onclick="addComment('${q.id}')">Send</button>` : ''}
+            </div>
+        </div>`; } window.likeQuote = async (id, btn) => { const ref = doc(db, "quotes", id); const liked = btn.classList.contains('liked'); await updateDoc(ref, {likes: liked? arrayRemove(currentUser.uid) : arrayUnion(currentUser.uid)}); } window.addComment
+        = async (id) => { let txt=document.getElementById(`comment-input-${id}`).value; if(!txt) return; const ref = doc(db, "quotes", id); const q = (await getDocs(collection(db, "quotes"))).docs.find(d=>d.id===id).data(); q.comments.push({user:currentUser.displayName,
+        text:txt}); await updateDoc(ref, {comments: q.comments}); document.getElementById(`comment-input-${id}`).value=''; } window.toggleComments = (id) => { document.getElementById(`comments-${id}`).style.display = document.getElementById(`comments-${id}`).style.display==='none'?'block':'none';
+        } window.deleteQuote = async (id) => {if(confirm('Delete?')) await deleteDoc(doc(db, "quotes", id));} window.toggleFollow = (uid) => { if(following.includes(uid)){following = following.filter(f=>f!==uid)} else{following.push(uid)} localStorage.setItem('following',
+        JSON.stringify(following)); document.getElementById('followingCount').innerText = following.length; alert('Follow updated!'); } window.shareWhatsApp = (text, author) => { window.open(`https://wa.me/?text=${encodeURIComponent(`"${text}" - ${author}\n\nFrom
+        BROXENME QUOTES`)}`, '_blank'); } window.exportQuoteImage = async (id) => { const quote = (await getDocs(collection(db, "quotes"))).docs.find(d=>d.id===id).data(); const area = document.getElementById('exportArea'); area.innerHTML = `
+        <div class="quote-export">
+            <h2>"${quote.text}"</h2>
+            <p>- ${quote.author}</p>
+            <div class="watermark">BROXENME QUOTES</div>
+        </div>`; const canvas = await html2canvas(area.firstChild); const link = document.createElement('a'); link.download = 'broxenme-quote.png'; link.href = canvas.toDataURL(); link.click(); } onSnapshot(query(collection(db, "quotes"), orderBy("createdAt",
+        "desc")), (snapshot) => { const quotes = snapshot.docs.map(doc => ({id: doc.id,...doc.data()})); document.getElementById('quoteGrid').innerHTML = quotes.map(q => renderQuoteCard(q)).join(''); }); // CHAT SYSTEM window.sendChat = async () => {
+        if(!currentUser) return alert('Login first!'); const text = document.getElementById('chatInput').value; if(!text) return; await addDoc(collection(db, "chat"), {user: currentUser.displayName, text, createdAt: new Date()}); document.getElementById('chatInput').value
+        = ''; } window.loadChat = () => { onSnapshot(query(collection(db, "chat"), orderBy("createdAt", "asc")), (snapshot) => { const msgs = snapshot.docs.map(d=>d.data()); document.getElementById('chatBox').innerHTML = msgs.map(m=>`
+        <div class="chat-msg"><span class="user-tag">${m.user}:</span> ${m.text}</div>`).join(''); document.getElementById('chatBox').scrollTop = 99999; }); } window.filterCategory = (cat) => { alert(`Filtering by ${cat}. Will show only ${cat} quotes`); showSection('quotes');
+        } window.showSection = (id) => { ['home','categories','chat','generator','quotes','profile'].forEach(s => document.getElementById(s).style.display = s===id? 'block' : 'none'); } window.openModal = (type) => {document.getElementById('authModal').style.display='flex';
+        isLoginMode = type==='login';} window.closeModal = () => document.getElementById('authModal').style.display='none'; window.openAdmin = () => document.getElementById('adminModal').style.display='flex'; window.closeAdmin = () => document.getElementById('adminModal').style.display='none';
+        window.checkAdmin = async () => { if(document.getElementById('adminPass').value!== "broxenme2026") return alert('Wrong password'); document.getElementById('adminData').style.display='block'; const quotes = (await getDocs(collection(db, "quotes"))).docs.map(d=>d.data());
+        document.getElementById('allQuotesList').innerHTML = quotes.map(q => `
+        <p>"${q.text}" - ${q.author}</p>`).join(''); } window.toggleTheme = () => { document.body.classList.toggle('light'); document.getElementById('themeToggle').innerText = document.body.classList.contains('light')? '🌙' : '☀️'; } async function fetchDailyQuote(){
+        const res = await fetch('https://api.quotable.io/random'); const q = await res.json(); document.getElementById('dailyQuote').innerText = `"${q.content}"`; document.getElementById('quoteAuthor').innerText = `- ${q.author}`; } fetchDailyQuote();
+    </script>
+</body>
+
+</html>
