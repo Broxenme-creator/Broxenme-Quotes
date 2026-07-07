@@ -495,6 +495,28 @@
         <p>"${q.text}" - ${q.author}</p>`).join(''); } window.toggleTheme = () => { document.body.classList.toggle('light'); document.getElementById('themeToggle').innerText = document.body.classList.contains('light')? '🌙' : '☀️'; } async function fetchDailyQuote(){
         const res = await fetch('https://api.quotable.io/random'); const q = await res.json(); document.getElementById('dailyQuote').innerText = `"${q.content}"`; document.getElementById('quoteAuthor').innerText = `- ${q.author}`; } fetchDailyQuote();
     </script>
+    <script type="module">
+  import { auth, db } from './firebase.js';
+  import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+  import { collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+  // Check if user is logged in
+  onAuthStateChanged(auth, (user) => {
+    if (!user) {
+      window.location = "login.html"; // kick to login if not logged in
+    }
+  });
+
+  // Example: function to save a quote
+  window.postQuote = async function(text) {
+    await addDoc(collection(db, "quotes"), {
+      text: text,
+      user: auth.currentUser.email,
+      createdAt: new Date()
+    });
+    alert("Quote posted!");
+  }
+</script>
 </body>
 
 </html>
