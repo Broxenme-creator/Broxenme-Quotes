@@ -16,7 +16,17 @@
     --accent: #6aff00; --muted: #555; --nav-bg: rgba(255, 255, 255, 0.8);
 }
 * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
-body { background: var(--bg); color: var(--text); background-attachment: fixed; background-size: cover; background-position: center; transition: 0.3s; padding-top: 65px; }
+body { 
+    background: var(--bg); 
+    color: var(--text); 
+    background-attachment: scroll; /* FIXED: fixed breaks on mobile */
+    background-size: cover; 
+    background-position: center; 
+    background-repeat: no-repeat;
+    min-height: 100vh;
+    transition: 0.3s; 
+    padding-top: 65px; 
+}
 
 /* GLASS */
 .glass { background: var(--card); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); }
@@ -44,14 +54,14 @@ nav a:hover { color: var(--accent); }
 
 /* BUTTONS */
 .btn { background: var(--accent); color: var(--bg); padding: 0.9rem 1.8rem; border: none; border-radius: 12px; cursor: pointer; font-weight: bold; transition: 0.2s; width: 100%; }
-.btn:hover { transform: translateY(-2px); }
+.btn:hover { transform: translateY(-2px); opacity: 0.9; }
 .btn-outline { background: none; border: 2px solid var(--accent); color: var(--accent); padding: 0.6rem 1.2rem; border-radius: 20px; cursor: pointer; width: 100%; }
 .card { background: var(--card); padding: 2rem; border-radius: 15px; max-width: 700px; margin: 2rem auto; }
-.card input, .card textarea { width: 100%; padding: 0.9rem; margin: 0.5rem 0; border-radius: 10px; border: 1px solid rgba(255,255,255,0.2); background: rgba(0,0,0,0.2); color: var(--text); }
+.card input, .card textarea { width: 100%; padding: 0.9rem; margin: 0.5rem 0; border-radius: 10px; border: 1px solid rgba(255,255,255,0.2); background: rgba(0,0,0,0.2); color: var(--text); outline: none; }
 
 /* SEARCH */
 .search-bar { max-width: 600px; margin: 1rem auto; padding: 0 5%; }
-.search-bar input { width: 100%; padding: 1rem 1.5rem; border-radius: 25px; border: 1px solid var(--accent); background: var(--card); color: var(--text); }
+.search-bar input { width: 100%; padding: 1rem 1.5rem; border-radius: 25px; border: 1px solid var(--accent); background: var(--card); color: var(--text); outline: none; }
 
 /* REELS */
 .reels-viewer { height: calc(100vh - 65px); overflow-y: scroll; scroll-snap-type: y mandatory; }
@@ -66,7 +76,7 @@ nav a:hover { color: var(--accent); }
 .reel-tag { background: rgba(0,0,0,0.6); padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.8rem; }
 .reel-song { position: absolute; bottom: 70px; left: 1rem; color: white; font-size: 0.9rem; background: rgba(0,0,0,0.5); padding: 0.3rem 0.8rem; border-radius: 20px; }
 
-/* PROFILE - EXACT LIKE YOUR PIC */
+/* PROFILE */
 .profile-wrapper { max-width: 600px; margin: 1rem auto; background: var(--card); border-radius: 20px; overflow: hidden; }
 .profile-header { height: 180px; background: linear-gradient(135deg, #00ff88, #00d4ff); position: relative; border-radius: 20px 20px 0 0; }
 .profile-pic-wrap { position: absolute; bottom: -65px; left: 50%; transform: translateX(-50%); }
@@ -75,14 +85,15 @@ nav a:hover { color: var(--accent); }
 .profile-info { padding: 80px 1.5rem 2rem; text-align: center; }
 .profile-info h2 { font-size: 1.6rem; }
 .profile-info .location { color: var(--muted); margin: 0.3rem 0 1rem; }
-.profile-stats { display: flex; justify-content: space-around; margin: 1.5rem 0; }
+.profile-stats { display: flex; justify-content: space-around; margin: 1.5rem 0; flex-wrap: wrap; }
+.stat { min-width: 80px; }
 .stat h3 { font-size: 1.6rem; color: var(--accent); font-weight: 800; }
 .stat p { font-size: 0.9rem; color: var(--muted); }
 
 /* MODALS */
 .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 2000; align-items: center; justify-content: center; padding: 1rem; }
 .modal.active { display: flex; }
-.modal-content { background: var(--card); padding: 2rem; border-radius: 20px; width: 100%; max-width: 500px; }
+.modal-content { background: var(--card); padding: 2rem; border-radius: 20px; width: 100%; max-width: 500px; max-height: 90vh; overflow-y: auto; }
 .quote-preview { width: 100%; aspect-ratio: 1; border-radius: 15px; display: flex; align-items: center; justify-content: center; padding: 1rem; margin: 1rem 0; text-align: center; font-size: 1.3rem; font-weight: bold; color: white; }
 .bg-selector, .font-selector, .tag-selector { display: flex; gap: 0.5rem; margin: 1rem 0; flex-wrap: wrap; }
 .bg-option { width: 45px; height: 45px; border-radius: 10px; cursor: pointer; border: 3px solid transparent; }
@@ -103,14 +114,22 @@ nav a:hover { color: var(--accent); }
 .chat-window { display: none; position: fixed; top: 65px; left: 0; width: 100%; height: calc(100vh - 65px); background: var(--bg); z-index: 999; flex-direction: column; }
 .chat-window.active { display: flex; }
 .chat-messages { flex: 1; overflow-y: auto; padding: 1rem; }
-.msg { background: var(--card); padding: 0.8rem 1rem; border-radius: 15px; margin: 0.5rem 0; max-width: 70%; }
+.msg { background: var(--card); padding: 0.8rem 1rem; border-radius: 15px; margin: 0.5rem 0; max-width: 70%; word-wrap: break-word; }
 .msg.me { background: var(--teal); margin-left: auto; }
 
-/* RESPONSIVE */
+/* RESPONSIVE - FIXED */
 @media (max-width: 950px) {
-    nav ul { position: fixed; top: 65px; left: -100%; width: 100%; height: calc(100vh - 65px); background: var(--bg); flex-direction: column; align-items: center; padding-top: 3rem; transition: 0.3s; }
+    nav ul { 
+        position: fixed; top: 65px; left: -100%; 
+        width: 100%; height: calc(100vh - 65px); 
+        background: var(--bg); flex-direction: column; 
+        align-items: center; padding-top: 3rem; 
+        transition: 0.3s; gap: 2rem; font-size: 1.2rem;
+    }
     nav ul.active { left: 0; }
     .hamburger { display: block; }
+    .reel-text { font-size: 1.5rem; }
+    .profile-stats { gap: 1rem; }
 }
 </style>
 </head>
@@ -138,18 +157,17 @@ nav a:hover { color: var(--accent); }
 
 <div id="reelsPage" class="page">
     <div class="search-bar"><input type="text" id="searchInput" placeholder="🔍 Search quotes, tags, users..." oninput="searchQuotes()"></div>
-    <div class="reels-viewer" id="reelsViewer"></div>
+    <div class="reels-viewer" id="reelsViewer"><p style="text-align:center;padding:2rem">No posts yet. Create one!</p></div>
 </div>
 
-<div id="generatorPage" class="page"><div class="card glass" style="text-align:center"><h2><i class="fa fa-wand-magic-sparkles"></i> Quote Generator</h2><select id="categorySelect" style="padding:0.8rem;border-radius:10px;background:var(--card);color:var(--text);border:1px solid var(--accent);margin:1rem;width:80%"><option>Motivation</option><option>Life</option><option>Business</option><option>Love</option></select><button class="btn" onclick="generateQuote()" style="width:auto">Generate <i class="fa fa-sparkles"></i></button><p id="generatedQuote" style="margin-top:2rem;font-size:1.3rem;color:var(--accent)"></p></div></div>
+<div id="generatorPage" class="page"><div class="card glass" style="text-align:center"><h2><i class="fa fa-wand-magic-sparkles"></i> Quote Generator</h2><select id="categorySelect" style="padding:0.8rem;border-radius:10px;background:var(--card);color:var(--text);border:1px solid var(--accent);margin:1rem;width:80%"><option>Motivation</option><option>Life</option><option>Business</option><option>Love</option></select><button class="btn" onclick="generateQuote()" style="width:auto">Generate <i class="fa fa-sparkles"></i></button><p id="generatedQuote" style="margin-top:2rem;font-size:1.3rem;color:var(--accent)">Click generate</p></div></div>
 
 <div id="loginPage" class="page"><div class="card glass"><h2>Welcome to Broxenme</h2><input type="email" id="loginEmail" placeholder="Email"><input type="password" id="loginPass" placeholder="Password"><button class="btn" onclick="login()">Login</button><button class="btn-outline" style="margin-top:0.5rem" onclick="signup()">Sign Up</button></div></div>
 
-<!-- PROFILE EXACT LIKE PIC -->
 <div id="profilePage" class="page"><div class="profile-wrapper glass">
     <div class="profile-header">
         <div class="profile-pic-wrap">
-            <img src="images/logo.png" class="profile-pic" id="profilePic">
+            <img src="https://placehold.co/130" class="profile-pic" id="profilePic">
             <input type="file" id="profileUpload" accept="image/*" style="display:none">
             <div class="camera-btn" onclick="document.getElementById('profileUpload').click()"><i class="fa fa-camera"></i></div>
         </div>
@@ -166,7 +184,7 @@ nav a:hover { color: var(--accent); }
         <p id="profileBio" style="color:var(--muted);margin:1rem 0"></p>
         <button class="btn" onclick="openEditProfile()"><i class="fa fa-pen"></i> Edit Profile</button>
         <button class="btn" style="margin-top:0.8rem" onclick="openCreatePostModal()"><i class="fa fa-plus"></i> Create Post</button>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:1.5rem" id="profileGrid"></div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(150px, 1fr));gap:10px;margin-top:1.5rem" id="profileGrid"></div>
     </div>
 </div></div>
 
@@ -231,12 +249,12 @@ nav a:hover { color: var(--accent); }
 <div id="chatWindow" class="chat-window">
     <div class="chat-header glass" style="display:flex;align-items:center;gap:1rem;padding:1rem">
         <button onclick="closeChat()" style="background:none;border:none;color:var(--text);font-size:1.2rem"><i class="fa fa-arrow-left"></i></button>
-        <img src="images/logo.png" class="chat-avatar" id="chatAvatar">
+        <img src="https://placehold.co/50" class="chat-avatar" id="chatAvatar">
         <b id="chatName">Chat</b>
     </div>
     <div class="chat-messages" id="chatMessages"></div>
     <div class="chat-input-bar glass" style="display:flex;gap:0.5rem;padding:1rem">
-        <input type="text" id="chatInput" placeholder="Message..." style="flex:1;padding:0.8rem;border-radius:20px;background:var(--card);color:var(--text);border:1px solid var(--accent)">
+        <input type="text" id="chatInput" placeholder="Message..." style="flex:1;padding:0.8rem;border-radius:20px;background:var(--card);color:var(--text);border:1px solid var(--accent);outline:none">
         <button class="btn" onclick="sendMsg()" style="width:auto"><i class="fa fa-paper-plane"></i></button>
     </div>
 </div>
@@ -252,14 +270,13 @@ const auth = firebase.auth();
 
 let currentUser = null, selectedBg = 'linear-gradient(135deg, #667eea, #764ba2)', selectedFont = 'Segoe UI', selectedTagsArr = [], currentChat = null, allPosts = [];
 
-// RANDOM BG
+// RANDOM BG - FIXED
 const randomImages = ['https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=1920','https://images.unsplash.com/photo-1470252649378-9c29790c9c29?w=1920','https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=1920'];
 document.body.style.backgroundImage = `url('${randomImages[Math.floor(Math.random()*randomImages.length)]}')`;
 
 // THEME
 const toggle = document.getElementById('themeToggle'); 
 if(localStorage.getItem('theme')==='light') document.body.classList.add('light'); 
-toggle.innerHTML = document.body.classList.contains('light')? '<i class="fa fa-gear"></i>' : '<i class="fa fa-gear"></i>'; 
 toggle.onclick = () => { document.body.classList.toggle('light'); const theme = document.body.classList.contains('light')? 'light' : 'dark'; localStorage.setItem('theme', theme); }
 
 // AUTH
@@ -324,7 +341,7 @@ function submitPost(){
     const text = document.getElementById('newPostText').value;
     const song = document.getElementById('songSearch').value;
     if(!text) return alert('Write a quote first!');
-    db.collection('posts').add({text, bg: selectedBg, font: selectedFont, tags: selectedTagsArr, song, authorId: currentUser.uid, authorName: currentUser.displayName || 'User', authorPic: currentUser.photoURL || 'images/logo.png', time: firebase.firestore.FieldValue.serverTimestamp(), likes: 0, shares: 0});
+    db.collection('posts').add({text, bg: selectedBg, font: selectedFont, tags: selectedTagsArr, song, authorId: currentUser.uid, authorName: currentUser.email.split('@')[0], authorPic: currentUser.photoURL || 'https://placehold.co/40', time: firebase.firestore.FieldValue.serverTimestamp(), likes: 0, shares: 0});
     closeCreatePostModal(); document.getElementById('newPostText').value = ''; selectedTagsArr = []; document.querySelectorAll('.tag-btn').forEach(b=>b.classList.remove('active'));
 }
 
@@ -332,11 +349,12 @@ function submitPost(){
 function loadPosts(){
     db.collection('posts').orderBy('time', 'desc').onSnapshot(snapshot => {
         allPosts = []; document.getElementById('reelsViewer').innerHTML = ''; document.getElementById('profileGrid').innerHTML = ''; let postCount = 0; let totalLikes = 0;
+        if(snapshot.empty){ document.getElementById('reelsViewer').innerHTML = '<p style="text-align:center;padding:2rem">No posts yet. Create one!</p>' }
         snapshot.forEach(doc => {
             const p = doc.data(); p.id = doc.id; allPosts.push(p);
             document.getElementById('reelsViewer').innerHTML += `<div class="reel-full" style="background:${p.bg}"><div class="reel-text" style="font-family:${p.font}">${p.text}</div><div class="reel-tags">${(p.tags||[]).map(t=>`<span class="reel-tag">#${t}</span>`).join('')}</div>${p.song?`<div class="reel-song"><i class="fa fa-music"></i> ${p.song}</div>`:''}<div class="reel-sidebar"><div class="reel-action" onclick="likePost('${doc.id}')"><i class="fa fa-heart"></i><span>${p.likes}</span></div><div class="reel-action" onclick="sharePost('${doc.id}')"><i class="fa fa-share"></i><span>${p.shares}</span></div></div><div class="reel-bottom"><img src="${p.authorPic}" class="reel-profile"><b>${p.authorName}</b></div></div>`;
             if(p.authorId === currentUser?.uid){
-                document.getElementById('profileGrid').innerHTML += `<div style="background:${p.bg};font-family:${p.font};aspect-ratio:1;border-radius:12px;display:flex;align-items:center;justify-content:center;padding:1rem;text-align:center;font-weight:bold;position:relative">${p.text}<small style="position:absolute;bottom:5px;background:rgba(0,0,0,0.6);padding:2px 6px;border-radius:5px;font-size:0.7rem">❤️${p.likes} 🔄${p.shares}</small></div>`;
+                document.getElementById('profileGrid').innerHTML += `<div style="background:${p.bg};font-family:${p.font};aspect-ratio:1;border-radius:12px;display:flex;align-items:center;justify-content:center;padding:1rem;text-align:center;font-weight:bold;position:relative;color:white">${p.text}<small style="position:absolute;bottom:5px;background:rgba(0,0,0,0.6);padding:2px 6px;border-radius:5px;font-size:0.7rem">❤️${p.likes} 🔄${p.shares}</small></div>`;
                 postCount++; totalLikes += p.likes;
             }
         });
@@ -346,16 +364,17 @@ function loadPosts(){
 function searchQuotes(){
     const q = document.getElementById('searchInput').value.toLowerCase();
     const filtered = allPosts.filter(p => p.text.toLowerCase().includes(q) || (p.tags||[]).join().toLowerCase().includes(q) || p.authorName.toLowerCase().includes(q));
-    document.getElementById('reelsViewer').innerHTML = filtered.map(p=>`<div class="reel-full" style="background:${p.bg}"><div class="reel-text" style="font-family:${p.font}">${p.text}</div></div>`).join('') || '<p style="text-align:center;padding:2rem">No results</p>';
+    document.getElementById('reelsViewer').innerHTML = filtered.map(p=>`<div class="reel-full" style="background:${p.bg}"><div class="reel-text" style="font-family:${p.font}">${p.text }</div></div>`).join('') || '<p style="text-align:center;padding:2rem">No results</p>';
 }
 function likePost(id){ db.collection('posts').doc(id).update({likes: firebase.firestore.FieldValue.increment(1)}); }
 function sharePost(id){ db.collection('posts').doc(id).update({shares: firebase.firestore.FieldValue.increment(1)}); }
 
 // COMMUNITY
-function switchCommTab(tab, e){ document.query All('.comm-tab').forEach(t => t.classList.remove('active')); e.target.classList.add('active'); document.getElementById('feedTab').style.display = tab === 'feed'? 'block' : 'none'; document.getElementById('messagesTab').style.display = tab === 'messages'? 'block' : 'none'; }
+function switchCommTab(tab, e){ document.querySelectorAll('.comm-tab').forEach(t => t.classList.remove('active')); e.target.classList.add('active'); document.getElementById('feedTab').style.display = tab === 'feed'? 'block' : 'none'; document.getElementById('messagesTab').style.display = tab === 'messages'? 'block' : 'none'; }
 function loadCommunityFeed(){
     db.collection('posts').orderBy('time', 'desc').onSnapshot(snapshot => {
         document.getElementById('communityFeed').innerHTML = '';
+        if(snapshot.empty){ document.getElementById('communityFeed').innerHTML = '<p style="text-align:center;padding:2rem">No posts in community yet</p>' }
         snapshot.forEach(doc => {
             const p = doc.data();
             document.getElementById('communityFeed').innerHTML += `<div class="card glass" style="margin:1rem 0"><div style="display:flex;gap:1rem;align-items:center"><img src="${p.authorPic}" style="width:40px;height:40px;border-radius:50%"><b>${p.authorName}</b></div><p style="margin:1rem 0">${p.text}</p></div>`;
@@ -366,13 +385,14 @@ function loadChats(){
     if(!currentUser) return;
     db.collection('chats').where('users', 'array-contains', currentUser.uid).onSnapshot(snap => {
         document.getElementById('chatList').innerHTML = '';
+        if(snap.empty){ document.getElementById('chatList').innerHTML = '<p style="text-align:center;padding:1rem;color:var(--muted)">No conversations yet</p>' }
         snap.forEach(doc => {
             const c = doc.data();
             document.getElementById('chatList').innerHTML += `<div class="chat-item" onclick="openChat('${doc.id}', '${c.name}', '${c.pic}')"><img src="${c.pic}" class="chat-avatar"><div><div class="chat-name">${c.name}</div><div class="chat-last">${c.lastMsg || ''}</div></div></div>`;
         });
     });
 }
-function openNewChat(){ const name = prompt('Enter username to chat with:'); if(!name) return; db.collection('chats').add({users: [currentUser.uid], name, pic: 'images/logo.png', lastMsg: ''}); }
+function openNewChat(){ const name = prompt('Enter username to chat with:'); if(!name) return; db.collection('chats').add({users: [currentUser.uid], name, pic: 'https://placehold.co/50', lastMsg: ''}); }
 function openChat(id, name, pic){ currentChat = id; document.getElementById('chatName').innerText = name; document.getElementById('chatAvatar').src = pic; document.getElementById('chatWindow').classList.add('active'); db.collection('chats').doc(id).collection('messages').orderBy('time').onSnapshot(snap=>{document.getElementById('chatMessages').innerHTML=''; snap.forEach(doc=>{const m=doc.data(); const isMe=m.from===currentUser.uid; document.getElementById('chatMessages').innerHTML += `<div class="msg ${isMe? 'me' : ''}">${m.text}</div>`;}); document.getElementById('chatMessages').scrollTop = document.getElementById('chatMessages').scrollHeight;});}
 function closeChat(){ document.getElementById('chatWindow').classList.remove('active'); }
 function sendMsg(){
