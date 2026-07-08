@@ -19,13 +19,12 @@
 body { 
     background: var(--bg); 
     color: var(--text); 
-    background-image: var(--random-bg, url('images/background.jpg')); 
+    background-image: url('images/background.jpg');  /* <-- LEAVE ONLY THIS */
     background-attachment: fixed; 
     background-size: cover; 
     transition: 0.3s; 
     padding-top: 70px; 
 }
-
 /* NAVBAR */
 nav { display: flex; justify-content: space-between; align-items: center; padding: 0.8rem 4%; background: var(--nav-bg); backdrop-filter: blur(10px); position: fixed; top: 0; width: 100%; z-index: 1000; border-bottom: 2px solid var(--accent); }
 .nav-logo { display: flex; align-items: center; gap: 10px; cursor: pointer; flex-shrink: 0; }
@@ -275,12 +274,22 @@ function login(){
 function logout(){ auth.signOut(); }
 
 // PROFILE UPLOAD
+// PROFILE UPLOAD - FREE VERSION USING IMGBB
 document.getElementById('profileUpload').addEventListener('change', async (e) => {
     const file = e.target.files[0];
-    if(!file || !currentUser) return;
-    const ref = storage.ref(`profilePics/${currentUser.uid}`);
-    await ref.put(file);
-    const url = await ref.getDownloadURL();
+    if(!file ||!currentUser) return;
+    
+    const formData = new FormData();
+    formData.append("image", file);
+    
+    // Get free API key from https://api.imgbb.com/
+    const res = await fetch("https://api.imgbb.com/1/upload?key=YOUR_IMGBB_KEY", {
+        method: "POST",
+        body: formData
+    });
+    const data = await res.json();
+    const url = data.data.url;
+    
     document.getElementById('profilePic').src = url;
     db.collection('users').doc(currentUser.uid).update({photoURL: url});
 });
@@ -355,6 +364,14 @@ function showPage(pageId){ document.querySelectorAll('.page').forEach(page => pa
 function switchTab(tab, e){ document.querySelectorAll('.tab').forEach(t => t.classList.remove('active')); e.target.classList.add('active'); document.getElementById('loginForm').style.display = tab === 'login'? 'block' : 'none'; document.getElementById('signupForm').style.display = tab === 'signup'? 'block' : 'none'; }
 const navMenu = document.getElementById('navMenu'); const hamburger = document.querySelector('.hamburger'); function toggleMenu(){ navMenu.classList.toggle('active'); hamburger.classList.toggle('active'); } function closeMenu(){ navMenu.classList.remove('active'); hamburger.classList.remove('active'); }
 const toggle = document.getElementById('themeToggle'); if(localStorage.getItem('theme')==='light') document.body.classList.add('light'); toggle.innerText = document.body.classList.contains('light')? '🌙' : '☀️'; toggle.onclick = () => { document.body.classList.toggle('light'); const theme = document.body.classList.contains('light')? 'light' : 'dark'; localStorage.setItem('theme', theme); toggle.innerText = theme === 'light'? '🌙' : '☀️'; }
+    // RANDOM WALLPAPER FIX
+const randomImages = [
+    'https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=1920',
+    'https://images.unsplash.com/photo-1470252649378-9c29790c9c29?w=1920',
+    'https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=1920'
+];
+const randomBg = randomImages[Math.floor(Math.random()*randomImages.length)];
+document.body.style.backgroundImage = `url('${randomBg}')`;
 </script>
 </body>
 </html>
