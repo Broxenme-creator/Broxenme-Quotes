@@ -24,7 +24,6 @@ body {
     transition: 0.3s; 
     padding-top: 70px; 
 }
-
 nav { display: flex; justify-content: space-between; align-items: center; padding: 0.8rem 4%; background: var(--nav-bg); backdrop-filter: blur(10px); position: fixed; top: 0; width: 100%; z-index: 1000; border-bottom: 2px solid var(--accent); }
 .nav-logo { display: flex; align-items: center; gap: 10px; cursor: pointer; }
 .nav-logo img { width: 40px; height: 40px; border-radius: 10px; border: 1px solid var(--accent); }
@@ -43,21 +42,38 @@ nav a:hover { color: var(--accent); }
     .hamburger { display: block; }
 }
 
-.page { display: none; min-height: 80vh; }
+.page { display: none; min-height: 80vh; animation: fadeIn 0.4s ease; }
 .page.active { display: block; }
+@keyframes fadeIn { from {opacity: 0; transform: translateY(15px)} to {opacity: 1; transform: translateY(0)} }
 
 .hero { display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; min-height: 70vh; padding: 2rem 5%; }
-#dailyQuote { font-size: 1.3rem; color: var(--accent); }
-.btn { background: var(--accent); color: var(--bg); padding: 0.9rem 1.8rem; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; }
+.hero h2 { font-size: 2.2rem; margin-bottom: 1rem; }
+#dailyQuote { font-size: 1.3rem; max-width: 700px; color: var(--accent); line-height: 1.6; }
+.btn { background: var(--accent); color: var(--bg); padding: 0.9rem 1.8rem; border: none; border-radius: 10px; cursor: pointer; margin-top: 1.5rem; font-weight: bold; font-size: 1rem; }
 .btn-outline { background: none; border: 2px solid var(--accent); color: var(--accent); padding: 0.6rem 1.2rem; border-radius: 20px; cursor: pointer; }
+.btn-teal { background: var(--teal); color: white; border: none; padding: 0.6rem 1.8rem; border-radius: 20px; cursor: pointer; font-weight: bold; }
 .card { background: var(--card); padding: 2rem; border-radius: 15px; max-width: 700px; margin: 2rem auto; border: 1px solid var(--accent); }
 .card input, .card textarea { width: 100%; padding: 0.9rem; margin: 0.5rem 0; border-radius: 10px; border: 1px solid var(--muted); background: var(--bg); color: var(--text); }
+.back-btn { background: none; border: 1px solid var(--accent); color: var(--accent); padding: 0.6rem 1.2rem; border-radius: 10px; cursor: pointer; margin: 1rem 5%; font-weight: bold; }
 
+.generator-box { background: var(--card); padding: 2rem; border-radius: 15px; text-align: center; margin: 2rem auto; max-width: 600px; }
+.generator-box select { padding: 0.8rem; border-radius: 10px; background: var(--bg); color: var(--text); border: 1px solid var(--accent); margin: 1rem; }
+
+.featured-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 2rem; padding: 0 5%; }
+.quote-card { background: var(--card); padding: 1.5rem; border-radius: 15px; border-left: 4px solid var(--accent); }
+
+.categories-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem; margin-top: 2rem; padding: 0 5%; }
+.cat-card { background: var(--card); padding: 2rem 1rem; border-radius: 15px; text-align: center; border: 1px solid var(--accent); cursor: pointer; font-weight: bold; }
+
+.reels-page { padding: 0!important; }
 .reels-viewer { height: calc(100vh - 70px); overflow-y: scroll; scroll-snap-type: y mandatory; }
-.reel-full { height: calc(100vh - 70px); width: 100%; max-width: 500px; margin: 0 auto; background-size: cover; position: relative; scroll-snap-align: start; }
+.reel-full { height: calc(100vh - 70px); width: 100%; max-width: 500px; margin: 0 auto; background-size: cover; background-position: center; position: relative; scroll-snap-align: start; display: flex; flex-direction: column; justify-content: space-between; padding: 1rem; }
 .reel-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 1.8rem; font-weight: bold; text-align: center; color: white; text-shadow: 2px 2px 8px rgba(0,0,0,0.8); width: 90%; }
 .reel-sidebar { position: absolute; right: 1rem; bottom: 100px; display: flex; flex-direction: column; gap: 1.5rem; align-items: center; }
 .reel-action { text-align: center; color: white; cursor: pointer; }
+.reel-action span { font-size: 0.8rem; font-weight: bold; }
+.reel-bottom { display: flex; align-items: center; gap: 1rem; position: absolute; bottom: 20px; left: 1rem; }
+.reel-profile { width: 40px; height: 40px; border-radius: 50%; border: 2px solid var(--accent); }
 
 /* PROFILE NEW */
 .profile-container { max-width: 500px; margin: 0 auto; background: var(--card); border-radius: 20px; overflow: hidden; }
@@ -71,9 +87,9 @@ nav a:hover { color: var(--accent); }
 .profile-stats { display: flex; justify-content: space-around; margin: 1.5rem 0; }
 .stat h3 { font-size: 1.4rem; color: var(--teal); }
 .stat p { font-size: 0.8rem; color: var(--muted); }
-.profile-bio { font-size: 0.9rem; color: var(--muted); margin: 1rem 0; }
+.profile-bio { font-size: 0.9rem; color: var(--muted); line-height: 1.5; margin: 1rem 0; }
 .profile-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.profile-post { width: 100%; aspect-ratio: 1; border-radius: 12px; display:flex;align-items:center;justify-content:center;padding:1rem;text-align:center;font-size:0.9rem;border:2px solid var(--accent); background-size: cover; font-weight: bold; }
+.profile-post { width: 100%; aspect-ratio: 1; border-radius: 12px; display:flex;align-items:center;justify-content:center;padding:1rem;text-align:center;font-size:0.9rem;border:2px solid var(--accent); background-size: cover; background-position: center; font-weight: bold; }
 
 /* MODALS */
 .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 2000; align-items: center; justify-content: center; }
@@ -88,9 +104,15 @@ nav a:hover { color: var(--accent); }
 .font-btn.active { background: var(--accent); color: var(--bg); }
 .share-buttons { display: flex; gap: 0.5rem; }
 .share-btn { flex: 1; padding: 0.6rem; border-radius: 10px; border: none; cursor: pointer; font-weight: bold; }
+
 .tabs { display: flex; gap: 1rem; margin-bottom: 1rem; }
 .tab { padding: 0.6rem 1.2rem; border-radius: 10px; cursor: pointer; border: 1px solid var(--accent); }
 .tab.active { background: var(--accent); color: var(--bg); }
+
+.community-container { max-width: 700px; margin: 0 auto; padding: 1rem 5%; }
+.feed-post { background: var(--card); border-radius: 15px; padding: 1rem; margin: 1.5rem 0; }
+.feed-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+.feed-pic { width: 40px; height: 40px; border-radius: 50%; }
 </style>
 </head>
 <body>
@@ -103,6 +125,8 @@ nav a:hover { color: var(--accent); }
         <li><a onclick="showPage('homePage')">Home</a></li>
         <li><a onclick="showPage('reelsPage')">Reels</a></li>
         <li><a onclick="showPage('generatorPage')">Generator</a></li>
+        <li><a onclick="showPage('categoriesPage')">Categories</a></li>
+        <li><a onclick="showPage('communityPage')">Community</a></li>
         <li><a onclick="showPage('profilePage')">Profile</a></li>
     </ul>
     <div class="nav-right">
@@ -114,15 +138,17 @@ nav a:hover { color: var(--accent); }
     </div>
 </nav>
 
-<div id="homePage" class="page active"><section class="hero"><h2>Daily Inspiration</h2><p id="dailyQuote">"Loading quote..."</p><button class="btn" onclick="newDailyQuote()">New Quote</button></section></div>
+<div id="homePage" class="page active"><section class="hero"><h2>Daily Inspiration</h2><p id="dailyQuote">"Loading quote..."</p><button class="btn" onclick="newDailyQuote()">New Quote</button></section><h2 style="text-align:center;margin:3rem 0 1rem">Featured Quotes</h2><div class="featured-grid" id="featuredGrid"></div></div>
 
-<div id="reelsPage" class="page"><div class="reels-viewer" id="reelsViewer"></div></div>
+<div id="reelsPage" class="page reels-page"><div class="reels-viewer" id="reelsViewer"><p style="text-align:center;padding:2rem">No posts yet. Be the first to post! 🔥</p></div></div>
 
-<div id="generatorPage" class="page"><h2 style="text-align:center">Quote Generator</h2></div>
+<div id="generatorPage" class="page"><button class="back-btn" onclick="showPage('homePage')">← Back</button><h2 style="text-align:center">Quote Generator</h2><div class="generator-box"><h3>Pick a vibe</h3><select id="categorySelect"><option>Motivation</option><option>Life</option><option>Business</option><option>Love</option></select><button class="btn" onclick="generateQuote()">Generate Quote</button><p id="generatedQuote" style="margin-top:2rem;font-size:1.2rem;color:var(--accent)"></p></div></div>
 
-<div id="loginPage" class="page"><div class="card"><div class="tabs"><div class="tab active" onclick="switchTab('login', event)">Login</div><div class="tab" onclick="switchTab('signup', event)">Sign Up</div></div><div id="loginForm"><input type="email" id="loginEmail" placeholder="Email"><input type="password" id="loginPass" placeholder="Password"><button class="btn" style="width:100%" onclick="login()">Login</button></div><div id="signupForm" style="display:none"><input type="text" id="signupName" placeholder="Username"><input type="email" id="signupEmail" placeholder="Email"><input type="password" id="signupPass" placeholder="Password"><button class="btn" style="width:100%" onclick="signup()">Sign Up</button></div></div></div>
+<div id="categoriesPage" class="page"><button class="back-btn" onclick="showPage('homePage')">← Back</button><h2 style="text-align:center">Browse Categories</h2><div class="categories-grid"><div class="cat-card">Life</div><div class="cat-card">Motivation</div><div class="cat-card">Business</div><div class="cat-card">Love</div><div class="cat-card">Pain</div><div class="cat-card">Success</div></div></div>
 
-<!-- NEW PROFILE PAGE -->
+<div id="loginPage" class="page"><button class="back-btn" onclick="showPage('homePage')">← Back</button><div class="card"><div class="tabs"><div class="tab active" onclick="switchTab('login', event)">Login</div><div class="tab" onclick="switchTab('signup', event)">Sign Up</div></div><div id="loginForm"><h2>Welcome Back</h2><input type="email" id="loginEmail" placeholder="Email"><input type="password" id="loginPass" placeholder="Password"><button class="btn" style="width:100%" onclick="login()">Login</button></div><div id="signupForm" style="display:none"><h2>Create Account</h2><input type="text" id="signupName" placeholder="Username"><input type="email" id="signupEmail" placeholder="Email"><input type="password" id="signupPass" placeholder="Password"><button class="btn" style="width:100%" onclick="signup()">Sign Up</button></div></div></div>
+
+<!-- NEW PROFILE PAGE WITH ALL FEATURES -->
 <div id="profilePage" class="page"><div class="profile-container">
     <div class="profile-header-bg">
         <div class="profile-pic-wrap">
@@ -198,6 +224,8 @@ nav a:hover { color: var(--accent); }
     </div>
 </div>
 
+<div id="communityPage" class="page"><div class="community-container"><h2>Community</h2><div id="communityFeed"></div></div></div>
+
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
@@ -250,6 +278,7 @@ auth.onAuthStateChanged(user => {
         document.getElementById('authBtn').onclick = logout;
         loadUserData();
         loadPosts();
+        loadCommunityPosts();
     } else {
         currentUser = null;
         document.getElementById('authBtn').innerText = 'Login';
@@ -341,12 +370,14 @@ function shareQuote(platform){
 function loadPosts(){
     db.collection('posts').orderBy('time', 'desc').onSnapshot(snapshot => {
         document.getElementById('reelsViewer').innerHTML = '';
+        document.getElementById('featuredGrid').innerHTML = '';
         document.getElementById('profileGrid').innerHTML = '';
         let postCount = 0; let totalLikes = 0;
         snapshot.forEach(doc => {
             const p = doc.data();
             const id = doc.id;
-            document.getElementById('reelsViewer').innerHTML += `<div class="reel-full" style="background:${p.bg}"><div class="reel-text" style="font-family:${p.font}">${p.text}</div><div class="reel-sidebar"><div class="reel-action" onclick="likePost('${id}')"><div style="font-size:2rem">❤️</div><span>${p.likes}</span></div><div class="reel-action" onclick="sharePost('${id}')"><div style="font-size:2rem">🔄</div><span>${p.shares}</span></div></div></div>`;
+            document.getElementById('reelsViewer').innerHTML += `<div class="reel-full" style="background:${p.bg}"><div class="reel-text" style="font-family:${p.font}">${p.text}</div><div class="reel-sidebar"><div class="reel-action" onclick="likePost('${id}')"><div style="font-size:2rem">❤️</div><span>${p.likes}</span></div><div class="reel-action" onclick="sharePost('${id}')"><div style="font-size:2rem">🔄</div><span>${p.shares}</span></div></div><div class="reel-bottom"><img src="${p.authorPic}" class="reel-profile"><div><b>${p.authorName}</b></div></div></div>`;
+            document.getElementById('featuredGrid').innerHTML += `<div class="quote-card"><p>"${p.text}"</p><p style="color:var(--muted)">- ${p.authorName}</p></div>`;
             if(p.authorId === currentUser?.uid){
                 document.getElementById('profileGrid').innerHTML += `<div class="profile-post" style="background:${p.bg};font-family:${p.font}">${p.text}<br><small>❤️${p.likes} 🔄${p.shares}</small></div>`;
                 postCount++; totalLikes += p.likes;
@@ -358,13 +389,15 @@ function loadPosts(){
 }
 function likePost(id){ db.collection('posts').doc(id).update({likes: firebase.firestore.FieldValue.increment(1)}); }
 function sharePost(id){ db.collection('posts').doc(id).update({shares: firebase.firestore.FieldValue.increment(1)}); }
+function loadCommunityPosts(){ db.collection('posts').orderBy('time', 'desc').onSnapshot(snapshot => { const feed = document.getElementById('communityFeed'); feed.innerHTML = ''; snapshot.forEach(doc => { const p = doc.data(); feed.innerHTML += `<div class="feed-post"><div class="feed-header"><img src="${p.authorPic}" class="feed-pic"><b>${p.authorName}</b></div><p>${p.text}</p></div>`; }); }); }
 
 // UTILS
 function newDailyQuote(){ const q = ["Discipline > Motivation","Start now","Pain is temporary"][Math.floor(Math.random()*3)]; document.getElementById('dailyQuote').innerText = `"${q}"`; }
 newDailyQuote();
-function showPage(pageId){ document.querySelectorAll('.page').forEach(page => page.classList.remove('active')); document.getElementById(pageId).classList.add('active'); }
+function generateQuote(){ document.getElementById('generatedQuote').innerText = `"The way to get started is to quit talking and begin doing."`; }
+function showPage(pageId){ document.querySelectorAll('.page').forEach(page => page.classList.remove('active')); document.getElementById(pageId).classList.add('active'); closeMenu(); window.scrollTo(0,0); }
 function switchTab(tab, e){ document.querySelectorAll('.tab').forEach(t => t.classList.remove('active')); e.target.classList.add('active'); document.getElementById('loginForm').style.display = tab === 'login'? 'block' : 'none'; document.getElementById('signupForm').style.display = tab === 'signup'? 'block' : 'none'; }
-const navMenu = document.getElementById('navMenu'); const hamburger = document.querySelector('.hamburger'); function toggleMenu(){ navMenu.classList.toggle('active'); hamburger.classList.toggle('active'); }
+const navMenu = document.getElementById('navMenu'); const hamburger = document.querySelector('.hamburger'); function toggleMenu(){ navMenu.classList.toggle('active'); hamburger.classList.toggle('active'); } function closeMenu(){ navMenu.classList.remove('active'); hamburger.classList.remove('active'); }
 const toggle = document.getElementById('themeToggle'); if(localStorage.getItem('theme')==='light') document.body.classList.add('light'); toggle.innerText = document.body.classList.contains('light')? '🌙' : '☀️'; toggle.onclick = () => { document.body.classList.toggle('light'); const theme = document.body.classList.contains('light')? 'light' : 'dark'; localStorage.setItem('theme', theme); toggle.innerText = theme === 'light'? '🌙' : '☀️'; }
 </script>
 </body>
