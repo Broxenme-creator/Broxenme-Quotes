@@ -53,7 +53,6 @@ body {
     border: 1px solid rgba(255,255,255,0.1);
 }
 
-/* NAVIGATION */
 nav {
     display: flex;
     justify-content: space-between;
@@ -155,7 +154,6 @@ nav a:hover {
     color: var(--text);
 }
 
-/* PAGES */
 .page {
     display: none;
     min-height: 85vh;
@@ -168,17 +166,10 @@ nav a:hover {
 }
 
 @keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(15px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
-/* HERO / DAILY INSPIRATION */
 .hero {
     display: flex;
     flex-direction: column;
@@ -235,7 +226,6 @@ nav a:hover {
     font-style: italic;
 }
 
-/* BUTTONS */
 .btn {
     background: var(--accent);
     color: #000;
@@ -315,7 +305,6 @@ label {
     font-size: 0.9rem;
 }
 
-/* REELS PAGE */
 .reels-container {
     max-width: 500px;
     margin: 0 auto;
@@ -507,7 +496,6 @@ label {
     50% { transform: scale(1.2); }
 }
 
-/* COMMENTS PANEL */
 .comments-panel {
     position: absolute;
     bottom: 0;
@@ -600,7 +588,6 @@ label {
     font-size: 1rem;
 }
 
-/* PROFILE PAGE */
 .profile-wrapper {
     max-width: 800px;
     margin: 1rem auto;
@@ -746,7 +733,6 @@ label {
     transform: scale(1.05);
 }
 
-/* MODALS */
 .modal {
     display: none;
     position: fixed;
@@ -789,7 +775,6 @@ label {
     color: var(--accent);
 }
 
-/* CREATE POST MODAL */
 .quote-preview {
     width: 100%;
     aspect-ratio: 1;
@@ -882,7 +867,6 @@ label {
     border-color: var(--accent);
 }
 
-/* COMMUNITY PAGE */
 .community-container {
     max-width: 650px;
     margin: 0 auto;
@@ -958,7 +942,6 @@ label {
     color: var(--accent);
 }
 
-/* CHAT */
 .chat-item {
     display: flex;
     gap: 1rem;
@@ -1044,7 +1027,6 @@ label {
     outline: none;
 }
 
-/* TOASTS */
 .toast-container {
     position: fixed;
     top: 80px;
@@ -1069,24 +1051,15 @@ label {
     font-size: 0.9rem;
 }
 
-.toast.success {
-    background: rgba(46, 213, 115, 0.95);
-}
-
-.toast.error {
-    background: rgba(255, 71, 87, 0.95);
-}
-
-.toast.info {
-    background: rgba(0, 122, 122, 0.95);
-}
+.toast.success { background: rgba(46, 213, 115, 0.95); }
+.toast.error { background: rgba(255, 71, 87, 0.95); }
+.toast.info { background: rgba(0, 122, 122, 0.95); }
 
 @keyframes slideInRight {
     from { transform: translateX(100%); opacity: 0; }
     to { transform: translateX(0); opacity: 1; }
 }
 
-/* LOADING */
 .spinner {
     border: 3px solid rgba(255,255,255,0.1);
     border-top: 3px solid var(--accent);
@@ -1097,11 +1070,8 @@ label {
     margin: 1rem auto;
 }
 
-@keyframes spin {
-    to { transform: rotate(360deg); }
-}
+@keyframes spin { to { transform: rotate(360deg); } }
 
-/* RESPONSIVE DESIGN */
 @media (max-width: 768px) {
     nav ul {
         position: fixed;
@@ -1118,101 +1088,34 @@ label {
         font-size: 1.2rem;
         z-index: 999;
     }
-
-    nav ul.active {
-        left: 0;
-    }
-
-    .hamburger {
-        display: block;
-    }
-
-    .profile-stats {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .profile-grid {
-        grid-template-columns: repeat(3, 1fr);
-    }
-
-    .reel-full {
-        height: calc(100vh - 160px);
-        border-radius: 12px;
-    }
-
-    .reels-viewer {
-        height: calc(100vh - 160px);
-    }
-
-    .reel-sidebar {
-        right: 0.5rem;
-        bottom: 120px;
-        gap: 1.2rem;
-    }
-
-    .reel-action {
-        font-size: 1.4rem;
-    }
-
-    .hero {
-        margin: 0.5rem;
-        border-radius: 16px;
-        min-height: 50vh;
-    }
-
-    .modal-content {
-        padding: 1.5rem;
-        border-radius: 20px;
-    }
-
-    .bg-selector {
-        grid-template-columns: repeat(3, 1fr);
-    }
-
-    .font-selector {
-        grid-template-columns: repeat(2, 1fr);
-    }
+    nav ul.active { left: 0; }
+    .hamburger { display: block; }
+    .profile-stats { grid-template-columns: repeat(2, 1fr); }
+    .profile-grid { grid-template-columns: repeat(3, 1fr); }
+    .reel-full { height: calc(100vh - 160px); border-radius: 12px; }
+    .reels-viewer { height: calc(100vh - 160px); }
+    .reel-sidebar { right: 0.5rem; bottom: 120px; gap: 1.2rem; }
+    .reel-action { font-size: 1.4rem; }
+    .hero { margin: 0.5rem; border-radius: 16px; min-height: 50vh; }
+    .modal-content { padding: 1.5rem; border-radius: 20px; }
+    .bg-selector { grid-template-columns: repeat(3, 1fr); }
+    .font-selector { grid-template-columns: repeat(2, 1fr); }
 }
 
 @media (max-width: 480px) {
-    .profile-stats {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 0.5rem;
-    }
-
-    .profile-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .profile-actions {
-        flex-direction: column;
-    }
-
-    .reel-full {
-        max-width: 100%;
-        border-radius: 0;
-        height: calc(100vh - 130px);
-        margin-bottom: 0;
-    }
-
-    .reels-viewer {
-        height: calc(100vh - 130px);
-    }
-
-    .hero {
-        margin: 0;
-        border-radius: 0;
-        min-height: 40vh;
-    }
+    .profile-stats { grid-template-columns: repeat(2, 1fr); gap: 0.5rem; }
+    .profile-grid { grid-template-columns: repeat(2, 1fr); }
+    .profile-actions { flex-direction: column; }
+    .reel-full { max-width: 100%; border-radius: 0; height: calc(100vh - 130px); margin-bottom: 0; }
+    .reels-viewer { height: calc(100vh - 130px); }
+    .hero { margin: 0; border-radius: 0; min-height: 40vh; }
 }
 </style>
 </head>
 <body>
 
-<!-- TOAST CONTAINER -->
 <div class="toast-container" id="toastContainer"></div>
 
-<!-- NAVIGATION -->
 <nav>
     <div class="nav-logo" onclick="showPage('homePage')">
         <div class="icon"><i class="fa fa-quote-right"></i></div>
@@ -1232,7 +1135,6 @@ label {
     </div>
 </nav>
 
-<!-- HOME PAGE -->
 <div id="homePage" class="page active">
     <section class="hero" id="heroSection">
         <h2><i class="fa fa-sun"></i> Daily Inspiration</h2>
@@ -1244,7 +1146,6 @@ label {
     </section>
 </div>
 
-<!-- REELS PAGE -->
 <div id="reelsPage" class="page">
     <div class="reels-container">
         <div class="reels-search">
@@ -1259,7 +1160,6 @@ label {
     </div>
 </div>
 
-<!-- GENERATOR PAGE -->
 <div id="generatorPage" class="page">
     <div class="card glass" style="text-align:center">
         <h2><i class="fa fa-wand-magic-sparkles"></i> Quote Generator</h2>
@@ -1282,7 +1182,6 @@ label {
     </div>
 </div>
 
-<!-- LOGIN PAGE -->
 <div id="loginPage" class="page">
     <div class="card glass">
         <h2 style="text-align:center">Welcome to Broxenme</h2>
@@ -1294,7 +1193,6 @@ label {
     </div>
 </div>
 
-<!-- PROFILE PAGE -->
 <div id="profilePage" class="page">
     <div class="profile-wrapper glass">
         <div class="profile-header" id="profileHeaderBg">
@@ -1333,7 +1231,6 @@ label {
     </div>
 </div>
 
-<!-- CREATE POST MODAL -->
 <div id="createPostModal" class="modal">
     <div class="modal-content glass">
         <div class="modal-header">
@@ -1378,7 +1275,6 @@ label {
     </div>
 </div>
 
-<!-- EDIT PROFILE MODAL -->
 <div id="editProfileModal" class="modal">
     <div class="modal-content glass">
         <div class="modal-header">
@@ -1409,7 +1305,6 @@ label {
     </div>
 </div>
 
-<!-- COMMUNITY PAGE -->
 <div id="communityPage" class="page">
     <div class="community-container">
         <div class="community-tabs">
@@ -1437,7 +1332,6 @@ label {
     </div>
 </div>
 
-<!-- CHAT WINDOW -->
 <div id="chatWindow" class="chat-window">
     <div class="chat-header">
         <button onclick="closeChat()" style="background:none;border:none;color:var(--text);font-size:1.2rem;cursor:pointer">
@@ -1474,55 +1368,9 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 const auth = firebase.auth();
 
-// Enable offline persistence
 db.enablePersistence().catch(err => console.log('Persistence:', err.code));
 
-// ==================== FREE WALLPAPER BACKGROUNDS ====================
-const wallpapers = [
-    'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800',
-    'https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=800',
-    'https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800',
-    'https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=800',
-    'https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=800',
-    'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800',
-    'https://images.unsplash.com/photo-1519681393784-d120267933ba?w=800',
-    'https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=800'
-];
-
-function getRandomWallpaper() {
-    return wallpapers[Math.floor(Math.random() * wallpapers.length)];
-}
-
-function setRandomHeroBackground() {
-    const hero = document.getElementById('heroSection');
-    if(hero) {
-        hero.style.backgroundImage = `url(${getRandomWallpaper()})`;
-    }
-}
-
-function setRandomProfileBackground() {
-    const header = document.getElementById('profileHeaderBg');
-    if(header) {
-        header.style.backgroundImage = `url(${getRandomWallpaper()})`;
-    }
-}
-
-// Change backgrounds periodically
-setInterval(setRandomHeroBackground, 30000); // Every 30 seconds
-setInterval(setRandomProfileBackground, 60000); // Every 60 seconds
-
-// ==================== GLOBAL STATE ====================
-let currentUser = null;
-let selectedBg = gradients[0];
-let selectedFont = 'Poppins';
-let selectedTagsArr = [];
-let currentChat = null;
-let allPosts = [];
-let unsubscribers = [];
-let searchTimeout = null;
-
-const fonts = ['Poppins','Georgia','Arial','Impact','Courier New','Trebuchet MS','Verdana','Times New Roman','Comic Sans MS','Roboto'];
-
+// ==================== CONSTANTS (DEFINED FIRST!) ====================
 const gradients = [
     'linear-gradient(135deg, #667eea, #764ba2)',
     'linear-gradient(135deg, #f093fb, #f5576c)',
@@ -1538,6 +1386,40 @@ const gradients = [
     'linear-gradient(135deg, #00ff88, #00d4ff)'
 ];
 
+const fonts = ['Poppins','Georgia','Arial','Impact','Courier New','Trebuchet MS','Verdana','Times New Roman','Comic Sans MS','Roboto'];
+
+const wallpapers = [
+    'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800',
+    'https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=800',
+    'https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800',
+    'https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=800',
+    'https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=800',
+    'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800',
+    'https://images.unsplash.com/photo-1519681393784-d120267933ba?w=800',
+    'https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=800'
+];
+
+const fallbackQuotes = [
+    { content: "The only way to do great work is to love what you do.", author: "Steve Jobs" },
+    { content: "In the middle of difficulty lies opportunity.", author: "Albert Einstein" },
+    { content: "Believe you can and you're halfway there.", author: "Theodore Roosevelt" },
+    { content: "Success is not final, failure is not fatal: it is the courage to continue that counts.", author: "Winston Churchill" },
+    { content: "The future belongs to those who believe in the beauty of their dreams.", author: "Eleanor Roosevelt" },
+    { content: "It does not matter how slowly you go as long as you do not stop.", author: "Confucius" },
+    { content: "Everything you've ever wanted is on the other side of fear.", author: "George Addair" },
+    { content: "Happiness is not something ready made. It comes from your own actions.", author: "Dalai Lama" }
+];
+
+// ==================== GLOBAL STATE (NOW gradients EXISTS!) ====================
+let currentUser = null;
+let selectedBg = gradients[0];
+let selectedFont = 'Poppins';
+let selectedTagsArr = [];
+let currentChat = null;
+let allPosts = [];
+let unsubscribers = [];
+let searchTimeout = null;
+
 // Initialize UI
 document.getElementById('fontPicker').innerHTML = fonts.map(f => 
     `<button class="font-btn" style="font-family:${f}" onclick="selectFont(this, '${f}')">${f.split(' ')[0]}</button>`
@@ -1546,10 +1428,6 @@ document.getElementById('fontPicker').innerHTML = fonts.map(f =>
 document.getElementById('gradientPicker').innerHTML = gradients.map(g => 
     `<div class="bg-option" style="background:${g}" onclick="selectBg(this, '${g}')"></div>`
 ).join('');
-
-// Set initial backgrounds
-setRandomHeroBackground();
-setRandomProfileBackground();
 
 // ==================== UTILITY FUNCTIONS ====================
 function showToast(msg, type = 'info') {
@@ -1577,16 +1455,24 @@ function cleanupListeners() {
     unsubscribers = [];
 }
 
-function timeAgo(timestamp) {
-    if(!timestamp) return '';
-    const now = new Date();
-    const past = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
-    const diff = Math.floor((now - past) / 1000);
-    if(diff < 60) return 'just now';
-    if(diff < 3600) return `${Math.floor(diff/60)}m ago`;
-    if(diff < 86400) return `${Math.floor(diff/3600)}h ago`;
-    return `${Math.floor(diff/86400)}d ago`;
+function getRandomWallpaper() {
+    return wallpapers[Math.floor(Math.random() * wallpapers.length)];
 }
+
+function setRandomHeroBackground() {
+    const hero = document.getElementById('heroSection');
+    if(hero) hero.style.backgroundImage = `url(${getRandomWallpaper()})`;
+}
+
+function setRandomProfileBackground() {
+    const header = document.getElementById('profileHeaderBg');
+    if(header) header.style.backgroundImage = `url(${getRandomWallpaper()})`;
+}
+
+setRandomHeroBackground();
+setRandomProfileBackground();
+setInterval(setRandomHeroBackground, 30000);
+setInterval(setRandomProfileBackground, 60000);
 
 // ==================== AUTH ====================
 auth.onAuthStateChanged(user => {
@@ -1660,18 +1546,7 @@ function logout() {
     auth.signOut().then(() => showToast('Logged out', 'info'));
 }
 
-// ==================== DAILY QUOTE (WITH API + FALLBACKS) ====================
-const fallbackQuotes = [
-    { content: "The only way to do great work is to love what you do.", author: "Steve Jobs" },
-    { content: "In the middle of difficulty lies opportunity.", author: "Albert Einstein" },
-    { content: "Believe you can and you're halfway there.", author: "Theodore Roosevelt" },
-    { content: "Success is not final, failure is not fatal: it is the courage to continue that counts.", author: "Winston Churchill" },
-    { content: "The future belongs to those who believe in the beauty of their dreams.", author: "Eleanor Roosevelt" },
-    { content: "It does not matter how slowly you go as long as you do not stop.", author: "Confucius" },
-    { content: "Everything you've ever wanted is on the other side of fear.", author: "George Addair" },
-    { content: "Happiness is not something ready made. It comes from your own actions.", author: "Dalai Lama" }
-];
-
+// ==================== DAILY QUOTE ====================
 async function newDailyQuote() {
     const quoteEl = document.getElementById('dailyQuote');
     const authorEl = document.getElementById('quoteAuthor');
@@ -1681,48 +1556,19 @@ async function newDailyQuote() {
     try {
         const controller = new AbortController();
         setTimeout(() => controller.abort(), 5000);
-        
         const res = await fetch('https://api.quotable.io/random', { signal: controller.signal });
         const data = await res.json();
         quoteEl.innerText = `"${data.content}"`;
         authorEl.innerText = `— ${data.author}`;
-        showToast('New quote loaded! ✨', 'success');
     } catch(e) {
         const fallback = fallbackQuotes[Math.floor(Math.random() * fallbackQuotes.length)];
         quoteEl.innerText = `"${fallback.content}"`;
         authorEl.innerText = `— ${fallback.author}`;
     }
 }
+newDailyQuote();
 
 // ==================== QUOTE GENERATOR ====================
-const categoryQuotes = {
-    motivation: [
-        { text: "Push yourself, because no one else is going to do it for you.", author: "Unknown" },
-        { text: "Don't stop until you're proud.", author: "Unknown" },
-        { text: "The harder you work, the luckier you get.", author: "Gary Player" }
-    ],
-    life: [
-        { text: "Life is what happens when you're busy making other plans.", author: "John Lennon" },
-        { text: "The purpose of our lives is to be happy.", author: "Dalai Lama" }
-    ],
-    business: [
-        { text: "The way to get started is to quit talking and begin doing.", author: "Walt Disney" },
-        { text: "Your most unhappy customers are your greatest source of learning.", author: "Bill Gates" }
-    ],
-    love: [
-        { text: "The best thing to hold onto in life is each other.", author: "Audrey Hepburn" },
-        { text: "Love is composed of a single soul inhabiting two bodies.", author: "Aristotle" }
-    ],
-    success: [
-        { text: "Success usually comes to those who are too busy to be looking for it.", author: "Henry David Thoreau" },
-        { text: "Opportunities don't happen. You create them.", author: "Chris Grosser" }
-    ],
-    wisdom: [
-        { text: "The only true wisdom is in knowing you know nothing.", author: "Socrates" },
-        { text: "Turn your wounds into wisdom.", author: "Oprah Winfrey" }
-    ]
-};
-
 async function generateQuote() {
     const cat = document.getElementById('categorySelect').value;
     const quoteEl = document.getElementById('generatedQuote');
@@ -1731,14 +1577,12 @@ async function generateQuote() {
     try {
         const controller = new AbortController();
         setTimeout(() => controller.abort(), 5000);
-        
         const res = await fetch(`https://api.quotable.io/random?tags=${cat}`, { signal: controller.signal });
         const data = await res.json();
         quoteEl.innerHTML = `"${data.content}"<br><small style="color:var(--muted)">— ${data.author}</small>`;
     } catch(e) {
-        const quotes = categoryQuotes[cat] || categoryQuotes.motivation;
-        const q = quotes[Math.floor(Math.random() * quotes.length)];
-        quoteEl.innerHTML = `"${q.text}"<br><small style="color:var(--muted)">— ${q.author}</small>`;
+        const fallback = fallbackQuotes[Math.floor(Math.random() * fallbackQuotes.length)];
+        quoteEl.innerHTML = `"${fallback.content}"<br><small style="color:var(--muted)">— ${fallback.author}</small>`;
     }
 }
 
@@ -1749,7 +1593,6 @@ async function uploadBgImage(e) {
     if(file.size > 5 * 1024 * 1024) return showToast('Image must be under 5MB', 'error');
     
     showToast('Uploading... <i class="fa fa-spinner fa-spin"></i>', 'info');
-    
     const formData = new FormData();
     formData.append("image", file);
     
@@ -1801,9 +1644,8 @@ function selectSong(s) {
 async function likePost(id) {
     if(!currentUser) return showToast('Login to like posts!', 'error');
     
-    const userLikeRef = db.collection('likes').doc(currentUser.uid + '_' + id);
-    
     try {
+        const userLikeRef = db.collection('likes').doc(currentUser.uid + '_' + id);
         const doc = await userLikeRef.get();
         const postRef = db.collection('posts').doc(id);
         
@@ -1858,10 +1700,8 @@ function sharePost(postId) {
     if(!post) return;
     
     const text = `"${post.text}" — via BROXENME`;
-    const url = window.location.href;
-    
     if(navigator.share) {
-        navigator.share({ title: 'Check this quote!', text, url }).catch(() => copyText(text));
+        navigator.share({ title: 'Check this quote!', text }).catch(() => copyText(text));
     } else {
         copyText(text);
     }
@@ -1895,7 +1735,7 @@ async function savePost(postId) {
     }
 }
 
-// ==================== LOAD POSTS (WITH ALL SYSTEMS) ====================
+// ==================== LOAD POSTS ====================
 function loadPosts() {
     if(!currentUser) return;
     cleanupListeners();
@@ -1922,12 +1762,8 @@ function loadPosts() {
                     const p = doc.data();
                     p.id = doc.id;
                     allPosts.push(p);
+                    document.getElementById('reelsViewer').innerHTML += buildReelHTML(p, doc.id);
                     
-                    // Build reel HTML
-                    const reelHTML = buildReelHTML(p, doc.id);
-                    document.getElementById('reelsViewer').innerHTML += reelHTML;
-                    
-                    // Profile grid
                     if(p.authorId === currentUser?.uid) {
                         document.getElementById('profileGrid').innerHTML += `
                             <div class="profile-grid-item" style="background:${p.bg};font-family:${p.font}">
@@ -1937,22 +1773,17 @@ function loadPosts() {
                         totalLikes += (p.likes || 0);
                     }
                     
-                    // Load comments for this post
                     loadCommentsForPost(doc.id);
-                    
-                    // Check if user liked this post
                     checkUserLike(doc.id);
                 });
                 
                 document.getElementById('postCount').innerText = postCount;
                 document.getElementById('totalLikes').innerText = totalLikes;
-                
             } catch(e) {
                 console.error('Load posts error:', e);
             }
         }, error => {
             console.error('Posts listener error:', error);
-            showToast('Connection lost. Retrying...', 'error');
         });
     
     unsubscribers.push(unsubscribe);
@@ -1967,37 +1798,27 @@ function buildReelHTML(p, id) {
     <div class="reel-full" style="background:${p.bg}">
         <div class="reel-overlay"></div>
         <div class="reel-content">
-            <div class="reel-tags">
-                ${(p.tags || []).map(t => `<span class="reel-tag">#${sanitize(t)}</span>`).join('')}
-            </div>
+            <div class="reel-tags">${(p.tags || []).map(t => `<span class="reel-tag">#${sanitize(t)}</span>`).join('')}</div>
             <div class="reel-text" style="font-family:${p.font || 'Poppins'}">${safeText}</div>
-            
             <div class="reel-sidebar">
                 <div class="reel-action" onclick="likePost('${id}')" id="likeBtn_${id}">
-                    <i class="fa fa-heart"></i>
-                    <span id="likes_${id}">${p.likes || 0}</span>
+                    <i class="fa fa-heart"></i><span id="likes_${id}">${p.likes || 0}</span>
                 </div>
                 <div class="reel-action" onclick="toggleComments('${id}')">
-                    <i class="fa fa-comment"></i>
-                    <span>Comment</span>
+                    <i class="fa fa-comment"></i><span>Comment</span>
                 </div>
                 <div class="reel-action" onclick="sharePost('${id}')">
-                    <i class="fa fa-share-nodes"></i>
-                    <span>Share</span>
+                    <i class="fa fa-share-nodes"></i><span>Share</span>
                 </div>
                 <div class="reel-action" onclick="savePost('${id}')">
-                    <i class="fa fa-bookmark"></i>
-                    <span>Save</span>
+                    <i class="fa fa-bookmark"></i><span>Save</span>
                 </div>
             </div>
-            
             <div class="reel-bottom">
                 <img src="${p.authorPic || 'https://placehold.co/38'}" class="reel-profile" onerror="this.src='https://placehold.co/38'">
                 <span class="reel-username">@${safeAuthor}</span>
             </div>
-            
             ${safeSong ? `<div class="reel-song"><i class="fa fa-music"></i> ${safeSong}</div>` : ''}
-            
             <div class="comments-panel" id="comments_${id}">
                 <div class="comments-list" id="commentList_${id}"></div>
                 <div class="comment-input-area">
@@ -2010,8 +1831,7 @@ function buildReelHTML(p, id) {
 }
 
 function loadCommentsForPost(postId) {
-    db.collection('posts').doc(postId).collection('comments')
-        .orderBy('time', 'asc')
+    db.collection('posts').doc(postId).collection('comments').orderBy('time', 'asc')
         .onSnapshot(snap => {
             const list = document.getElementById('commentList_' + postId);
             if(!list) return;
@@ -2024,7 +1844,7 @@ function loadCommentsForPost(postId) {
                     const c = doc.data();
                     list.innerHTML += `
                         <div class="comment-item">
-                            <img src="https://placehold.co/32" class="comment-avatar" onerror="this.src='https://placehold.co/32'">
+                            <img src="https://placehold.co/32" class="comment-avatar">
                             <div class="comment-body">
                                 <div class="comment-author">${sanitize(c.author || 'User')}</div>
                                 <div class="comment-text">${sanitize(c.text)}</div>
@@ -2054,11 +1874,7 @@ function updatePreview() {
 
 function toggleTag(el, tag) {
     el.classList.toggle('active');
-    if(selectedTagsArr.includes(tag)) {
-        selectedTagsArr = selectedTagsArr.filter(t => t !== tag);
-    } else {
-        selectedTagsArr.push(tag);
-    }
+    selectedTagsArr.includes(tag) ? selectedTagsArr = selectedTagsArr.filter(t => t !== tag) : selectedTagsArr.push(tag);
 }
 
 function selectBg(el, bg) {
@@ -2088,22 +1904,16 @@ function closeCreatePostModal() {
 function submitPost() {
     const text = document.getElementById('newPostText').value.trim();
     const song = document.getElementById('songSearch').value.trim();
-    
     if(!text) return showToast('Write a quote first!', 'error');
     if(text.length > 500) return showToast('Quote too long (max 500 chars)', 'error');
     
     db.collection('posts').add({
-        text,
-        bg: selectedBg,
-        font: selectedFont,
-        tags: selectedTagsArr,
-        song,
+        text, bg: selectedBg, font: selectedFont, tags: selectedTagsArr, song,
         authorId: currentUser.uid,
         authorName: currentUser.email.split('@')[0],
         authorPic: currentUser.photoURL || 'https://placehold.co/38',
         time: firebase.firestore.FieldValue.serverTimestamp(),
-        likes: 0,
-        shares: 0
+        likes: 0, shares: 0
     }).then(() => {
         closeCreatePostModal();
         showToast('Quote posted! 🎉', 'success');
@@ -2132,42 +1942,38 @@ function closeEditProfile() {
 
 function saveProfile() {
     const name = document.getElementById('editName').value.trim();
-    const location = document.getElementById('editLocation').value.trim();
-    const bio = document.getElementById('editBio').value.trim();
-    
     if(!name) return showToast('Name is required', 'error');
     
-    db.collection('users').doc(currentUser.uid).update({ name, location, bio })
-        .then(() => {
-            loadUserData();
-            closeEditProfile();
-            showToast('Profile updated! ✅', 'success');
-        })
-        .catch(e => showToast('Update failed', 'error'));
+    db.collection('users').doc(currentUser.uid).update({
+        name,
+        location: document.getElementById('editLocation').value.trim(),
+        bio: document.getElementById('editBio').value.trim()
+    }).then(() => {
+        loadUserData();
+        closeEditProfile();
+        showToast('Profile updated! ✅', 'success');
+    }).catch(e => showToast('Update failed', 'error'));
 }
 
 function loadUserData() {
     if(!currentUser) return;
-    db.collection('users').doc(currentUser.uid).get()
-        .then(doc => {
-            if(doc.exists) {
-                const data = doc.data();
-                document.getElementById('profileName').innerText = data.name;
-                document.getElementById('profileBio').innerText = data.bio || '';
-                document.getElementById('profileLocation').innerText = data.location || 'Harare, ZW';
-                document.getElementById('followerCount').innerText = data.followers || 0;
-                document.getElementById('followingCount').innerText = data.following || 0;
-                if(data.photoURL) {
-                    document.getElementById('profilePic').src = data.photoURL;
-                    document.getElementById('editProfilePicPreview').src = data.photoURL;
-                }
-                setRandomProfileBackground();
+    db.collection('users').doc(currentUser.uid).get().then(doc => {
+        if(doc.exists) {
+            const data = doc.data();
+            document.getElementById('profileName').innerText = data.name;
+            document.getElementById('profileBio').innerText = data.bio || '';
+            document.getElementById('profileLocation').innerText = data.location || 'Harare, ZW';
+            document.getElementById('followerCount').innerText = data.followers || 0;
+            document.getElementById('followingCount').innerText = data.following || 0;
+            if(data.photoURL) {
+                document.getElementById('profilePic').src = data.photoURL;
+                document.getElementById('editProfilePicPreview').src = data.photoURL;
             }
-        })
-        .catch(e => console.error('Load user error:', e));
+            setRandomProfileBackground();
+        }
+    }).catch(e => console.error('Load user error:', e));
 }
 
-// Profile photo upload
 document.getElementById('profileUpload').addEventListener('change', async (e) => {
     const file = e.target.files[0];
     if(!file || !currentUser) return;
@@ -2179,8 +1985,7 @@ document.getElementById('profileUpload').addEventListener('change', async (e) =>
     
     try {
         const res = await fetch("https://api.imgbb.com/1/upload?key=78883b1360bb85b347b444b05aa56826", {
-            method: "POST",
-            body: formData
+            method: "POST", body: formData
         });
         const data = await res.json();
         if(data.success) {
@@ -2195,83 +2000,55 @@ document.getElementById('profileUpload').addEventListener('change', async (e) =>
     }
 });
 
-// ==================== COMMUNITY FEED ====================
+// ==================== COMMUNITY ====================
 function loadCommunityFeed() {
-    db.collection('posts').orderBy('time', 'desc').limit(30)
-        .onSnapshot(snapshot => {
-            document.getElementById('communityFeed').innerHTML = '';
-            
-            if(snapshot.empty) {
-                document.getElementById('communityFeed').innerHTML = `
-                    <div style="text-align:center;padding:3rem;color:var(--muted)">
-                        <i class="fa fa-users" style="font-size:3rem;display:block;margin-bottom:1rem"></i>
-                        <p>No posts in the community yet</p>
-                    </div>`;
-            }
-            
-            snapshot.forEach(doc => {
-                const p = doc.data();
-                document.getElementById('communityFeed').innerHTML += `
-                <div class="feed-card glass">
-                    <div class="feed-header">
-                        <img src="${p.authorPic || 'https://placehold.co/40'}" class="feed-avatar" onerror="this.src='https://placehold.co/40'">
-                        <div>
-                            <b>${sanitize(p.authorName || 'Anonymous')}</b>
-                            <div style="font-size:0.75rem;color:var(--muted)">${timeAgo(p.time)}</div>
-                        </div>
-                    </div>
-                    <div class="feed-content">${sanitize(p.text)}</div>
-                    <div class="feed-actions">
-                        <span onclick="likePost('${doc.id}')"><i class="fa fa-heart"></i> ${p.likes || 0}</span>
-                        <span onclick="sharePost('${doc.id}')"><i class="fa fa-share"></i> Share</span>
-                        <span><i class="fa fa-tag"></i> ${(p.tags || []).slice(0, 2).join(', ') || 'none'}</span>
-                    </div>
-                </div>`;
-            });
+    db.collection('posts').orderBy('time', 'desc').limit(30).onSnapshot(snapshot => {
+        document.getElementById('communityFeed').innerHTML = '';
+        if(snapshot.empty) {
+            document.getElementById('communityFeed').innerHTML = '<div style="text-align:center;padding:3rem;color:var(--muted)"><i class="fa fa-users" style="font-size:3rem;display:block;margin-bottom:1rem"></i><p>No posts yet</p></div>';
+        }
+        snapshot.forEach(doc => {
+            const p = doc.data();
+            document.getElementById('communityFeed').innerHTML += `
+            <div class="feed-card glass">
+                <div class="feed-header">
+                    <img src="${p.authorPic || 'https://placehold.co/40'}" class="feed-avatar" onerror="this.src='https://placehold.co/40'">
+                    <div><b>${sanitize(p.authorName || 'Anonymous')}</b></div>
+                </div>
+                <div class="feed-content">${sanitize(p.text)}</div>
+                <div class="feed-actions">
+                    <span onclick="likePost('${doc.id}')"><i class="fa fa-heart"></i> ${p.likes || 0}</span>
+                    <span onclick="sharePost('${doc.id}')"><i class="fa fa-share"></i> Share</span>
+                </div>
+            </div>`;
         });
+    });
 }
 
-// ==================== CHAT SYSTEM ====================
+// ==================== CHAT ====================
 function openNewChat() {
     const username = prompt('Enter @username to chat with:');
     if(!username) return;
-    
     db.collection('chats').add({
-        users: [currentUser.uid],
-        name: username,
-        pic: 'https://placehold.co/50',
-        lastMsg: '',
+        users: [currentUser.uid], name: username, pic: 'https://placehold.co/50', lastMsg: '',
         time: firebase.firestore.FieldValue.serverTimestamp()
     }).then(() => showToast('Chat created!', 'success'));
 }
 
 function loadChats() {
     if(!currentUser) return;
-    
-    db.collection('chats')
-        .where('users', 'array-contains', currentUser.uid)
-        .orderBy('time', 'desc')
+    db.collection('chats').where('users', 'array-contains', currentUser.uid).orderBy('time', 'desc')
         .onSnapshot(snap => {
             document.getElementById('chatList').innerHTML = '';
-            
             if(snap.empty) {
-                document.getElementById('chatList').innerHTML = `
-                    <p style="text-align:center;padding:2rem;color:var(--muted)">
-                        <i class="fa fa-comments" style="font-size:3rem;display:block;margin-bottom:1rem"></i>
-                        No conversations yet
-                    </p>`;
+                document.getElementById('chatList').innerHTML = '<p style="text-align:center;padding:2rem;color:var(--muted)">No conversations yet</p>';
             }
-            
             snap.forEach(doc => {
                 const c = doc.data();
                 document.getElementById('chatList').innerHTML += `
                 <div class="chat-item" onclick="openChat('${doc.id}', '${sanitize(c.name)}', '${c.pic}')">
-                    <img src="${c.pic}" style="width:50px;height:50px;border-radius:50%" onerror="this.src='https://placehold.co/50'">
-                    <div style="flex:1">
-                        <b>${sanitize(c.name)}</b>
-                        <p style="color:var(--muted);font-size:0.85rem">${sanitize(c.lastMsg || 'Start chatting...')}</p>
-                    </div>
-                    <i class="fa fa-chevron-right" style="color:var(--muted)"></i>
+                    <img src="${c.pic}" style="width:50px;height:50px;border-radius:50%">
+                    <div style="flex:1"><b>${sanitize(c.name)}</b><p style="color:var(--muted);font-size:0.85rem">${sanitize(c.lastMsg || 'Start chatting...')}</p></div>
                 </div>`;
             });
         });
@@ -2283,19 +2060,16 @@ function openChat(id, name, pic) {
     document.getElementById('chatAvatar').src = pic;
     document.getElementById('chatWindow').classList.add('active');
     
-    const unsub = db.collection('chats').doc(id).collection('messages')
-        .orderBy('time')
+    const unsub = db.collection('chats').doc(id).collection('messages').orderBy('time')
         .onSnapshot(snap => {
             document.getElementById('chatMessages').innerHTML = '';
             snap.forEach(doc => {
                 const m = doc.data();
-                const isMe = m.from === currentUser.uid;
                 document.getElementById('chatMessages').innerHTML += `
-                    <div class="msg ${isMe ? 'me' : 'other'}">${sanitize(m.text)}</div>`;
+                    <div class="msg ${m.from === currentUser.uid ? 'me' : 'other'}">${sanitize(m.text)}</div>`;
             });
             document.getElementById('chatMessages').scrollTop = document.getElementById('chatMessages').scrollHeight;
         });
-    
     unsubscribers.push(unsub);
 }
 
@@ -2309,26 +2083,21 @@ function sendMsg() {
     if(!text || !currentChat) return;
     
     db.collection('chats').doc(currentChat).collection('messages').add({
-        text,
-        from: currentUser.uid,
-        time: firebase.firestore.FieldValue.serverTimestamp()
+        text, from: currentUser.uid, time: firebase.firestore.FieldValue.serverTimestamp()
     }).then(() => {
         db.collection('chats').doc(currentChat).update({
-            lastMsg: text,
-            time: firebase.firestore.FieldValue.serverTimestamp()
+            lastMsg: text, time: firebase.firestore.FieldValue.serverTimestamp()
         });
     });
-    
     document.getElementById('chatInput').value = '';
 }
 
-// ==================== NAVIGATION & UI ====================
+// ==================== NAVIGATION ====================
 function showPage(id) {
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     const page = document.getElementById(id);
     if(page) page.classList.add('active');
     document.getElementById('navMenu').classList.remove('active');
-    
     if(id === 'homePage') setRandomHeroBackground();
     if(id === 'profilePage') setRandomProfileBackground();
 }
@@ -2344,16 +2113,11 @@ function switchCommTab(tab, e) {
     document.getElementById('messagesTab').style.display = tab === 'messages' ? 'block' : 'none';
 }
 
-// ==================== SEARCH WITH DEBOUNCE ====================
 function searchQuotes() {
     clearTimeout(searchTimeout);
     searchTimeout = setTimeout(() => {
         const q = document.getElementById('searchInput')?.value?.toLowerCase() || '';
-        
-        if(!q) {
-            loadPosts();
-            return;
-        }
+        if(!q) { loadPosts(); return; }
         
         const filtered = allPosts.filter(p =>
             (p.text || '').toLowerCase().includes(q) ||
@@ -2362,25 +2126,15 @@ function searchQuotes() {
         );
         
         const viewer = document.getElementById('reelsViewer');
-        
-        if(filtered.length === 0) {
-            viewer.innerHTML = `
-                <div style="text-align:center;padding:3rem;color:var(--muted)">
-                    <i class="fa fa-search" style="font-size:4rem;display:block;margin-bottom:1rem"></i>
-                    <h3>No results found</h3>
-                    <p>Try different keywords</p>
-                </div>`;
-        } else {
-            viewer.innerHTML = filtered.map(p => `
-                <div class="reel-full" style="background:${p.bg}">
-                    <div class="reel-overlay"></div>
-                    <div class="reel-text" style="font-family:${p.font || 'Poppins'}">${sanitize(p.text)}</div>
-                    <div class="reel-bottom">
-                        <img src="${p.authorPic || 'https://placehold.co/38'}" class="reel-profile" onerror="this.src='https://placehold.co/38'">
-                        <span class="reel-username">@${sanitize(p.authorName || 'Anonymous')}</span>
-                    </div>
-                </div>`).join('');
-        }
+        viewer.innerHTML = filtered.length ? filtered.map(p => `
+            <div class="reel-full" style="background:${p.bg}">
+                <div class="reel-overlay"></div>
+                <div class="reel-text" style="font-family:${p.font || 'Poppins'}">${sanitize(p.text)}</div>
+                <div class="reel-bottom">
+                    <img src="${p.authorPic || 'https://placehold.co/38'}" class="reel-profile">
+                    <span class="reel-username">@${sanitize(p.authorName || 'Anonymous')}</span>
+                </div>
+            </div>`).join('') : '<div style="text-align:center;padding:3rem;color:var(--muted)"><i class="fa fa-search" style="font-size:4rem;display:block;margin-bottom:1rem"></i><h3>No results</h3></div>';
     }, 300);
 }
 
@@ -2392,21 +2146,14 @@ document.getElementById('themeToggle').addEventListener('click', () => {
     document.getElementById('themeToggle').innerHTML = isLight ? '<i class="fa fa-sun"></i>' : '<i class="fa fa-moon"></i>';
 });
 
-// Load saved theme
 if(localStorage.getItem('theme') === 'light') {
     document.body.classList.add('light');
     document.getElementById('themeToggle').innerHTML = '<i class="fa fa-sun"></i>';
 }
 
-// ==================== INITIALIZATION ====================
-newDailyQuote();
-
-// Cleanup on page leave
 window.addEventListener('beforeunload', () => cleanupListeners());
 
-console.log('🚀 BROXENME v2.0 - All systems integrated!');
-console.log('✅ Comment System | ✅ Like System | ✅ Share System | ✅ Save System');
-console.log('✅ Free Wallpapers | ✅ Responsive Design | ✅ Firebase Integrated');
+console.log('🚀 BROXENME - Ready!');
 </script>
 </body>
 </html>
