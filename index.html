@@ -4,17 +4,218 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>BROXENME QUOTES</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<style>
+:root {
+    --bg: #171819; --text: #ffffff; --card: #222425;
+    --accent: #ADFF2F; --muted: #888; --nav-bg: rgba(23, 24, 25, 0.95);
+    --teal: #007A7A;
+}
+.light {
+    --bg: #f8f9fa; --text: #171819; --card: #ffffff;
+    --accent: #6aff00; --muted: #555; --nav-bg: rgba(255, 255, 255, 0.95);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; scroll-behavior: smooth; }
 
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
-  import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, query, where, onSnapshot, updateDoc, arrayUnion, arrayRemove, orderBy } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-  import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-  import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
+body { 
+    background: var(--bg); 
+    color: var(--text); 
+    background-image: var(--random-bg, url('images/background.jpg')); 
+    background-attachment: fixed; 
+    background-size: cover; 
+    transition: 0.3s; 
+    padding-top: 70px; 
+}
 
-  // YOUR REAL FIREBASE CONFIG
+/* NAVBAR */
+nav { display: flex; justify-content: space-between; align-items: center; padding: 0.8rem 4%; background: var(--nav-bg); backdrop-filter: blur(10px); position: fixed; top: 0; width: 100%; z-index: 1000; border-bottom: 2px solid var(--accent); }
+.nav-logo { display: flex; align-items: center; gap: 10px; cursor: pointer; flex-shrink: 0; }
+.nav-logo img { width: 40px; height: 40px; border-radius: 10px; object-fit: cover; border: 1px solid var(--accent); }
+.nav-logo h1 { font-size: 1.1rem; letter-spacing: 1px; white-space: nowrap; }
+nav ul { display: flex; gap: 1.2rem; list-style: none; }
+nav a { color: var(--text); text-decoration: none; font-size: 0.9rem; font-weight: 500; cursor: pointer; white-space: nowrap; transition: 0.2s; }
+nav a:hover { color: var(--accent); transform: translateY(-2px); }
+.nav-right { display: flex; gap: 0.8rem; align-items: center; flex-shrink: 0; }
+.nav-btn { background: var(--accent); border: none; color: var(--bg); padding: 0.5rem 0.9rem; border-radius: 20px; cursor: pointer; font-weight: bold; font-size: 0.85rem; transition: 0.2s; }
+.nav-btn:hover { transform: scale(1.05); }
+#themeToggle { background: none; border: 1px solid var(--accent); color: var(--accent); border-radius: 50%; cursor: pointer; width: 38px; height: 38px; font-size: 1.1rem; display: flex; align-items: center; justify-content: center; transition: 0.3s; }
+#themeToggle:hover { transform: rotate(180deg); }
+
+/* HAMBURGER */
+.hamburger { display: none; cursor: pointer; padding: 5px; }
+.bar { width: 28px; height: 4px; background-color: var(--text); margin: 6px 0; transition: 0.4s; border-radius: 3px; }
+.hamburger.active .bar:nth-child(1) { transform: rotate(-45deg) translate(-7px, 7px); }
+.hamburger.active .bar:nth-child(2) { opacity: 0; }
+.hamburger.active .bar:nth-child(3) { transform: rotate(45deg) translate(-7px, -7px); }
+@media (max-width: 950px) {
+    nav ul { position: fixed; top: 70px; left: -100%; width: 100%; height: calc(100vh - 70px); background: var(--bg); flex-direction: column; align-items: center; padding-top: 3rem; transition: 0.3s; gap: 2rem; }
+    nav ul.active { left: 0; }
+    .hamburger { display: block; }
+}
+
+/* PAGES */
+.page { display: none; min-height: 80vh; animation: fadeIn 0.4s ease; }
+.page.active { display: block; }
+@keyframes fadeIn { from {opacity: 0; transform: translateY(15px)} to {opacity: 1; transform: translateY(0)} }
+
+.hero { display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; min-height: 70vh; padding: 2rem 5%; }
+.hero h2 { font-size: 2.2rem; margin-bottom: 1rem; }
+#dailyQuote { font-size: 1.3rem; max-width: 700px; color: var(--accent); line-height: 1.6; }
+.btn { background: var(--accent); color: var(--bg); padding: 0.9rem 1.8rem; border: none; border-radius: 10px; cursor: pointer; margin-top: 1.5rem; font-weight: bold; font-size: 1rem; transition: 0.2s; }
+.btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(173,255,47,0.3); }
+.btn-outline { background: none; border: 2px solid var(--accent); color: var(--accent); padding: 0.6rem 1.2rem; border-radius: 20px; cursor: pointer; transition: 0.2s; }
+.btn-outline:hover { background: var(--accent); color: var(--bg); }
+.btn-teal { background: var(--teal); color: white; border: none; padding: 0.6rem 1.8rem; border-radius: 20px; cursor: pointer; font-weight: bold; transition: 0.2s; }
+.btn-teal:hover { opacity: 0.9; transform: scale(1.05); }
+.card { background: var(--card); padding: 2rem; border-radius: 15px; max-width: 700px; margin: 2rem auto; border: 1px solid var(--accent); }
+.card input { width: 100%; padding: 0.9rem; margin: 0.5rem 0; border-radius: 10px; border: 1px solid var(--muted); background: var(--bg); color: var(--text); }
+.back-btn { background: none; border: 1px solid var(--accent); color: var(--accent); padding: 0.6rem 1.2rem; border-radius: 10px; cursor: pointer; margin: 1rem 5%; font-weight: bold; }
+
+/* GENERATOR */
+.generator-box { background: var(--card); padding: 2rem; border-radius: 15px; text-align: center; margin: 2rem auto; max-width: 600px; }
+.generator-box select { padding: 0.8rem; border-radius: 10px; background: var(--bg); color: var(--text); border: 1px solid var(--accent); margin: 1rem; }
+
+/* FEATURED QUOTES */
+.featured-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 2rem; padding: 0 5%; }
+.quote-card { background: var(--card); padding: 1.5rem; border-radius: 15px; border-left: 4px solid var(--accent); transition: 0.3s; }
+.quote-card:hover { transform: translateY(-5px); }
+.quote-card .author { color: var(--muted); margin-top: 0.5rem; }
+
+/* IG STYLE REELS */
+.reels-page { padding: 0!important; }
+.reels-viewer { height: calc(100vh - 70px); overflow-y: scroll; scroll-snap-type: y mandatory; }
+.reel-full { height: calc(100vh - 70px); width: 100%; max-width: 500px; margin: 0 auto; background: linear-gradient(180deg, rgba(0,0,0,0.3), rgba(0,0,0,0.8)); background-size: cover; background-position: center; position: relative; scroll-snap-align: start; display: flex; flex-direction: column; justify-content: space-between; padding: 1rem; }
+.reel-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 1.8rem; font-weight: bold; text-align: center; color: white; text-shadow: 2px 2px 8px rgba(0,0,0,0.8); width: 90%; }
+.reel-sidebar { position: absolute; right: 1rem; bottom: 100px; display: flex; flex-direction: column; gap: 1.5rem; align-items: center; }
+.reel-action { text-align: center; color: white; cursor: pointer; transition: 0.2s; }
+.reel-action:hover { transform: scale(1.2); }
+.reel-action span { font-size: 0.8rem; font-weight: bold; }
+.reel-bottom { display: flex; align-items: center; gap: 1rem; position: absolute; bottom: 20px; left: 1rem; right: 1rem; }
+.reel-profile { width: 40px; height: 40px; border-radius: 50%; border: 2px solid var(--accent); }
+.follow-btn { border: 1px solid white; padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.8rem; cursor: pointer; }
+.reel-caption { flex: 1; font-size: 0.9rem; }
+
+/* CATEGORIES */
+.categories-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem; margin-top: 2rem; padding: 0 5%; }
+.cat-card { background: var(--card); padding: 2rem 1rem; border-radius: 15px; text-align: center; border: 1px solid var(--accent); cursor: pointer; transition: 0.3s; font-weight: bold; }
+.cat-card:hover { transform: translateY(-5px); background: var(--accent); color: var(--bg); }
+
+/* PROFILE */
+.profile-container { max-width: 500px; margin: 0 auto; background: var(--card); border-radius: 20px; overflow: hidden; }
+.profile-header-bg { height: 180px; background: linear-gradient(135deg, var(--teal), var(--accent)); position: relative; border-radius: 0 0 50% 50% / 0 0 30% 30%; }
+.profile-pic-wrap { position: absolute; bottom: -60px; left: 50%; transform: translateX(-50%); }
+.profile-pic-big { width: 120px; height: 120px; border-radius: 50%; border: 4px solid var(--card); object-fit: cover; }
+.upload-btn { position: absolute; bottom: 5px; right: 5px; background: var(--accent); border-radius: 50%; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-weight: bold; color: var(--bg); }
+.profile-body { padding: 70px 2rem 2rem; text-align: center; }
+.profile-name { font-size: 1.3rem; font-weight: bold; }
+.profile-location { color: var(--teal); font-size: 0.9rem; margin: 0.3rem 0 1rem; }
+.profile-stats { display: flex; justify-content: space-around; margin: 1.5rem 0; }
+.stat h3 { font-size: 1.4rem; color: var(--teal); }
+.stat p { font-size: 0.8rem; color: var(--muted); }
+.profile-buttons { display: flex; gap: 1rem; justify-content: center; margin-bottom: 1rem; }
+.profile-bio { font-size: 0.9rem; color: var(--muted); line-height: 1.5; margin: 1.5rem 0; }
+.profile-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.profile-post { width: 100%; aspect-ratio: 1; background: var(--bg); border-radius: 10px; display:flex;align-items:center;justify-content:center;padding:1rem;text-align:center;font-size:0.8rem;border:1px solid var(--accent) }
+.create-post-box { padding: 1rem; border-top: 1px solid var(--muted); }
+.create-post-box textarea { width: 100%; padding: 0.8rem; border-radius: 10px; border: 1px solid var(--muted); background: var(--bg); color: var(--text); resize: none; }
+
+/* COMMUNITY PAGE */
+.community-container { max-width: 700px; margin: 0 auto; padding: 1rem 5%; }
+.community-tabs { display: flex; gap: 1rem; margin-bottom: 1.5rem; border-bottom: 1px solid var(--muted); }
+.comm-tab { padding: 1rem; cursor: pointer; font-weight: bold; transition: 0.2s; }
+.comm-tab.active { color: var(--accent); border-bottom: 3px solid var(--accent); }
+
+/* STORIES */
+.stories { display: flex; gap: 1rem; overflow-x: auto; padding: 1rem 0; }
+.story { text-align: center; font-size: 0.8rem; cursor: pointer; }
+.story-pic { width: 60px; height: 60px; border-radius: 50%; border: 3px solid var(--accent); padding: 2px; transition: 0.3s; }
+.story-pic:hover { transform: scale(1.1); }
+.story-add { border: 2px dashed var(--muted); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
+
+/* FEED POST */
+.feed-post { background: var(--card); border-radius: 15px; padding: 1rem; margin: 1.5rem 0; transition: 0.3s; }
+.feed-post:hover { transform: translateY(-3px); }
+.feed-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+.feed-pic { width: 40px; height: 40px; border-radius: 50%; }
+.feed-actions { display: flex; gap: 1.5rem; font-size: 1.3rem; }
+.feed-action { cursor: pointer; transition: 0.2s; }
+.feed-action:hover { transform: scale(1.2); }
+.feed-caption { margin: 0.5rem 0; }
+
+/* MESSAGES */
+.chat-list { }
+.chat-item { display: flex; gap: 1rem; padding: 1rem; border-bottom: 1px solid var(--card); cursor: pointer; transition: 0.2s; }
+.chat-item:hover { background: var(--card); transform: translateX(5px); }
+.chat-avatar { width: 50px; height: 50px; border-radius: 50%; }
+.chat-info { flex: 1; }
+.chat-name { font-weight: bold; }
+.chat-last { color: var(--muted); font-size: 0.9rem; }
+.chat-time { font-size: 0.8rem; color: var(--muted); }
+
+/* CHAT WINDOW */
+.chat-window { display: none; position: fixed; top: 70px; left: 0; width: 100%; height: calc(100vh - 70px); background: var(--bg); z-index: 999; flex-direction: column; animation: slideUp 0.3s; }
+@keyframes slideUp { from {transform: translateY(100%)} to {transform: translateY(0)} }
+.chat-window.active { display: flex; }
+.chat-header { display: flex; align-items: center; gap: 1rem; padding: 1rem; border-bottom: 1px solid var(--card); }
+.chat-messages { flex: 1; overflow-y: auto; padding: 1rem; }
+.msg { background: var(--card); padding: 0.8rem 1rem; border-radius: 15px; margin: 0.5rem 0; max-width: 70%; animation: pop 0.2s; }
+@keyframes pop { from {transform: scale(0.8)} to {transform: scale(1)} }
+.msg.me { background: var(--teal); margin-left: auto; }
+.chat-input-bar { display: flex; gap: 0.5rem; padding: 1rem; border-top: 1px solid var(--card); }
+
+.tabs { display: flex; gap: 1rem; margin-bottom: 1rem; }
+.tab { padding: 0.6rem 1.2rem; border-radius: 10px; cursor: pointer; border: 1px solid var(--accent); }
+.tab.active { background: var(--accent); color: var(--bg); }
+</style>
+</head>
+<body>
+<nav>
+    <div class="nav-logo" onclick="showPage('homePage')">
+        <img src="images/logo.png" alt="Logo">
+        <h1>BROXENME</h1>
+    </div>
+    <ul id="navMenu">
+        <li><a onclick="showPage('homePage')">Home</a></li>
+        <li><a onclick="showPage('reelsPage')">Reels</a></li>
+        <li><a onclick="showPage('generatorPage')">Generator</a></li>
+        <li><a onclick="showPage('categoriesPage')">Categories</a></li>
+        <li><a onclick="showPage('communityPage')">Community</a></li>
+        <li><a onclick="showPage('profilePage')">Profile</a></li>
+    </ul>
+    <div class="nav-right">
+        <button class="nav-btn" id="authBtn" onclick="showPage('loginPage')">Login</button>
+        <button id="themeToggle">🌙</button>
+        <div class="hamburger" onclick="toggleMenu()">
+            <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+        </div>
+    </div>
+</nav>
+
+<!-- ALL YOUR PAGES HERE SAME AS BEFORE -->
+<div id="homePage" class="page active"><section class="hero"><h2>Daily Inspiration</h2><p id="dailyQuote">"Loading quote..."</p><button class="btn" onclick="newDailyQuote()">New Quote</button></section><h2 style="text-align:center;margin:3rem 0 1rem">Featured Quotes</h2><div class="featured-grid" id="featuredGrid"></div></div>
+
+<div id="reelsPage" class="page reels-page"><div class="reels-viewer" id="reelsViewer"><p style="text-align:center;padding:2rem">No posts yet. Be the first to post! 🔥</p></div></div>
+
+<div id="generatorPage" class="page"><button class="back-btn" onclick="showPage('homePage')">← Back</button><h2 style="text-align:center">Quote Generator</h2><div class="generator-box"><h3>Pick a vibe</h3><select id="categorySelect"><option>Motivation</option><option>Life</option><option>Business</option><option>Love</option></select><button class="btn" onclick="generateQuote()">Generate Quote</button><p id="generatedQuote" style="margin-top:2rem;font-size:1.2rem;color:var(--accent)"></p></div></div>
+
+<div id="categoriesPage" class="page"><button class="back-btn" onclick="showPage('homePage')">← Back</button><h2 style="text-align:center">Browse Categories</h2><div class="categories-grid"><div class="cat-card">Life</div><div class="cat-card">Motivation</div><div class="cat-card">Business</div><div class="cat-card">Love</div><div class="cat-card">Pain</div><div class="cat-card">Success</div></div></div>
+
+<div id="loginPage" class="page"><button class="back-btn" onclick="showPage('homePage')">← Back</button><div class="card"><div class="tabs"><div class="tab active" onclick="switchTab('login', event)">Login</div><div class="tab" onclick="switchTab('signup', event)">Sign Up</div></div><div id="loginForm"><h2>Welcome Back</h2><input type="email" id="loginEmail" placeholder="Email"><input type="password" id="loginPass" placeholder="Password"><button class="btn" style="width:100%" onclick="login()">Login</button></div><div id="signupForm" style="display:none"><h2>Create Account</h2><input type="text" id="signupName" placeholder="Username"><input type="email" id="signupEmail" placeholder="Email"><input type="password" id="signupPass" placeholder="Password"><button class="btn" style="width:100%" onclick="signup()">Sign Up</button></div></div></div>
+
+<div id="profilePage" class="page"><div class="profile-container"><div class="profile-header-bg"><div class="profile-pic-wrap"><img src="images/logo.png" class="profile-pic-big" id="profilePic"><input type="file" id="profileUpload" accept="image/*" style="display:none"><div class="upload-btn" onclick="document.getElementById('profileUpload').click()">+</div></div></div><div class="profile-body"><h2 class="profile-name" id="profileName">Guest</h2><p class="profile-location">📍 Harare, ZW</p><div class="profile-stats"><div class="stat"><h3 id="postCount">0</h3><p>Posts</p></div><div class="stat"><h3>0</h3><p>Followers</p></div><div class="stat"><h3>0</h3><p>Following</p></div></div><div class="profile-buttons"><button class="btn-teal">Follow</button><button class="btn-outline" onclick="openChat('admin')">Message</button></div><p class="profile-bio">A young, talented quote collector from Harare. Glad to inspire you!</p><button class="btn" style="width:100%;margin-bottom:1rem" onclick="showCreatePost()">+ Create Post</button><div id="createPostBox" class="create-post-box" style="display:none"><textarea id="postText" rows="3" placeholder="Write your quote..."></textarea><button class="btn" style="width:100%;margin-top:0.5rem" onclick="createPost()">Post</button></div><h3 style="text-align:left;margin:1.5rem 0 1rem">Your Posts</h3><div class="profile-grid" id="profileGrid"></div></div></div></div>
+
+<div id="communityPage" class="page"><div class="community-container"><div class="community-tabs"><div class="comm-tab active" onclick="switchCommTab('feed', event)">Feed</div><div class="comm-tab" onclick="switchCommTab('messages', event)">Messages</div></div><div id="feedTab"><h3>Stories</h3><div class="stories"><div class="story"><div class="story-pic story-add">+</div><p>Add</p></div></div><h3>Feeds</h3><div id="communityFeed"></div></div><div id="messagesTab" style="display:none"><h3>Messages</h3><div class="chat-list" id="chatList"></div></div></div></div>
+
+<div id="chatWindow" class="chat-window"><div class="chat-header"><button class="back-btn" onclick="closeChat()" style="margin:0">←</button><img src="images/logo.png" class="chat-avatar"><b id="chatName">Chat</b></div><div class="chat-messages" id="chatMessages"></div><div class="chat-input-bar"><input type="text" id="chatInput" placeholder="Message..."><button class="btn" onclick="sendMsg()">Send</button></div></div>
+
+<!-- FIREBASE SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
+
+<script>
+// ================== PASTE YOUR FIREBASE CONFIG HERE ==================
+// YOUR REAL FIREBASE CONFIG
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyDC7MtlDi8Sl7ai3GjEnh06AoR7hZV_4Vs",
@@ -25,355 +226,135 @@ const firebaseConfig = {
   appId: "1:625885740482:web:fce8637986109f8ab82a5b",
   measurementId: "G-PH1VGHPDG3"
 };
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+const auth = firebase.auth();
+const storage = firebase.storage();
 
-  // Initialize Firebase - ONLY ONCE
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
-  const db = getFirestore(app);
-  const auth = getAuth(app);
-  const storage = getStorage(app);
+let currentUser = null;
 
-  // Make global so rest of script can use them
-  window.db=db; window.auth=auth; window.storage=storage;
-  window.collection=collection; window.addDoc=addDoc; window.deleteDoc=deleteDoc; window.doc=doc;
-  window.query=query; window.where=where; window.onSnapshot=onSnapshot; window.updateDoc=updateDoc;
-  window.arrayUnion=arrayUnion; window.arrayRemove=arrayRemove; window.orderBy=orderBy;
-  window.createUserWithEmailAndPassword=createUserWithEmailAndPassword; window.signInWithEmailAndPassword=signInWithEmailAndPassword;
-  window.signOut=signOut; window.onAuthStateChanged=onAuthStateChanged; window.updateProfile=updateProfile;
-  window.ref=ref; window.uploadBytes=uploadBytes; window.getDownloadURL=getDownloadURL;
-</script>
+// RANDOM WALLPAPER
+const randomImages = ['https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=1920','https://images.unsplash.com/photo-1470252649378-9c29790c9c29?w=1920','https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=1920'];
+document.body.style.setProperty('--random-bg', `url('${randomImages[Math.floor(Math.random()*randomImages.length)]}')`);
 
-<style>
-:root{--bg: #171819; --text: #f5f5f5; --card: #222425; --accent: #ADFF2F; --muted: #888; --danger:#ff4d4d;}
-.light{ --bg: #f8f9fa; --text: #171819; --card: #ffffff; --accent: #4CAF50; --muted: #555; }
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
-body{background: var(--bg); color: var(--text); background-image: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920'); background-attachment: fixed; background-size: cover; transition:0.3s;}
-h1,h2{font-family:'Playfair Display',serif;}
-nav{display:flex;justify-content:space-between;align-items:center;padding:1rem 5%; background: rgba(0,0,0,0.5); backdrop-filter: blur(10px);position:sticky;top:0;z-index:100;flex-wrap:wrap;}
-nav h1{font-size:1.4rem; letter-spacing:2px; cursor:pointer;} nav ul{display:flex;gap:1rem;list-style:none;flex-wrap:wrap;}
-nav a{color:var(--text);text-decoration:none;} nav a:hover{color:var(--accent);}
-.nav-right{display:flex;gap:0.8rem;align-items:center;}
-.nav-btn{background:none;border:1px solid var(--accent);color:var(--accent);padding:0.4rem 0.8rem;border-radius:20px;cursor:pointer;font-size:0.8rem;}
-.btn{background:var(--accent);color:var(--bg);padding:0.8rem 1.5rem;border:none;border-radius:25px;cursor:pointer;margin-top:1rem;font-weight:bold;}
-.btn.danger{background:var(--danger);color:#fff;}
-.hero{min-height:80vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:2rem; background: rgba(0,0,0,0.5);}
-#dailyQuote{font-size:clamp(1.1rem,3vw,1.5rem);max-width:700px;color:var(--accent);transition:opacity 0.5s;}
-section{padding:3rem 5%;}.section-title{text-align:center;font-size:clamp(1.5rem,4vw,2rem);margin-bottom:2rem;}
-.categories{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;}
-.cat-card{position:relative;border-radius:15px;overflow:hidden;cursor:pointer;height:160px;}
-.cat-card img{width:100%;height:100%;object-fit:cover;filter:brightness(0.6);}
-.cat-card span{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);font-weight:bold;color:#fff;}
-.quote-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;}
-.quote-card{background: rgba(34,36,37,0.85); padding:1.5rem;border-radius:15px;animation:fadeIn 0.5s ease;position:relative;}
-@keyframes fadeIn{from{opacity:0;transform:translateY(10px);} to{opacity:1;transform:translateY(0);}}
-.quote-actions{margin-top:1rem;display:flex;gap:0.5rem;flex-wrap:wrap;}
-.quote-actions button{background:none;border:1px solid var(--accent);color:var(--accent);padding:0.4rem 0.8rem;border-radius:20px;cursor:pointer;font-size:0.8rem;}
-.quote-actions button.liked{background:var(--accent);color:var(--bg);}
-.quote-actions button.del{border-color:var(--danger);color:var(--danger);}
-.generator{background: rgba(34,36,37,0.85); padding:2rem;border-radius:15px;text-align:center;margin-bottom:2rem;}
-.generator input,.generator textarea{margin:0.5rem;padding:0.6rem 1rem;border-radius:10px;border:none;width:90%;max-width:400px;background:var(--bg);color:var(--text);}
-.modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);justify-content:center;align-items:center;z-index:200;}
-.modal-content{background:var(--card);padding:2rem;border-radius:15px;width:90%;max-width:600px;max-height:80vh;overflow-y:auto;}
-.comment-box{margin-top:1rem;border-top:1px solid var(--muted);padding-top:1rem;}
-.comment-box input{width:70%;padding:0.5rem;border-radius:10px;border:none;background:var(--bg);color:var(--text);}
-.profile-pic{width:80px;height:80px;border-radius:50%;object-fit:cover;border:2px solid var(--accent);}
-.chat-box{height:300px;overflow-y:auto;background:var(--card);padding:1rem;border-radius:10px;margin-bottom:1rem;}
-.chat-msg{margin-bottom:0.5rem;}.user-tag{color:var(--accent);font-weight:bold;}
-.quote-export{width:600px;padding:40px;background:linear-gradient(135deg,#ADFF2F,#4CAF50);color:#000;border-radius:20px;text-align:center;position:relative;}
-.quote-export h2{font-family:'Playfair Display',serif;font-size:1.5rem;margin-bottom:20px;}
-.watermark{position:absolute;bottom:10px;right:20px;font-size:0.8rem;opacity:0.6;}
-</style>
-</head>
-<body>
-
-<nav>
-  <h1 onclick="showSection('home')">BROXENME QUOTES</h1>
-  <ul>
-    <li><a href="#" onclick="showSection('home')">Home</a></li>
-    <li><a href="#" onclick="showSection('categories')">Categories</a></li>
-    <li><a href="#" onclick="showSection('chat')">Chat</a></li>
-    <li><a href="#" onclick="showSection('generator')">Create</a></li>
-    <li><a href="#" onclick="showSection('quotes')">Community</a></li>
-  </ul>
-  <div class="nav-right">
-    <img id="navPic" class="profile-pic" src="https://i.imgur.com/I80W1Qb.png" style="display:none;width:40px;height:40px">
-    <span id="userEmail"></span>
-    <button class="nav-btn" id="authBtn" onclick="openModal('login')">Login</button>
-    <button class="nav-btn" onclick="showSection('profile')">Profile</button>
-    <button class="nav-btn" onclick="openAdmin()">Admin</button>
-    <button class="nav-btn" id="themeToggle" onclick="toggleTheme()">🌙</button>
-  </div>
-</nav>
-
-<section class="hero" id="home">
-  <h2>Daily Inspiration</h2>
-  <p id="dailyQuote">Loading...</p>
-  <span id="quoteAuthor"></span>
-  <button class="btn" onclick="fetchDailyQuote()">New Quote</button>
-</section>
-
-<section id="categories" style="display:none;">
-  <h2 class="section-title">Categories</h2>
-  <div class="categories">
-    <div class="cat-card" onclick="filterCategory('Life')"><img src="https://images.unsplash.com/photo-1506784365847-bbad939e9335?w=400"><span>Life</span></div>
-    <div class="cat-card" onclick="filterCategory('Relationships')"><img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=400"><span>Relationships</span></div>
-    <div class="cat-card" onclick="filterCategory('Business')"><img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=400"><span>Business</span></div>
-    <div class="cat-card" onclick="filterCategory('Motivation')"><img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=400"><span>Motivation</span></div>
-  </div>
-</section>
-
-<section id="chat" style="display:none;">
-  <h2 class="section-title">Thoughts Wall 💭</h2>
-  <div class="generator">
-    <div class="chat-box" id="chatBox"></div>
-    <input id="chatInput" placeholder="Share your thoughts...">
-    <button class="btn" onclick="sendChat()">Send</button>
-  </div>
-</section>
-
-<section id="generator" style="display:none;">
-  <h2 class="section-title">Submit Your Quote</h2>
-  <div class="generator">
-    <textarea id="userQuoteText" placeholder="Write your quote..."></textarea>
-    <input type="text" id="userQuoteAuthor" placeholder="Author Name">
-    <select id="userQuoteCategory"><option>Life</option><option>Relationships</option><option>Business</option><option>Motivation</option></select>
-    <button class="btn" onclick="submitUserQuote()">Save Quote</button>
-  </div>
-</section>
-
-<section id="quotes" style="display:none;">
-  <h2 class="section-title">Community Quotes</h2>
-  <div class="quote-grid" id="quoteGrid"></div>
-  <div id="exportArea" style="position:absolute;left:-9999px;"></div>
-</section>
-
-<section id="profile" style="display:none;">
-  <h2 class="section-title">Your Profile</h2>
-  <div class="generator">
-    <img id="profilePic" class="profile-pic" src="https://i.imgur.com/I80W1Qb.png">
-    <input type="file" id="picUpload" accept="image/*" onchange="uploadPic()">
-    <h3 id="profileName">Guest</h3>
-    <p>Following: <span id="followingCount">0</span> | Your Quotes: <span id="myQuoteCount">0</span></p>
-    <button class="btn danger" onclick="logout()">Logout</button>
-  </div>
-  <h3 style="text-align:center;margin-top:2rem">My Submitted Quotes</h3>
-  <div class="quote-grid" id="myQuotesGrid"></div>
-</section>
-
-<div class="modal" id="authModal">
-  <div class="modal-content">
-    <h2 id="modalTitle">Login</h2>
-    <input type="email" id="email" placeholder="Email">
-    <input type="password" id="password" placeholder="Password">
-    <button class="btn" onclick="submitAuth()">Submit</button>
-    <p style="cursor:pointer;margin-top:1rem" onclick="toggleAuthMode()">Switch to Signup</p>
-    <button onclick="closeModal()">Close</button>
-  </div>
-</div>
-
-<div class="modal" id="adminModal">
-  <div class="modal-content">
-    <h2>Admin Panel</h2>
-    <input type="password" id="adminPass" placeholder="Admin Password: broxenme2026">
-    <button class="btn" onclick="checkAdmin()">Enter</button>
-    <div id="adminData" style="display:none;">
-      <h3>All Quotes</h3>
-      <div id="allQuotesList"></div>
-    </div>
-    <button onclick="closeAdmin()">Close</button>
-  </div>
-</div>
-
-<script type="module">
-let currentUser = null; let isLoginMode = true; let following = JSON.parse(localStorage.getItem('following')) || [];
-
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    currentUser = user;
-    document.getElementById('userEmail').innerText = user.displayName || user.email.split('@')[0];
-    document.getElementById('profileName').innerText = user.displayName || user.email;
-    document.getElementById('authBtn').innerText = 'Logout';
-    document.getElementById('authBtn').onclick = logout;
-    if(user.photoURL){
-      document.getElementById('profilePic').src=user.photoURL;
-      document.getElementById('navPic').src=user.photoURL;
-      document.getElementById('navPic').style.display='block';
+// AUTH
+auth.onAuthStateChanged(user => {
+    if(user){
+        currentUser = user;
+        document.getElementById('authBtn').innerText = 'Logout';
+        document.getElementById('authBtn').onclick = logout;
+        document.getElementById('profileName').innerText = user.displayName || 'User';
+        if(user.photoURL) document.getElementById('profilePic').src = user.photoURL;
+        loadPosts();
+        loadCommunityPosts();
+        loadChats();
+    } else {
+        currentUser = null;
+        document.getElementById('authBtn').innerText = 'Login';
+        document.getElementById('authBtn').onclick = () => showPage('loginPage');
+        showPage('loginPage');
     }
-    document.getElementById('followingCount').innerText = following.length;
-    loadUserQuotes(); loadChat();
-  } else {
-    currentUser = null;
-    document.getElementById('authBtn').innerText = 'Login';
-    document.getElementById('authBtn').onclick = () => openModal('login');
-    document.getElementById('userEmail').innerText = '';
-  }
 });
 
-window.uploadPic = async () => {
-  const file = document.getElementById('picUpload').files[0];
-  if(!file ||!currentUser) return;
-  const storageRef = ref(storage, `profilePics/${currentUser.uid}`);
-  await uploadBytes(storageRef, file);
-  const url = await getDownloadURL(storageRef);
-  await updateProfile(currentUser, {photoURL: url});
-  document.getElementById('profilePic').src = url;
-  document.getElementById('navPic').src = url;
+function signup(){
+    const email = document.getElementById('signupEmail').value;
+    const pass = document.getElementById('signupPass').value;
+    const name = document.getElementById('signupName').value;
+    auth.createUserWithEmailAndPassword(email, pass).then(cred => {
+        cred.user.updateProfile({displayName: name});
+        db.collection('users').doc(cred.user.uid).set({name: name, photoURL: ''});
+    }).catch(e => alert(e.message));
 }
 
-window.toggleAuthMode = () => {
-  isLoginMode =!isLoginMode;
-  document.getElementById('modalTitle').innerText = isLoginMode? 'Login' : 'Signup';
-}
-window.submitAuth = async () => {
-  const email = document.getElementById('email').value;
-  const password = document.getElementById('password').value;
-  try {
-    if(isLoginMode) await signInWithEmailAndPassword(auth, email, password);
-    else {const cred = await createUserWithEmailAndPassword(auth, email, password); await updateProfile(cred.user, {displayName: email.split('@')[0]});}
-    closeModal();
-  } catch(e) { alert(e.message) }
-}
-window.logout = () => signOut(auth);
-
-window.submitUserQuote = async () => {
-  if(!currentUser) return alert('Login first!');
-  const text = document.getElementById('userQuoteText').value;
-  const author = document.getElementById('userQuoteAuthor').value || currentUser.displayName;
-  const category = document.getElementById('userQuoteCategory').value;
-  if(!text) return alert('Write a quote!');
-  await addDoc(collection(db, "quotes"), {
-    text, author, category, authorPic: currentUser.photoURL || '', userId: currentUser.uid,
-    likes: [], comments: [], createdAt: new Date()
-  });
-  document.getElementById('userQuoteText').value = '';
-  alert('Quote saved!');
+function login(){
+    const email = document.getElementById('loginEmail').value;
+    const pass = document.getElementById('loginPass').value;
+    auth.signInWithEmailAndPassword(email, pass).catch(e => alert(e.message));
 }
 
-window.loadUserQuotes = () => {
-  if(!currentUser) return;
-  const q = query(collection(db, "quotes"), where("userId", "==", currentUser.uid));
-  onSnapshot(q, (snapshot) => {
-    const quotes = snapshot.docs.map(doc => ({id: doc.id,...doc.data()}));
-    document.getElementById('myQuoteCount').innerText = quotes.length;
-    document.getElementById('myQuotesGrid').innerHTML = quotes.map(q => renderQuoteCard(q, true)).join('');
-  });
-}
+function logout(){ auth.signOut(); }
 
-function renderQuoteCard(q, isMine=false){
-  const liked = currentUser && q.likes.includes(currentUser.uid);
-  const isFollowing = following.includes(q.userId);
-  return `<div class="quote-card">
-    <div style="display:flex;gap:10px;align-items:center">
-      <img class="profile-pic" style="width:40px;height:40px" src="${q.authorPic || 'https://i.imgur.com/I80W1Qb.png'}">
-      <div><p>"${q.text}"</p><span>- ${q.author}</span> <small style="color:var(--muted)">#${q.category || 'General'}</small></div>
-    </div>
-    <div class="quote-actions">
-      ${currentUser? `<button class="${liked?'liked':''}" onclick="likeQuote('${q.id}', this)">❤️ ${q.likes.length}</button>` : ''}
-      <button onclick="toggleComments('${q.id}')">💬 ${q.comments.length}</button>
-      <button onclick="shareWhatsApp('${q.text}','${q.author}')">📱 Share</button>
-      <button onclick="exportQuoteImage('${q.id}')">📸 Image</button>
-      ${!isMine && currentUser? `<button onclick="toggleFollow('${q.userId}')">${isFollowing?'Unfollow':'Follow'}</button>` : ''}
-      ${isMine? `<button class="del" onclick="deleteQuote('${q.id}')">🗑️</button>` : ''}
-    </div>
-    <div class="comment-box" id="comments-${q.id}" style="display:none;">
-      ${q.comments.map(c=>`<p><b>${c.user}:</b> ${c.text}</p>`).join('')}
-      ${currentUser? `<input id="comment-input-${q.id}" placeholder="Add comment"><button class="btn" style="padding:0.4rem" onclick="addComment('${q.id}')">Send</button>` : ''}
-    </div>
-  </div>`;
-}
-
-window.likeQuote = async (id, btn) => {
-  const ref = doc(db, "quotes", id);
-  const liked = btn.classList.contains('liked');
-  await updateDoc(ref, {likes: liked? arrayRemove(currentUser.uid) : arrayUnion(currentUser.uid)});
-}
-window.addComment = async (id) => {
-  let txt=document.getElementById(`comment-input-${id}`).value;
-  if(!txt) return;
-  const ref = doc(db, "quotes", id);
-  const q = (await getDocs(collection(db, "quotes"))).docs.find(d=>d.id===id).data();
-  q.comments.push({user:currentUser.displayName, text:txt});
-  await updateDoc(ref, {comments: q.comments});
-  document.getElementById(`comment-input-${id}`).value='';
-}
-window.toggleComments = (id) => {
-  document.getElementById(`comments-${id}`).style.display = document.getElementById(`comments-${id}`).style.display==='none'?'block':'none';
-}
-window.deleteQuote = async (id) => {if(confirm('Delete?')) await deleteDoc(doc(db, "quotes", id));}
-window.toggleFollow = (uid) => {
-  if(following.includes(uid)){following = following.filter(f=>f!==uid)}
-  else{following.push(uid)}
-  localStorage.setItem('following', JSON.stringify(following));
-  document.getElementById('followingCount').innerText = following.length;
-  alert('Follow updated!');
-}
-
-window.shareWhatsApp = (text, author) => {
-  window.open(`https://wa.me/?text=${encodeURIComponent(`"${text}" - ${author}\n\nFrom BROXENME QUOTES`)}`, '_blank');
-}
-
-window.exportQuoteImage = async (id) => {
-  const quote = (await getDocs(collection(db, "quotes"))).docs.find(d=>d.id===id).data();
-  const area = document.getElementById('exportArea');
-  area.innerHTML = `<div class="quote-export"><h2>"${quote.text}"</h2><p>- ${quote.author}</p><div class="watermark">BROXENME QUOTES</div></div>`;
-  const canvas = await html2canvas(area.firstChild);
-  const link = document.createElement('a');
-  link.download = 'broxenme-quote.png';
-  link.href = canvas.toDataURL();
-  link.click();
-}
-
-onSnapshot(query(collection(db, "quotes"), orderBy("createdAt", "desc")), (snapshot) => {
-  const quotes = snapshot.docs.map(doc => ({id: doc.id,...doc.data()}));
-  document.getElementById('quoteGrid').innerHTML = quotes.map(q => renderQuoteCard(q)).join('');
+// PROFILE UPLOAD
+document.getElementById('profileUpload').addEventListener('change', async (e) => {
+    const file = e.target.files[0];
+    if(!file || !currentUser) return;
+    const ref = storage.ref(`profilePics/${currentUser.uid}`);
+    await ref.put(file);
+    const url = await ref.getDownloadURL();
+    document.getElementById('profilePic').src = url;
+    db.collection('users').doc(currentUser.uid).update({photoURL: url});
 });
 
-// CHAT SYSTEM
-window.sendChat = async () => {
-  if(!currentUser) return alert('Login first!');
-  const text = document.getElementById('chatInput').value;
-  if(!text) return;
-  await addDoc(collection(db, "chat"), {user: currentUser.displayName, text, createdAt: new Date()});
-  document.getElementById('chatInput').value = '';
-}
-window.loadChat = () => {
-  onSnapshot(query(collection(db, "chat"), orderBy("createdAt", "asc")), (snapshot) => {
-    const msgs = snapshot.docs.map(d=>d.data());
-    document.getElementById('chatBox').innerHTML = msgs.map(m=>`<div class="chat-msg"><span class="user-tag">${m.user}:</span> ${m.text}</div>`).join('');
-    document.getElementById('chatBox').scrollTop = 99999;
-  });
-}
-
-window.filterCategory = (cat) => {
-  alert(`Filtering by ${cat}. Will show only ${cat} quotes`);
-  showSection('quotes');
+// POSTS
+function createPost(){
+    const text = document.getElementById('postText').value;
+    if(!text || !currentUser) return;
+    db.collection('posts').add({
+        text: text,
+        authorId: currentUser.uid,
+        authorName: currentUser.displayName || 'User',
+        authorPic: currentUser.photoURL || 'images/logo.png',
+        time: firebase.firestore.FieldValue.serverTimestamp(),
+        likes: 0,
+        comments: [],
+        shares: 0
+    }).then(() => {
+        document.getElementById('postText').value = '';
+        document.getElementById('createPostBox').style.display = 'none';
+    });
 }
 
-window.showSection = (id) => {
-  ['home','categories','chat','generator','quotes','profile'].forEach(s => document.getElementById(s).style.display = s===id? 'block' : 'none');
-}
-window.openModal = (type) => {document.getElementById('authModal').style.display='flex'; isLoginMode = type==='login';}
-window.closeModal = () => document.getElementById('authModal').style.display='none';
-window.openAdmin = () => document.getElementById('adminModal').style.display='flex';
-window.closeAdmin = () => document.getElementById('adminModal').style.display='none';
-window.checkAdmin = async () => {
-  if(document.getElementById('adminPass').value!== "broxenme2026") return alert('Wrong password');
-  document.getElementById('adminData').style.display='block';
-  const quotes = (await getDocs(collection(db, "quotes"))).docs.map(d=>d.data());
-  document.getElementById('allQuotesList').innerHTML = quotes.map(q => `<p>"${q.text}" - ${q.author}</p>`).join('');
-}
-window.toggleTheme = () => {
-  document.body.classList.toggle('light');
-  document.getElementById('themeToggle').innerText = document.body.classList.contains('light')? '🌙' : '☀️';
+function loadPosts(){
+    db.collection('posts').orderBy('time', 'desc').onSnapshot(snapshot => {
+        document.getElementById('reelsViewer').innerHTML = '';
+        document.getElementById('featuredGrid').innerHTML = '';
+        document.getElementById('profileGrid').innerHTML = '';
+        let count = 0;
+        snapshot.forEach(doc => {
+            const p = doc.data();
+            const id = doc.id;
+            document.getElementById('reelsViewer').innerHTML += `<div class="reel-full"><div class="reel-text">"${p.text}"</div><div class="reel-sidebar"><div class="reel-action" onclick="likePost('${id}')"><div style="font-size:2rem">❤️</div><span>${p.likes}</span></div><div class="reel-action" onclick="sharePost('${id}')"><div style="font-size:2rem">🔄</div><span>${p.shares}</span></div></div><div class="reel-bottom"><img src="${p.authorPic}" class="reel-profile"><div><b>${p.authorName}</b></div></div></div>`;
+            document.getElementById('featuredGrid').innerHTML += `<div class="quote-card"><p>"${p.text}"</p><p class="author">- ${p.authorName}</p></div>`;
+            if(p.authorId === currentUser?.uid){
+                document.getElementById('profileGrid').innerHTML += `<div class="profile-post">${p.text}</div>`;
+                count++;
+            }
+        });
+        document.getElementById('postCount').innerText = count;
+    });
 }
 
-async function fetchDailyQuote(){
-  const res = await fetch('https://api.quotable.io/random');
-  const q = await res.json();
-  document.getElementById('dailyQuote').innerText = `"${q.content}"`;
-  document.getElementById('quoteAuthor').innerText = `- ${q.author}`;
+function likePost(id){ db.collection('posts').doc(id).update({likes: firebase.firestore.FieldValue.increment(1)}); }
+function sharePost(id){ db.collection('posts').doc(id).update({shares: firebase.firestore.FieldValue.increment(1)}); }
+
+function loadCommunityPosts(){
+    db.collection('posts').orderBy('time', 'desc').onSnapshot(snapshot => {
+        const feed = document.getElementById('communityFeed');
+        feed.innerHTML = '';
+        snapshot.forEach(doc => {
+            const p = doc.data();
+            feed.innerHTML += `<div class="feed-post"><div class="feed-header"><img src="${p.authorPic}" class="feed-pic"><div><b>${p.authorName}</b></div></div><p class="feed-caption">${p.text}</p><div class="feed-actions"><span class="feed-action" onclick="likePost('${doc.id}')">❤️ <span>${p.likes}</span></span></div></div>`;
+        });
+    });
 }
-fetchDailyQuote();
+
+// CHAT
+function loadChats(){ /* simplified for now */ }
+function openChat(name){ currentChat = name; document.getElementById('chatName').innerText = name; document.getElementById('chatWindow').classList.add('active'); }
+function closeChat(){ document.getElementById('chatWindow').classList.remove('active'); }
+function sendMsg(){ const input = document.getElementById('chatInput'); if(!input.value || !currentUser) return; db.collection('chats').add({from: currentUser.uid, text: input.value, time: firebase.firestore.FieldValue.serverTimestamp()}); input.value = ''; }
+
+// UTILS
+function newDailyQuote(){ const q = ["Discipline > Motivation","Start now","Pain is temporary"][Math.floor(Math.random()*3)]; document.getElementById('dailyQuote').innerText = `"${q}"`; }
+newDailyQuote();
+function generateQuote(){ document.getElementById('generatedQuote').innerText = `"${quotes[Math.floor(Math.random()*quotes.length)].text}"`; }
+const quotes = [{text: "The way to get started is to quit talking and begin doing."}];
+function showCreatePost(){ document.getElementById('createPostBox').style.display = 'block'; }
+function switchCommTab(tab, e){ document.querySelectorAll('.comm-tab').forEach(t => t.classList.remove('active')); e.target.classList.add('active'); document.getElementById('feedTab').style.display = tab === 'feed'? 'block' : 'none'; document.getElementById('messagesTab').style.display = tab === 'messages'? 'block' : 'none'; }
+function showPage(pageId){ document.querySelectorAll('.page').forEach(page => page.classList.remove('active')); document.getElementById(pageId).classList.add('active'); closeMenu(); window.scrollTo(0,0); }
+function switchTab(tab, e){ document.querySelectorAll('.tab').forEach(t => t.classList.remove('active')); e.target.classList.add('active'); document.getElementById('loginForm').style.display = tab === 'login'? 'block' : 'none'; document.getElementById('signupForm').style.display = tab === 'signup'? 'block' : 'none'; }
+const navMenu = document.getElementById('navMenu'); const hamburger = document.querySelector('.hamburger'); function toggleMenu(){ navMenu.classList.toggle('active'); hamburger.classList.toggle('active'); } function closeMenu(){ navMenu.classList.remove('active'); hamburger.classList.remove('active'); }
+const toggle = document.getElementById('themeToggle'); if(localStorage.getItem('theme')==='light') document.body.classList.add('light'); toggle.innerText = document.body.classList.contains('light')? '🌙' : '☀️'; toggle.onclick = () => { document.body.classList.toggle('light'); const theme = document.body.classList.contains('light')? 'light' : 'dark'; localStorage.setItem('theme', theme); toggle.innerText = theme === 'light'? '🌙' : '☀️'; }
 </script>
 </body>
 </html>
