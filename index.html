@@ -19,7 +19,7 @@
 body { 
     background: var(--bg); 
     color: var(--text); 
-    background-image: url('images/background.jpg');  /* <-- LEAVE ONLY THIS */
+    background-image: url('images/background.jpg'); 
     background-attachment: fixed; 
     background-size: cover; 
     transition: 0.3s; 
@@ -189,7 +189,6 @@ nav a:hover { color: var(--accent); transform: translateY(-2px); }
     </div>
 </nav>
 
-<!-- ALL YOUR PAGES HERE SAME AS BEFORE -->
 <div id="homePage" class="page active"><section class="hero"><h2>Daily Inspiration</h2><p id="dailyQuote">"Loading quote..."</p><button class="btn" onclick="newDailyQuote()">New Quote</button></section><h2 style="text-align:center;margin:3rem 0 1rem">Featured Quotes</h2><div class="featured-grid" id="featuredGrid"></div></div>
 
 <div id="reelsPage" class="page reels-page"><div class="reels-viewer" id="reelsViewer"><p style="text-align:center;padding:2rem">No posts yet. Be the first to post! 🔥</p></div></div>
@@ -213,9 +212,7 @@ nav a:hover { color: var(--accent); transform: translateY(-2px); }
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
 
 <script>
-// ================== PASTE YOUR FIREBASE CONFIG HERE ==================
-// YOUR REAL FIREBASE CONFIG
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+// ================== FIREBASE CONFIG ==================
 const firebaseConfig = {
   apiKey: "AIzaSyDC7MtlDi8Sl7ai3GjEnh06AoR7hZV_4Vs",
   authDomain: "broxenme-quotes.firebaseapp.com",
@@ -232,13 +229,29 @@ const storage = firebase.storage();
 
 let currentUser = null;
 
-// // RANDOM WALLPAPER
+// RANDOM WALLPAPER
 const randomImages = [
     'https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=1920',
     'https://images.unsplash.com/photo-1470252649378-9c29790c9c29?w=1920',
     'https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=1920'
 ];
 document.body.style.backgroundImage = `url('${randomImages[Math.floor(Math.random()*randomImages.length)]}')`;
+
+// PROFILE UPLOAD - FREE IMGBB
+document.getElementById('profileUpload').addEventListener('change', async (e) => {
+    const file = e.target.files[0];
+    if(!file ||!currentUser) return;
+    const formData = new FormData();
+    formData.append("image", file);
+    const res = await fetch("https://api.imgbb.com/1/upload?key=0eba1dca60f5f8b89d986216b93ba4a4", {
+        method: "POST",
+        body: formData
+    });
+    const data = await res.json();
+    const url = data.data.url;
+    document.getElementById('profilePic').src = url;
+    db.collection('users').doc(currentUser.uid).update({photoURL: url});
+});
 
 // AUTH
 auth.onAuthStateChanged(user => {
@@ -276,27 +289,6 @@ function login(){
 }
 
 function logout(){ auth.signOut(); }
-
-// PROFILE UPLOAD
-// PROFILE UPLOAD - FREE VERSION USING IMGBB
-document.getElementById('profileUpload').addEventListener('change', async (e) => {
-    const file = e.target.files[0];
-    if(!file ||!currentUser) return;
-    
-    const formData = new FormData();
-    formData.append("image", file);
-    
-    // Get free API key from https://api.imgbb.com/
-    const res = await fetch("https://api.imgbb.com/1/upload?key=YOUR_IMGBB_KEY", {
-        method: "POST",
-        body: formData
-    });
-    const data = await res.json();
-    const url = data.data.url;
-    
-    document.getElementById('profilePic').src = url;
-    db.collection('users').doc(currentUser.uid).update({photoURL: url});
-});
 
 // POSTS
 function createPost(){
@@ -352,7 +344,7 @@ function loadCommunityPosts(){
 }
 
 // CHAT
-function loadChats(){ /* simplified for now */ }
+function loadChats(){}
 function openChat(name){ currentChat = name; document.getElementById('chatName').innerText = name; document.getElementById('chatWindow').classList.add('active'); }
 function closeChat(){ document.getElementById('chatWindow').classList.remove('active'); }
 function sendMsg(){ const input = document.getElementById('chatInput'); if(!input.value || !currentUser) return; db.collection('chats').add({from: currentUser.uid, text: input.value, time: firebase.firestore.FieldValue.serverTimestamp()}); input.value = ''; }
@@ -368,14 +360,6 @@ function showPage(pageId){ document.querySelectorAll('.page').forEach(page => pa
 function switchTab(tab, e){ document.querySelectorAll('.tab').forEach(t => t.classList.remove('active')); e.target.classList.add('active'); document.getElementById('loginForm').style.display = tab === 'login'? 'block' : 'none'; document.getElementById('signupForm').style.display = tab === 'signup'? 'block' : 'none'; }
 const navMenu = document.getElementById('navMenu'); const hamburger = document.querySelector('.hamburger'); function toggleMenu(){ navMenu.classList.toggle('active'); hamburger.classList.toggle('active'); } function closeMenu(){ navMenu.classList.remove('active'); hamburger.classList.remove('active'); }
 const toggle = document.getElementById('themeToggle'); if(localStorage.getItem('theme')==='light') document.body.classList.add('light'); toggle.innerText = document.body.classList.contains('light')? '🌙' : '☀️'; toggle.onclick = () => { document.body.classList.toggle('light'); const theme = document.body.classList.contains('light')? 'light' : 'dark'; localStorage.setItem('theme', theme); toggle.innerText = theme === 'light'? '🌙' : '☀️'; }
-    // RANDOM WALLPAPER FIX
-const randomImages = [
-    'https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=1920',
-    'https://images.unsplash.com/photo-1470252649378-9c29790c9c29?w=1920',
-    'https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=1920'
-];
-const randomBg = randomImages[Math.floor(Math.random()*randomImages.length)];
-document.body.style.backgroundImage = `url('${randomBg}')`;
 </script>
 </body>
 </html>
