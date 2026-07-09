@@ -21,6 +21,7 @@
     --success: #2ed573;
     --glass-border: rgba(255,255,255,0.08);
     --glass-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    --admin-accent: #FFD700;
 }
 
 .light {
@@ -51,6 +52,7 @@ body {
     -webkit-backdrop-filter: blur(20px);
     border: 1px solid var(--glass-border);
     box-shadow: var(--glass-shadow);
+    border-radius: 16px;
 }
 
 .glass-heavy {
@@ -59,6 +61,7 @@ body {
     -webkit-backdrop-filter: blur(30px);
     border: 1px solid var(--glass-border);
     box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+    border-radius: 20px;
 }
 
 nav {
@@ -99,7 +102,6 @@ nav {
 }
 
 nav ul { display: flex; gap: 1rem; list-style: none; align-items: center; }
-
 nav ul li a {
     color: var(--text);
     text-decoration: none;
@@ -113,32 +115,9 @@ nav ul li a {
     align-items: center;
     gap: 0.4rem;
 }
-
 nav ul li a:hover { color: var(--accent); background: rgba(173,255,47,0.08); }
 
-.nav-search-box {
-    display: flex;
-    align-items: center;
-    gap: 0.3rem;
-    background: rgba(255,255,255,0.05);
-    border-radius: 25px;
-    padding: 0.4rem 1rem;
-    border: 1px solid var(--glass-border);
-}
-
-.nav-search-box input {
-    background: none;
-    border: none;
-    color: var(--text);
-    outline: none;
-    font-size: 0.8rem;
-    width: 120px;
-}
-
-.nav-search-box i { color: var(--muted); font-size: 0.8rem; }
-
 .nav-right { display: flex; gap: 0.5rem; align-items: center; }
-
 .nav-btn {
     background: var(--accent);
     border: none;
@@ -150,9 +129,7 @@ nav ul li a:hover { color: var(--accent); background: rgba(173,255,47,0.08); }
     font-size: 0.85rem;
     transition: 0.2s;
 }
-
 .nav-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(173,255,47,0.3); }
-
 #themeToggle {
     background: none;
     border: 2px solid var(--accent);
@@ -165,7 +142,6 @@ nav ul li a:hover { color: var(--accent); background: rgba(173,255,47,0.08); }
     align-items: center;
     justify-content: center;
 }
-
 .hamburger { display: none; cursor: pointer; font-size: 1.3rem; color: var(--text); }
 
 .page { display: none; min-height: 85vh; animation: fadeIn 0.4s ease; }
@@ -198,11 +174,12 @@ nav ul li a:hover { color: var(--accent); background: rgba(173,255,47,0.08); }
 .btn-outline:hover { background: var(--accent); color: #000; }
 .btn-small { padding: 0.5rem 1rem; font-size: 0.8rem; width: auto; }
 .btn-danger { background: var(--danger); color: white; }
+.btn-admin { background: var(--admin-accent); color: #000; }
 
 /* REELS */
 .reels-page-container { height: calc(100vh - 65px); overflow-y: scroll; scroll-snap-type: y mandatory; scroll-behavior: smooth; }
 .reels-page-container::-webkit-scrollbar { width: 0; }
-.reel-slide { height: calc(100vh - 65px); width: 100%; max-width: 100%; scroll-snap-align: start; position: relative; display: flex; align-items: center; justify-content: center; background-size: cover; background-position: center; }
+.reel-slide { height: calc(100vh - 65px); width: 100%; scroll-snap-align: start; position: relative; display: flex; align-items: center; justify-content: center; background-size: cover; background-position: center; }
 .reel-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(0deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.2) 40%, rgba(0,0,0,0.3) 100%); }
 .reel-content-area { position: relative; z-index: 2; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; padding: 1rem 1rem 1.5rem; }
 .reel-quote-text { font-size: clamp(1.2rem, 4vw, 2rem); font-weight: 800; color: white; text-shadow: 2px 2px 15px rgba(0,0,0,0.9); margin-bottom: 1rem; line-height: 1.3; }
@@ -211,7 +188,9 @@ nav ul li a:hover { color: var(--accent); background: rgba(173,255,47,0.08); }
 .reel-user-row { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.4rem; }
 .reel-user-pic { width: 36px; height: 36px; border-radius: 50%; border: 2px solid var(--accent); object-fit: cover; }
 .reel-user-name { color: white; font-weight: 700; font-size: 0.9rem; }
-.reel-music-display { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.8rem; cursor: pointer; }
+.reel-stats-row { display: flex; gap: 1rem; font-size: 0.7rem; color: rgba(255,255,255,0.5); margin-bottom: 0.3rem; }
+.reel-stats-row span { display: flex; align-items: center; gap: 0.3rem; }
+.reel-music-display { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.8rem; cursor: pointer; padding: 0.4rem 0.8rem; background: rgba(0,0,0,0.4); border-radius: 20px; width: fit-content; }
 .reel-music-display i { color: var(--accent); font-size: 0.9rem; }
 .reel-music-text { color: white; font-size: 0.75rem; }
 .reel-actions-sidebar { position: absolute; right: 0.8rem; bottom: 120px; display: flex; flex-direction: column; gap: 1.2rem; z-index: 5; }
@@ -222,7 +201,6 @@ nav ul li a:hover { color: var(--accent); background: rgba(173,255,47,0.08); }
 .reel-action-btn .action-label { color: white; font-size: 0.65rem; font-weight: 700; }
 .reels-search-overlay { position: fixed; top: 65px; left: 0; right: 0; z-index: 50; padding: 0.8rem 1rem; display: flex; justify-content: center; }
 .reels-search-overlay input { width: 100%; max-width: 450px; padding: 0.7rem 1.2rem; border-radius: 25px; border: 1px solid rgba(255,255,255,0.2); background: rgba(0,0,0,0.4); backdrop-filter: blur(15px); color: white; outline: none; font-size: 0.9rem; }
-.reels-search-overlay input::placeholder { color: rgba(255,255,255,0.5); }
 
 /* COMMENTS */
 .comments-panel { position: absolute; bottom: 0; left: 0; width: 100%; max-height: 45%; background: rgba(0,0,0,0.95); backdrop-filter: blur(20px); border-radius: 20px 20px 0 0; padding: 1rem; display: none; flex-direction: column; z-index: 20; animation: slideUp 0.3s ease; }
@@ -257,60 +235,26 @@ nav ul li a:hover { color: var(--accent); background: rgba(173,255,47,0.08); }
 .profile-posts-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: 1rem; }
 .post-grid-item { aspect-ratio: 1; border-radius: 12px; display: flex; align-items: center; justify-content: center; padding: 0.6rem; text-align: center; font-weight: bold; color: white; cursor: pointer; transition: 0.2s; font-size: 0.7rem; word-break: break-word; position: relative; }
 .post-grid-item:hover { transform: scale(1.05); }
-.post-grid-item .delete-btn { position: absolute; top: 5px; right: 5px; background: rgba(255,0,0,0.7); border-radius: 50%; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 0.6rem; opacity: 0; transition: 0.2s; }
+.post-grid-item .post-stats-overlay { position: absolute; bottom: 0; left: 0; right: 0; background: rgba(0,0,0,0.7); padding: 0.3rem; font-size: 0.55rem; display: flex; justify-content: space-around; border-radius: 0 0 12px 12px; }
+.post-grid-item .delete-btn { position: absolute; top: 5px; right: 5px; background: rgba(255,0,0,0.7); border-radius: 50%; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 0.6rem; opacity: 0; transition: 0.2s; z-index: 5; }
 .post-grid-item:hover .delete-btn { opacity: 1; }
 
-/* SEARCH ACCOUNTS PAGE */
-.search-page { max-width: 600px; margin: 0 auto; padding: 1rem; }
-.search-page input { width: 100%; padding: 1rem; border-radius: 25px; border: 2px solid var(--accent); background: var(--card); color: var(--text); outline: none; font-size: 0.9rem; margin-bottom: 1rem; }
-.user-card { display: flex; align-items: center; gap: 0.8rem; padding: 0.8rem; background: var(--card); border-radius: 12px; margin: 0.5rem 0; cursor: pointer; transition: 0.2s; }
-.user-card:hover { transform: translateY(-2px); }
-.user-card img { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; }
-.user-card .user-info { flex: 1; }
+/* ADMIN PANEL */
+.admin-panel { max-width: 900px; margin: 0 auto; padding: 1rem; }
+.admin-header { background: linear-gradient(135deg, #1a1a2e, #16213e); padding: 2rem; border-radius: 20px; margin-bottom: 1.5rem; text-align: center; }
+.admin-header h1 { color: var(--admin-accent); font-size: 2rem; }
+.admin-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+.admin-stat-card { background: var(--card); padding: 1.2rem; border-radius: 14px; text-align: center; border: 1px solid var(--glass-border); }
+.admin-stat-card h2 { font-size: 2rem; color: var(--admin-accent); }
+.admin-stat-card p { font-size: 0.8rem; color: var(--muted); margin-top: 0.3rem; }
+.admin-section { background: var(--card); padding: 1.5rem; border-radius: 14px; margin-bottom: 1rem; border: 1px solid var(--glass-border); }
+.admin-section h3 { margin-bottom: 1rem; color: var(--admin-accent); }
+.admin-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+.admin-table th, .admin-table td { padding: 0.6rem; text-align: left; border-bottom: 1px solid var(--glass-border); }
+.admin-table th { color: var(--accent); font-weight: 700; }
+.admin-actions { display: flex; gap: 0.3rem; }
 
-/* MODALS */
-.modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 2000; align-items: center; justify-content: center; padding: 0.5rem; }
-.modal.active { display: flex; }
-.modal-dialog { background: var(--card); backdrop-filter: blur(25px); border: 1px solid var(--glass-border); padding: 1.5rem; border-radius: 20px; width: 100%; max-width: 480px; max-height: 85vh; overflow-y: auto; }
-.modal-title { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 1.2rem; font-size: 1.2rem; font-weight: 700; }
-.modal-title i { color: var(--accent); }
-.form-input { width: 100%; padding: 0.8rem 1rem; margin: 0.4rem 0; border-radius: 12px; border: 1px solid var(--glass-border); background: rgba(0,0,0,0.2); color: var(--text); outline: none; font-size: 0.9rem; }
-.form-input:focus { border-color: var(--accent); }
-.form-label { display: block; font-weight: 600; margin-top: 0.8rem; margin-bottom: 0.3rem; color: var(--muted); font-size: 0.8rem; }
-
-/* SONG SEARCH */
-.song-search-container { position: relative; }
-.song-search-container .search-icon-abs { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); color: var(--accent); }
-.song-results-dropdown { max-height: 180px; overflow-y: auto; border-radius: 10px; background: rgba(0,0,0,0.4); margin-top: 0.3rem; }
-.song-result-row { display: flex; align-items: center; gap: 0.6rem; padding: 0.6rem 0.8rem; cursor: pointer; transition: 0.2s; border-bottom: 1px solid rgba(255,255,255,0.03); }
-.song-result-row:hover { background: rgba(173,255,47,0.1); }
-.song-result-row img { width: 42px; height: 42px; border-radius: 8px; object-fit: cover; }
-.song-result-info { flex: 1; }
-.song-result-title { font-weight: 600; font-size: 0.85rem; }
-.song-result-artist { font-size: 0.75rem; color: var(--muted); }
-.selected-song-card { display: flex; align-items: center; gap: 0.6rem; padding: 0.6rem; background: rgba(173,255,47,0.1); border-radius: 12px; margin-top: 0.4rem; }
-.playing-indicator { display: flex; gap: 2px; align-items: flex-end; height: 15px; }
-.playing-indicator span { width: 2px; background: var(--accent); border-radius: 2px; animation: wave 0.6s infinite alternate; }
-.playing-indicator span:nth-child(1) { height: 8px; animation-delay: 0s; }
-.playing-indicator span:nth-child(2) { height: 14px; animation-delay: 0.15s; }
-.playing-indicator span:nth-child(3) { height: 6px; animation-delay: 0.3s; }
-.playing-indicator span:nth-child(4) { height: 12px; animation-delay: 0.45s; }
-@keyframes wave { to { height: 3px; } }
-
-/* CHAT POPUP */
-.chat-popup { position: fixed; bottom: 20px; right: 20px; z-index: 1500; }
-.chat-window { display: none; position: fixed; top: 65px; left: 0; width: 100%; height: calc(100vh - 65px); background: var(--bg); z-index: 999; flex-direction: column; }
-.chat-window.active { display: flex; }
-.chat-header-bar { display: flex; align-items: center; gap: 0.8rem; padding: 0.8rem; background: #075E54; color: white; }
-.chat-messages-area { flex: 1; overflow-y: auto; padding: 1rem; background: #1a1a2e; display: flex; flex-direction: column; gap: 0.3rem; }
-.chat-input-row { display: flex; gap: 0.5rem; padding: 0.6rem; background: var(--card); }
-.msg-bubble { padding: 0.5rem 0.8rem; border-radius: 8px; max-width: 75%; font-size: 0.9rem; }
-.msg-bubble.me { background: #dcf8c6; color: #000; align-self: flex-end; }
-.msg-bubble.other { background: white; color: #000; align-self: flex-start; }
-.chat-list-row { display: flex; gap: 0.8rem; padding: 0.8rem; cursor: pointer; transition: 0.2s; border-radius: 10px; align-items: center; }
-.chat-list-row:hover { background: rgba(255,255,255,0.03); }
-
-/* STORIES & FEED */
+/* FEED & STORIES */
 .stories-row { display: flex; gap: 0.8rem; padding: 1rem 0; overflow-x: auto; }
 .stories-row::-webkit-scrollbar { height: 0; }
 .story-circle { width: 60px; height: 60px; border-radius: 50%; padding: 3px; background: linear-gradient(135deg, var(--accent), var(--purple), #EC4899); cursor: pointer; flex-shrink: 0; }
@@ -324,12 +268,46 @@ nav ul li a:hover { color: var(--accent); background: rgba(173,255,47,0.08); }
 .feed-card-actions span { cursor: pointer; display: flex; align-items: center; gap: 0.4rem; }
 .feed-card-actions span:hover { color: var(--accent); }
 
+/* GROUP CHAT */
+.chat-window { display: none; position: fixed; top: 65px; left: 0; width: 100%; height: calc(100vh - 65px); background: var(--bg); z-index: 999; flex-direction: column; }
+.chat-window.active { display: flex; }
+.chat-header-bar { display: flex; align-items: center; gap: 0.8rem; padding: 0.8rem; background: #075E54; color: white; }
+.chat-messages-area { flex: 1; overflow-y: auto; padding: 1rem; background: #1a1a2e; display: flex; flex-direction: column; gap: 0.3rem; }
+.chat-input-row { display: flex; gap: 0.5rem; padding: 0.6rem; background: var(--card); align-items: center; }
+.msg-bubble { padding: 0.5rem 0.8rem; border-radius: 8px; max-width: 75%; font-size: 0.9rem; }
+.msg-bubble.me { background: #dcf8c6; color: #000; align-self: flex-end; }
+.msg-bubble.other { background: white; color: #000; align-self: flex-start; }
+.msg-bubble .msg-sender { font-size: 0.7rem; font-weight: 700; color: var(--accent); margin-bottom: 0.2rem; }
+.chat-list-row { display: flex; gap: 0.8rem; padding: 0.8rem; cursor: pointer; transition: 0.2s; border-radius: 10px; align-items: center; }
+.chat-list-row:hover { background: rgba(255,255,255,0.03); }
+.chat-list-row .member-count { background: var(--accent); color: #000; border-radius: 50%; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 700; }
+
+/* MODALS */
+.modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 2000; align-items: center; justify-content: center; padding: 0.5rem; }
+.modal.active { display: flex; }
+.modal-dialog { background: var(--card); backdrop-filter: blur(25px); border: 1px solid var(--glass-border); padding: 1.5rem; border-radius: 20px; width: 100%; max-width: 480px; max-height: 85vh; overflow-y: auto; }
+.modal-title { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 1.2rem; font-size: 1.2rem; font-weight: 700; }
+.modal-title i { color: var(--accent); }
+.form-input { width: 100%; padding: 0.8rem 1rem; margin: 0.4rem 0; border-radius: 12px; border: 1px solid var(--glass-border); background: rgba(0,0,0,0.2); color: var(--text); outline: none; font-size: 0.9rem; }
+.form-input:focus { border-color: var(--accent); }
+.form-label { display: block; font-weight: 600; margin-top: 0.8rem; margin-bottom: 0.3rem; color: var(--muted); font-size: 0.8rem; }
+
+/* SONG SEARCH */
+.song-search-container { position: relative; }
+.song-results-dropdown { max-height: 180px; overflow-y: auto; border-radius: 10px; background: rgba(0,0,0,0.4); margin-top: 0.3rem; }
+.song-result-row { display: flex; align-items: center; gap: 0.6rem; padding: 0.6rem 0.8rem; cursor: pointer; transition: 0.2s; border-bottom: 1px solid rgba(255,255,255,0.03); }
+.song-result-row:hover { background: rgba(173,255,47,0.1); }
+.song-result-row img { width: 42px; height: 42px; border-radius: 8px; object-fit: cover; }
+.selected-song-card { display: flex; align-items: center; gap: 0.6rem; padding: 0.6rem; background: rgba(173,255,47,0.1); border-radius: 12px; margin-top: 0.4rem; }
+.playing-indicator { display: flex; gap: 2px; align-items: flex-end; height: 15px; }
+.playing-indicator span { width: 2px; background: var(--accent); border-radius: 2px; animation: wave 0.6s infinite alternate; }
+.playing-indicator span:nth-child(1) { height: 8px; } .playing-indicator span:nth-child(2) { height: 14px; animation-delay: 0.15s; } .playing-indicator span:nth-child(3) { height: 6px; animation-delay: 0.3s; } .playing-indicator span:nth-child(4) { height: 12px; animation-delay: 0.45s; }
+@keyframes wave { to { height: 3px; } }
+
 /* TOASTS */
 .toast-container { position: fixed; top: 75px; right: 15px; z-index: 5000; display: flex; flex-direction: column; gap: 8px; }
 .toast { padding: 0.8rem 1.2rem; border-radius: 10px; color: white; font-weight: 600; min-width: 200px; backdrop-filter: blur(20px); animation: slideInRight 0.3s ease; font-size: 0.85rem; }
-.toast.success { background: rgba(46,213,115,0.95); }
-.toast.error { background: rgba(255,71,87,0.95); }
-.toast.info { background: rgba(0,122,122,0.95); }
+.toast.success { background: rgba(46,213,115,0.95); } .toast.error { background: rgba(255,71,87,0.95); } .toast.info { background: rgba(0,122,122,0.95); }
 @keyframes slideInRight { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
 .spinner { border: 3px solid rgba(255,255,255,0.1); border-top: 3px solid var(--accent); border-radius: 50%; width: 28px; height: 28px; animation: spin 1s linear infinite; margin: 1rem auto; }
 @keyframes spin { to { transform: rotate(360deg); } }
@@ -338,15 +316,14 @@ nav ul li a:hover { color: var(--accent); background: rgba(173,255,47,0.08); }
     nav ul { position: fixed; top: 65px; left: -100%; width: 100%; height: calc(100vh - 65px); background: var(--bg); flex-direction: column; align-items: center; padding-top: 2rem; transition: 0.3s; gap: 1.2rem; z-index: 999; }
     nav ul.active { left: 0; }
     .hamburger { display: block; }
-    .nav-search-box { display: none; }
     .reel-actions-sidebar { right: 0.4rem; bottom: 100px; gap: 1rem; }
     .reel-action-btn .action-icon { width: 38px; height: 38px; font-size: 1.1rem; }
     .profile-stats-row { grid-template-columns: repeat(2, 1fr); }
-    .profile-posts-grid { grid-template-columns: repeat(3, 1fr); }
+    .admin-stats { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 480px) {
     .profile-posts-grid { grid-template-columns: repeat(2, 1fr); }
-    .reel-actions-sidebar { right: 0.2rem; bottom: 80px; gap: 0.8rem; }
+    .admin-stats { grid-template-columns: 1fr; }
 }
 </style>
 </head>
@@ -355,15 +332,14 @@ nav ul li a:hover { color: var(--accent); background: rgba(173,255,47,0.08); }
 <div class="toast-container" id="toastContainer"></div>
 
 <nav>
-    <div class="nav-logo" onclick="showPage('homePage')">
-        <div class="icon"><i class="fa fa-quote-right"></i></div>BROXENME
-    </div>
+    <div class="nav-logo" onclick="showPage('homePage')"><div class="icon"><i class="fa fa-quote-right"></i></div>BROXENME</div>
     <ul id="navMenu">
         <li><a onclick="showPage('homePage')"><i class="fa fa-home"></i> Home</a></li>
         <li><a onclick="showPage('reelsPage')"><i class="fa fa-play"></i> Reels</a></li>
         <li><a onclick="showPage('communityPage')"><i class="fa fa-users"></i> Community</a></li>
         <li><a onclick="showPage('searchAccountsPage')"><i class="fa fa-search"></i> Search</a></li>
         <li><a onclick="showPage('profilePage')"><i class="fa fa-user"></i> Profile</a></li>
+        <li id="adminNavLink" style="display:none"><a onclick="showPage('adminPage')"><i class="fa fa-crown"></i> Admin</a></li>
     </ul>
     <div class="nav-right">
         <button class="nav-btn" id="authBtn" onclick="showPage('loginPage')">Login</button>
@@ -372,64 +348,39 @@ nav ul li a:hover { color: var(--accent); background: rgba(173,255,47,0.08); }
     </div>
 </nav>
 
+<!-- PAGES -->
 <div id="homePage" class="page active">
     <section class="hero-full" id="heroSection">
         <h1>BROX<span>ENME</span></h1>
         <p style="color:rgba(255,255,255,0.7);font-size:1.1rem">Daily Inspiration for your soul</p>
-        <div class="daily-quote-box glass-heavy">
-            <p id="dailyQuote">"Loading your inspiration..."</p>
-            <p class="author" id="quoteAuthor"></p>
-        </div>
+        <div class="daily-quote-box glass-heavy"><p id="dailyQuote">"Loading..."</p><p class="author" id="quoteAuthor"></p></div>
         <button class="btn" id="newQuoteBtn" onclick="newDailyQuote()"><i class="fa fa-refresh"></i> New Quote</button>
     </section>
 </div>
 
 <div id="reelsPage" class="page" style="padding:0">
-    <div class="reels-search-overlay">
-        <input type="text" id="searchInput" placeholder="🔍 Search quotes, tags, users..." oninput="searchQuotes()">
-    </div>
-    <div class="reels-page-container" id="reelsViewer">
-        <div style="text-align:center;padding:4rem;color:var(--muted)"><div class="spinner"></div><p>Loading reels...</p></div>
-    </div>
+    <div class="reels-search-overlay"><input type="text" id="searchInput" placeholder="🔍 Search..." oninput="searchQuotes()"></div>
+    <div class="reels-page-container" id="reelsViewer"><div style="text-align:center;padding:4rem"><div class="spinner"></div></div></div>
 </div>
 
-<div id="searchAccountsPage" class="page">
-    <div class="search-page">
-        <h2 style="margin-bottom:1rem"><i class="fa fa-search"></i> Discover People</h2>
-        <input type="text" id="accountSearchInput" placeholder="Search by name or username..." oninput="searchAccounts()">
-        <div id="accountsList"></div>
-    </div>
-</div>
+<div id="searchAccountsPage" class="page"><div class="search-page" style="max-width:600px;margin:0 auto;padding:1rem"><h2><i class="fa fa-search"></i> Discover People</h2><input type="text" id="accountSearchInput" placeholder="Search..." class="form-input" oninput="searchAccounts()" style="margin:1rem 0"><div id="accountsList"></div></div></div>
 
 <div id="communityPage" class="page" style="max-width:650px;margin:0 auto;padding:0.5rem">
     <div style="display:flex;gap:0.5rem;margin-bottom:1rem;border-bottom:1px solid var(--glass-border);padding-bottom:0.5rem">
         <button class="btn btn-small active" id="tabFeed" onclick="switchCommTab('feed')"><i class="fa fa-newspaper"></i> Feed</button>
-        <button class="btn btn-small" id="tabChats" onclick="switchCommTab('chats')"><i class="fa fa-comments"></i> Chats</button>
+        <button class="btn btn-small" id="tabChats" onclick="switchCommTab('chats')"><i class="fa fa-comments"></i> Groups</button>
     </div>
-    <div class="stories-row" id="storiesRow">
-        <div style="text-align:center;flex-shrink:0;cursor:pointer" onclick="openCreateStory()">
-            <div class="story-circle add-story"><i class="fa fa-plus" style="font-size:1.3rem;color:var(--accent)"></i></div>
-            <div style="font-size:0.6rem;text-align:center">Add Story</div>
-        </div>
-    </div>
-    <div id="feedTabContent">
-        <button class="btn btn-outline" onclick="openCreateFeedPost()" style="margin-bottom:1rem"><i class="fa fa-plus"></i> Create Post</button>
-        <div id="communityFeed"><div style="text-align:center;padding:2rem"><div class="spinner"></div></div></div>
-    </div>
-    <div id="chatsTabContent" style="display:none">
-        <button class="btn btn-outline" onclick="openNewChatPopup()" style="margin-bottom:1rem"><i class="fa fa-plus"></i> New Chat</button>
-        <div id="chatList"></div>
-    </div>
+    <div class="stories-row" id="storiesRow"><div style="text-align:center;flex-shrink:0;cursor:pointer" onclick="openCreateStory()"><div class="story-circle add-story"><i class="fa fa-plus"></i></div><div style="font-size:0.6rem">Story</div></div></div>
+    <div id="feedTabContent"><button class="btn btn-outline" onclick="openCreateFeedPost()" style="margin-bottom:1rem"><i class="fa fa-plus"></i> Create Post</button><div id="communityFeed"><div class="spinner"></div></div></div>
+    <div id="chatsTabContent" style="display:none"><button class="btn btn-outline" onclick="openNewGroupChat()" style="margin-bottom:1rem"><i class="fa fa-plus"></i> Create Group</button><div id="chatList"></div></div>
 </div>
 
 <div id="profilePage" class="page" style="max-width:700px;margin:0 auto">
     <div class="profile-wrapper glass">
-        <div class="profile-cover" id="profileHeaderBg">
-            <div class="profile-cover-overlay"></div>
-            <div class="profile-avatar-wrap">
-                <img src="https://placehold.co/90" class="profile-avatar" id="profilePic">
+        <div class="profile-cover" id="profileHeaderBg"><div class="profile-cover-overlay"></div>
+            <div class="profile-avatar-wrap"><img src="https://placehold.co/90" class="profile-avatar" id="profilePic">
                 <input type="file" id="profileUpload" accept="image/*" style="display:none">
-                <button class="btn-icon" onclick="document.getElementById('profileUpload').click()" style="position:absolute;bottom:0;right:0;width:28px;height:28px;font-size:0.6rem"><i class="fa fa-camera"></i></button>
+                <button class="btn-icon" onclick="document.getElementById('profileUpload').click()" style="position:absolute;bottom:0;right:0;width:28px;height:28px"><i class="fa fa-camera"></i></button>
             </div>
         </div>
         <div class="profile-info-section">
@@ -442,125 +393,36 @@ nav ul li a:hover { color: var(--accent); background: rgba(173,255,47,0.08); }
                 <div class="stat-card"><h3 id="followingCount">0</h3><p>Following</p></div>
                 <div class="stat-card"><h3 id="totalLikes">0</h3><p>Likes</p></div>
             </div>
-            <div class="profile-action-btns">
-                <button class="btn btn-small" onclick="openEditProfile()"><i class="fa fa-pen"></i> Edit</button>
-                <button class="btn btn-small" onclick="openCreatePostModal()"><i class="fa fa-plus"></i> New Quote</button>
-            </div>
-            <div class="profile-tabs">
-                <div class="profile-tab active" onclick="switchProfileTab('posts')"><i class="fa fa-grid-2"></i> My Posts</div>
-                <div class="profile-tab" onclick="switchProfileTab('saved')"><i class="fa fa-bookmark"></i> Saved</div>
-            </div>
+            <div class="profile-action-btns"><button class="btn btn-small" onclick="openEditProfile()"><i class="fa fa-pen"></i> Edit</button><button class="btn btn-small" onclick="openCreatePostModal()"><i class="fa fa-plus"></i> New Quote</button></div>
+            <div class="profile-tabs"><div class="profile-tab active" onclick="switchProfileTab('posts')"><i class="fa fa-grid-2"></i> My Posts</div><div class="profile-tab" onclick="switchProfileTab('saved')"><i class="fa fa-bookmark"></i> Saved</div></div>
             <div class="profile-posts-grid" id="profileGrid"></div>
             <div class="profile-posts-grid" id="savedGrid" style="display:none"></div>
         </div>
     </div>
 </div>
 
-<div id="loginPage" class="page">
-    <div class="modal-dialog glass-heavy" style="max-width:420px;margin:2rem auto">
-        <div class="modal-title"><i class="fa fa-lock"></i> Welcome to BROXENME</div>
-        <input type="email" id="loginEmail" placeholder="Email" class="form-input">
-        <input type="password" id="loginPass" placeholder="Password" class="form-input">
-        <button class="btn" onclick="login()" style="margin-top:0.8rem"><i class="fa fa-right-to-bracket"></i> <span id="loginBtnText">Login</span></button>
-        <button class="btn-outline" onclick="signup()" style="margin-top:0.5rem"><i class="fa fa-user-plus"></i> <span id="signupBtnText">Sign Up</span></button>
-        <p style="text-align:center;margin-top:1rem;font-size:0.8rem;color:var(--muted)">
-            <span id="authToggleText">Don't have an account?</span>
-            <a style="color:var(--accent);cursor:pointer" onclick="toggleAuthMode()" id="authToggleLink">Sign Up now</a>
-        </p>
-    </div>
-</div>
+<div id="adminPage" class="page"><div class="admin-panel"><div class="admin-header"><h1><i class="fa fa-crown"></i> Admin Dashboard</h1><p style="color:var(--muted)">BROXENME Management Console</p></div><div class="admin-stats" id="adminStats"></div><div class="admin-section"><h3><i class="fa fa-users"></i> User Management</h3><div style="overflow-x:auto"><table class="admin-table"><thead><tr><th>User</th><th>Email</th><th>Posts</th><th>Followers</th><th>Status</th><th>Actions</th></tr></thead><tbody id="adminUserTable"></tbody></table></div></div><div class="admin-section"><h3><i class="fa fa-image"></i> Post Management</h3><div id="adminPostsList" style="max-height:400px;overflow-y:auto"></div></div><div class="admin-section"><h3><i class="fa fa-chart-line"></i> Platform Analytics</h3><div id="adminAnalytics"></div></div><div class="admin-section"><h3><i class="fa fa-robot"></i> Auto-Post Bot</h3><p style="font-size:0.85rem;color:var(--muted);margin-bottom:1rem">Dummy accounts post 2 quotes every 12 hours automatically</p><button class="btn btn-admin" onclick="triggerDummyPosts()"><i class="fa fa-play"></i> Trigger Posts Now</button> <span id="botStatus" style="margin-left:1rem;font-size:0.85rem"></span></div></div></div>
+
+<div id="loginPage" class="page"><div class="modal-dialog glass-heavy" style="max-width:420px;margin:2rem auto"><div class="modal-title"><i class="fa fa-lock"></i> Welcome</div><input type="email" id="loginEmail" placeholder="Email" class="form-input"><input type="password" id="loginPass" placeholder="Password" class="form-input"><button class="btn" onclick="login()" style="margin-top:0.8rem"><i class="fa fa-right-to-bracket"></i> <span id="loginBtnText">Login</span></button><button class="btn-outline" onclick="signup()" style="margin-top:0.5rem"><i class="fa fa-user-plus"></i> <span id="signupBtnText">Sign Up</span></button><p style="text-align:center;margin-top:1rem;font-size:0.8rem"><span id="authToggleText">New here?</span> <a style="color:var(--accent);cursor:pointer" onclick="toggleAuthMode()">Sign Up</a></p></div></div>
 
 <!-- MODALS -->
-<div id="createPostModal" class="modal">
-    <div class="modal-dialog glass-heavy">
-        <div class="modal-title"><i class="fa fa-pen-to-square"></i> Create Quote Post</div>
-        <textarea id="newPostText" placeholder="Write something inspiring..." class="form-input" rows="2" oninput="updatePreview()"></textarea>
-        <label class="form-label"><i class="fa fa-image"></i> Background</label>
-        <input type="file" id="bgImageUpload" accept="image/*" onchange="uploadBgImage(event)" class="form-input">
-        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:0.4rem;margin:0.5rem 0" id="gradientPicker"></div>
-        <label class="form-label"><i class="fa fa-font"></i> Font</label>
-        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.3rem" id="fontPicker"></div>
-        <label class="form-label"><i class="fa fa-tags"></i> Tags</label>
-        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.3rem">
-            <button class="tag-btn" onclick="toggleTag(this,'Motivation')">#Motivation</button>
-            <button class="tag-btn" onclick="toggleTag(this,'Life')">#Life</button>
-            <button class="tag-btn" onclick="toggleTag(this,'Love')">#Love</button>
-            <button class="tag-btn" onclick="toggleTag(this,'Success')">#Success</button>
-            <button class="tag-btn" onclick="toggleTag(this,'Business')">#Business</button>
-            <button class="tag-btn" onclick="toggleTag(this,'Wisdom')">#Wisdom</button>
-        </div>
-        <label class="form-label"><i class="fa fa-music"></i> Add Music</label>
-        <div class="song-search-container">
-            <input type="text" id="songSearch" placeholder="Search for a song..." class="form-input" oninput="searchSong(this.value)">
-            <i class="fa fa-music search-icon-abs"></i>
-        </div>
-        <div class="song-results-dropdown" id="songResults"></div>
-        <div id="selectedSongDisplay"></div>
-        <div id="songPreviewPlayer"></div>
-        <div class="quote-preview-box" id="quotePreview" style="width:100%;aspect-ratio:1;border-radius:16px;display:flex;align-items:center;justify-content:center;padding:1.2rem;margin:1rem 0;text-align:center;font-size:1.2rem;font-weight:bold;color:white;background-size:cover;position:relative">
-            Your quote preview
-            <div style="position:absolute;bottom:8px;right:10px;font-size:0.6rem;color:rgba(255,255,255,0.6);display:flex;align-items:center;gap:0.3rem"><i class="fa fa-quote-right"></i> BROXENME</div>
-        </div>
-        <button class="btn" onclick="submitPost()"><i class="fa fa-paper-plane"></i> Post Quote</button>
-        <button class="btn-outline" onclick="closeCreatePostModal()" style="margin-top:0.4rem">Cancel</button>
-    </div>
-</div>
+<div id="createPostModal" class="modal"><div class="modal-dialog glass-heavy"><div class="modal-title"><i class="fa fa-pen-to-square"></i> Create Quote</div><textarea id="newPostText" placeholder="Write something inspiring..." class="form-input" rows="2" oninput="updatePreview()"></textarea><label class="form-label"><i class="fa fa-image"></i> Background</label><input type="file" id="bgImageUpload" accept="image/*" onchange="uploadBgImage(event)" class="form-input"><div style="display:grid;grid-template-columns:repeat(4,1fr);gap:0.4rem;margin:0.5rem 0" id="gradientPicker"></div><label class="form-label"><i class="fa fa-font"></i> Font</label><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.3rem" id="fontPicker"></div><label class="form-label"><i class="fa fa-tags"></i> Tags</label><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.3rem"><button class="tag-btn" onclick="toggleTag(this,'Motivation')">#Motivation</button><button class="tag-btn" onclick="toggleTag(this,'Life')">#Life</button><button class="tag-btn" onclick="toggleTag(this,'Love')">#Love</button><button class="tag-btn" onclick="toggleTag(this,'Success')">#Success</button><button class="tag-btn" onclick="toggleTag(this,'Business')">#Business</button><button class="tag-btn" onclick="toggleTag(this,'Wisdom')">#Wisdom</button></div><label class="form-label"><i class="fa fa-music"></i> Add Music</label><div class="song-search-container"><input type="text" id="songSearch" placeholder="Search song..." class="form-input" oninput="searchSong(this.value)"><i class="fa fa-music" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);color:var(--accent)"></i></div><div class="song-results-dropdown" id="songResults"></div><div id="selectedSongDisplay"></div><div id="songPreviewPlayer"></div><div id="quotePreview" style="width:100%;aspect-ratio:1;border-radius:16px;display:flex;align-items:center;justify-content:center;padding:1.2rem;margin:1rem 0;text-align:center;font-size:1.2rem;font-weight:bold;color:white;background-size:cover;position:relative">Preview<div style="position:absolute;bottom:8px;right:10px;font-size:0.6rem;color:rgba(255,255,255,0.6)"><i class="fa fa-quote-right"></i> BROXENME</div></div><button class="btn" onclick="submitPost()"><i class="fa fa-paper-plane"></i> Post</button><button class="btn-outline" onclick="closeCreatePostModal()" style="margin-top:0.4rem">Cancel</button></div></div>
 
-<div id="editProfileModal" class="modal">
-    <div class="modal-dialog glass-heavy">
-        <div class="modal-title"><i class="fa fa-user-pen"></i> Edit Profile</div>
-        <div style="text-align:center;margin-bottom:1rem"><img src="https://placehold.co/80" id="editProfilePicPreview" style="width:80px;height:80px;border-radius:50%;border:3px solid var(--accent)"></div>
-        <label class="form-label">Name</label><input type="text" id="editName" class="form-input">
-        <label class="form-label">Location</label><input type="text" id="editLocation" class="form-input">
-        <label class="form-label">Bio</label><textarea id="editBio" class="form-input" rows="2"></textarea>
-        <button class="btn" onclick="saveProfile()" style="margin-top:1rem"><i class="fa fa-check"></i> Save</button>
-        <button class="btn-outline" onclick="closeEditProfile()" style="margin-top:0.4rem">Cancel</button>
-    </div>
-</div>
+<div id="editProfileModal" class="modal"><div class="modal-dialog glass-heavy"><div class="modal-title"><i class="fa fa-user-pen"></i> Edit Profile</div><div style="text-align:center"><img src="https://placehold.co/80" id="editProfilePicPreview" style="width:80px;height:80px;border-radius:50%;border:3px solid var(--accent)"></div><label class="form-label">Name</label><input type="text" id="editName" class="form-input"><label class="form-label">Location</label><input type="text" id="editLocation" class="form-input"><label class="form-label">Bio</label><textarea id="editBio" class="form-input" rows="2"></textarea><button class="btn" onclick="saveProfile()" style="margin-top:1rem">Save</button><button class="btn-outline" onclick="closeEditProfile()" style="margin-top:0.4rem">Cancel</button></div></div>
 
-<div id="createFeedModal" class="modal">
-    <div class="modal-dialog glass-heavy">
-        <div class="modal-title"><i class="fa fa-newspaper"></i> Create Feed Post</div>
-        <textarea id="feedPostText" placeholder="What's on your mind?" class="form-input" rows="3"></textarea>
-        <input type="file" id="feedImageUpload" accept="image/*" class="form-input" onchange="previewFeedImage(event)">
-        <img id="feedImagePreview" style="width:100%;border-radius:12px;margin:0.5rem 0;display:none">
-        <button class="btn" onclick="submitFeedPost()"><i class="fa fa-paper-plane"></i> Post</button>
-        <button class="btn-outline" onclick="document.getElementById('createFeedModal').classList.remove('active')" style="margin-top:0.4rem">Cancel</button>
-    </div>
-</div>
+<div id="createFeedModal" class="modal"><div class="modal-dialog glass-heavy"><div class="modal-title"><i class="fa fa-newspaper"></i> Create Post</div><textarea id="feedPostText" placeholder="What's on your mind?" class="form-input" rows="3"></textarea><input type="file" id="feedImageUpload" accept="image/*" class="form-input" onchange="previewFeedImage(event)"><img id="feedImagePreview" style="width:100%;border-radius:12px;margin:0.5rem 0;display:none"><button class="btn" onclick="submitFeedPost()">Post</button><button class="btn-outline" onclick="document.getElementById('createFeedModal').classList.remove('active')" style="margin-top:0.4rem">Cancel</button></div></div>
 
-<div id="newChatModal" class="modal">
-    <div class="modal-dialog glass-heavy">
-        <div class="modal-title"><i class="fa fa-comments"></i> New Chat</div>
-        <label class="form-label">Chat Name</label>
-        <input type="text" id="newChatName" placeholder="Give this chat a name..." class="form-input">
-        <label class="form-label">Your Display Name</label>
-        <input type="text" id="newChatDisplayName" class="form-input" readonly>
-        <p style="font-size:0.75rem;color:var(--muted);margin-top:0.3rem">This uses your profile name</p>
-        <button class="btn" onclick="createNewChat()" style="margin-top:1rem"><i class="fa fa-plus"></i> Create Chat</button>
-        <button class="btn-outline" onclick="document.getElementById('newChatModal').classList.remove('active')" style="margin-top:0.4rem">Cancel</button>
-    </div>
-</div>
+<div id="newGroupModal" class="modal"><div class="modal-dialog glass-heavy"><div class="modal-title"><i class="fa fa-users"></i> Create Group Chat</div><label class="form-label">Group Name</label><input type="text" id="groupName" placeholder="Enter group name..." class="form-input"><label class="form-label">Description</label><input type="text" id="groupDesc" placeholder="What's this group about?" class="form-input"><button class="btn" onclick="createGroupChat()" style="margin-top:1rem">Create Group</button><button class="btn-outline" onclick="document.getElementById('newGroupModal').classList.remove('active')" style="margin-top:0.4rem">Cancel</button></div></div>
 
-<div id="chatWindow" class="chat-window">
-    <div class="chat-header-bar">
-        <button onclick="closeChat()" style="background:none;border:none;color:white;font-size:1.2rem;cursor:pointer"><i class="fa fa-arrow-left"></i></button>
-        <img src="https://placehold.co/38" id="chatAvatar" style="width:38px;height:38px;border-radius:50%">
-        <div><b id="chatName">Chat</b><div style="font-size:0.65rem;opacity:0.8">online</div></div>
-    </div>
-    <div class="chat-messages-area" id="chatMessages"></div>
-    <div class="chat-input-row">
-        <input type="text" id="chatInput" placeholder="Message..." class="form-input" style="margin:0;border-radius:20px" onkeypress="if(event.key==='Enter')sendMsg()">
-        <button class="btn btn-icon" onclick="sendMsg()" style="background:#25D366;color:white;width:42px;height:42px"><i class="fa fa-paper-plane"></i></button>
-    </div>
-</div>
+<div id="chatWindow" class="chat-window"><div class="chat-header-bar"><button onclick="closeChat()" style="background:none;border:none;color:white;font-size:1.2rem;cursor:pointer"><i class="fa fa-arrow-left"></i></button><div><b id="chatName">Chat</b><div style="font-size:0.65rem;opacity:0.8"><span id="chatMemberCount"></span> members</div></div></div><div class="chat-messages-area" id="chatMessages"></div><div class="chat-input-row"><input type="text" id="chatInput" placeholder="Message..." class="form-input" style="margin:0;border-radius:20px" onkeypress="if(event.key==='Enter')sendMsg()"><button class="btn btn-icon" onclick="sendMsg()" style="background:#25D366;color:white;width:42px;height:42px"><i class="fa fa-paper-plane"></i></button></div></div>
 
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 
 <script>
-// FIREBASE
+const ADMIN_UID = 'lGCfuMhmsdSh1yBcXrtrgStsvq13'; // Your admin UID
+
 const firebaseConfig = {
     apiKey: "AIzaSyDC7MtlDi8Sl7ai3GjEnh06AoR7hZV_4Vs",
     authDomain: "broxenme-quotes.firebaseapp.com",
@@ -577,11 +439,11 @@ db.enablePersistence().catch(()=>{});
 // CONSTANTS
 const gradients=['linear-gradient(135deg,#667eea,#764ba2)','linear-gradient(135deg,#f093fb,#f5576c)','linear-gradient(135deg,#43e97b,#38f9d7)','linear-gradient(135deg,#fa709a,#fee140)','linear-gradient(135deg,#30cfd0,#330867)','linear-gradient(135deg,#a8edea,#fed6e3)','linear-gradient(135deg,#ff9a9e,#fecfef)','linear-gradient(135deg,#ffecd2,#fcb69f)','linear-gradient(135deg,#ff6a00,#ee0979)','linear-gradient(135deg,#4facfe,#00f2fe)','linear-gradient(135deg,#8B5CF6,#EC4899)','linear-gradient(135deg,#00ff88,#00d4ff)'];
 const fonts=['Poppins','Georgia','Arial','Impact','Courier New','Trebuchet MS','Verdana','Times New Roman','Comic Sans MS','Roboto'];
-const wallpapers=['https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200','https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=1200','https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=1200','https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=1200','https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=1200'];
-const fallbackQuotes=[{content:"The only way to do great work is to love what you do.",author:"Steve Jobs"},{content:"In the middle of difficulty lies opportunity.",author:"Albert Einstein"},{content:"Believe you can and you're halfway there.",author:"Theodore Roosevelt"},{content:"Success is not final, failure is not fatal.",author:"Winston Churchill"}];
+const wallpapers=['https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200','https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=1200','https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=1200','https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=1200'];
+const fallbackQuotes=[{content:"The only way to do great work is to love what you do.",author:"Steve Jobs"},{content:"In the middle of difficulty lies opportunity.",author:"Albert Einstein"},{content:"Believe you can and you're halfway there.",author:"Theodore Roosevelt"}];
 
 // STATE
-let currentUser=null,selectedBg=gradients[0],selectedFont='Poppins',selectedTagsArr=[],currentChat=null,allPosts=[],unsubscribers=[],searchTO=null,selectedSong={title:'',artist:'',artwork:'',preview:''},isLoginMode=true,audioPlayer=null,profileTab='posts',quoteLoading=false;
+let currentUser=null,selectedBg=gradients[0],selectedFont='Poppins',selectedTagsArr=[],currentChat=null,allPosts=[],unsubscribers=[],searchTO=null,selectedSong={title:'',artist:'',artwork:'',preview:''},isLoginMode=true,audioPlayer=null,quoteLoading=false,profileTab='posts',songSearchTimeout=null;
 
 // INIT
 document.getElementById('fontPicker').innerHTML=fonts.map(f=>`<button class="tag-btn" style="font-family:${f}" onclick="selectFont(this,'${f}')">${f.split(' ')[0]}</button>`).join('');
@@ -595,100 +457,24 @@ function setHeroBg(){const h=document.getElementById('heroSection');if(h)h.style
 function setProfBg(){const h=document.getElementById('profileHeaderBg');if(h)h.style.backgroundImage=`url(${rndWall()})`;}
 setHeroBg();setProfBg();setInterval(setHeroBg,30000);setInterval(setProfBg,60000);
 
-// AUTH TOGGLE
-function toggleAuthMode(){isLoginMode=!isLoginMode;document.getElementById('loginBtnText').innerText=isLoginMode?'Login':'Login';document.getElementById('signupBtnText').innerText=isLoginMode?'Sign Up':'Sign Up Now';document.getElementById('authToggleText').innerText=isLoginMode?"Don't have an account?":"Already have an account?";document.getElementById('authToggleLink').innerText=isLoginMode?'Sign Up now':'Login now';}
-
 // AUTH
+function toggleAuthMode(){isLoginMode=!isLoginMode;document.getElementById('loginBtnText').innerText=isLoginMode?'Login':'Login';document.getElementById('signupBtnText').innerText=isLoginMode?'Sign Up':'Sign Up Now';document.getElementById('authToggleText').innerText=isLoginMode?'New here?':'Have account?';}
 auth.onAuthStateChanged(user=>{
-    if(user){currentUser=user;document.getElementById('authBtn').innerText='Logout';document.getElementById('authBtn').onclick=logout;loadUserData();loadPosts();loadChats();loadCommunityFeed();loadStories();loadAllAccounts();showPage('reelsPage');setupDummyAccounts();}
-    else{cleanup();currentUser=null;document.getElementById('authBtn').innerText='Login';document.getElementById('authBtn').onclick=()=>showPage('loginPage');showPage('homePage');}
+    if(user){currentUser=user;document.getElementById('authBtn').innerText='Logout';document.getElementById('authBtn').onclick=logout;document.getElementById('adminNavLink').style.display=user.uid===ADMIN_UID?'block':'none';loadUserData();loadPosts();loadChats();loadCommunityFeed();loadStories();loadAllAccounts();showPage('reelsPage');if(user.uid===ADMIN_UID)loadAdminPanel();setupDummyAccounts();}
+    else{cleanup();currentUser=null;document.getElementById('authBtn').innerText='Login';document.getElementById('authBtn').onclick=()=>showPage('loginPage');document.getElementById('adminNavLink').style.display='none';showPage('homePage');}
 });
 function login(){const e=document.getElementById('loginEmail').value.trim(),p=document.getElementById('loginPass').value;if(!e||!p)return showToast('Fill all fields','error');auth.signInWithEmailAndPassword(e,p).then(()=>showToast('Welcome!','success')).catch(err=>showToast(err.message,'error'));}
 function signup(){const e=document.getElementById('loginEmail').value.trim(),p=document.getElementById('loginPass').value;if(!e||!p)return showToast('Fill all fields','error');if(p.length<6)return showToast('Password too short','error');auth.createUserWithEmailAndPassword(e,p).then(cred=>{db.collection('users').doc(cred.user.uid).set({name:e.split('@')[0],bio:'',location:'Harare, ZW',photoURL:'',followers:0,following:0,savedPosts:[],createdAt:firebase.firestore.FieldValue.serverTimestamp()});showToast('Account created!','success');}).catch(err=>showToast(err.message,'error'));}
 function logout(){cleanup();auth.signOut();}
 
-// DUMMY ACCOUNTS SETUP
-const dummyAccounts=[{email:'dummy1@broxenme.com',pass:'dummy123',name:'Wisdom Warrior',location:'Nairobi, KE',photoURL:'https://placehold.co/100/ADFF2F/000?text=WW'},{email:'dummy2@broxenme.com',pass:'dummy123',name:'Dream Chaser',location:'Lagos, NG',photoURL:'https://placehold.co/100/FF6B6B/000?text=DC'},{email:'dummy3@broxenme.com',pass:'dummy123',name:'Soul Speaker',location:'Cape Town, ZA',photoURL:'https://placehold.co/100/4ECDC4/000?text=SS'},{email:'dummy4@broxenme.com',pass:'dummy123',name:'Mind Mentor',location:'Accra, GH',photoURL:'https://placehold.co/100/FFE66D/000?text=MM'},{email:'dummy5@broxenme.com',pass:'dummy123',name:'Star Gazer',location:'Kigali, RW',photoURL:'https://placehold.co/100/A78BFA/000?text=SG'}];
-const dummyQuotes=[{text:"The journey of a thousand miles begins with one step.",tags:['Motivation','Life']},{text:"Your vibe attracts your tribe.",tags:['Life','Love']},{text:"Dream big, work hard, stay focused.",tags:['Success','Business']},{text:"Every moment is a fresh beginning.",tags:['Life','Wisdom']},{text:"Create the life you can't wait to wake up to.",tags:['Success','Motivation']},{text:"Happiness is not by chance, but by choice.",tags:['Life','Wisdom']},{text:"Turn your wounds into wisdom.",tags:['Wisdom','Life']},{text:"The best time for new beginnings is now.",tags:['Motivation','Success']}];
-
-async function setupDummyAccounts(){
-    const adminUid='lGCfuMhmsdSh1yBcXrtrgStsvq13'; // Your admin UID
-    if(currentUser?.uid!==adminUid)return;
-    for(const acc of dummyAccounts){
-        try{
-            await auth.createUserWithEmailAndPassword(acc.email,acc.pass);
-            const user=auth.currentUser;
-            await db.collection('users').doc(user.uid).set({name:acc.name,location:acc.location,photoURL:acc.photoURL,bio:'Spreading positivity daily ✨',followers:Math.floor(Math.random()*1000),following:Math.floor(Math.random()*100),savedPosts:[],createdAt:firebase.firestore.FieldValue.serverTimestamp(),isDummy:true});
-            await auth.signOut();
-        }catch(e){if(e.code!=='auth/email-already-in-use')console.log('Dummy setup:',e.message);}
-    }
-    if(!currentUser)await auth.signInWithEmailAndPassword('dummy1@broxenme.com','dummy123');
-}
-
-// AUTO-POST DUMMY QUOTES
-async function autoPostDummyQuotes(){
-    const usersSnap=await db.collection('users').where('isDummy','==',true).get();
-    usersSnap.forEach(async userDoc=>{
-        const user=userDoc.data();
-        const q=dummyQuotes[Math.floor(Math.random()*dummyQuotes.length)];
-        const bg=gradients[Math.floor(Math.random()*gradients.length)];
-        const font=fonts[Math.floor(Math.random()*fonts.length)];
-        await db.collection('posts').add({text:q.text,bg,font,tags:q.tags,songTitle:'',songArtist:'',songArtwork:'',authorId:userDoc.id,authorName:user.name,authorPic:user.photoURL,time:firebase.firestore.FieldValue.serverTimestamp(),likes:Math.floor(Math.random()*50),views:Math.floor(Math.random()*200),commentsCount:Math.floor(Math.random()*10)});
-    });
-}
-
-// DAILY QUOTE (FIXED GLITCH)
-async function newDailyQuote(){
-    if(quoteLoading)return;
-    quoteLoading=true;
-    const btn=document.getElementById('newQuoteBtn');
-    btn.disabled=true;
-    btn.innerHTML='<div class="spinner" style="width:20px;height:20px;margin:0"></div>';
-    const q=document.getElementById('dailyQuote'),a=document.getElementById('quoteAuthor');
-    try{
-        const c=new AbortController();setTimeout(()=>c.abort(),5000);
-        const r=await fetch('https://api.quotable.io/random',{signal:c.signal});
-        const d=await r.json();
-        q.innerText=`"${d.content}"`;a.innerText=`— ${d.author}`;
-    }catch{
-        const f=fallbackQuotes[Math.floor(Math.random()*fallbackQuotes.length)];
-        q.innerText=`"${f.content}"`;a.innerText=`— ${f.author}`;
-    }
-    btn.disabled=false;
-    btn.innerHTML='<i class="fa fa-refresh"></i> New Quote';
-    quoteLoading=false;
-}
+// DAILY QUOTE (FIXED)
+async function newDailyQuote(){if(quoteLoading)return;quoteLoading=true;const btn=document.getElementById('newQuoteBtn');btn.disabled=true;btn.innerHTML='<div class="spinner" style="width:20px;height:20px;margin:0"></div>';const q=document.getElementById('dailyQuote'),a=document.getElementById('quoteAuthor');try{const c=new AbortController();setTimeout(()=>c.abort(),5000);const r=await fetch('https://api.quotable.io/random',{signal:c.signal});const d=await r.json();q.innerText=`"${d.content}"`;a.innerText=`— ${d.author}`;}catch{const f=fallbackQuotes[Math.floor(Math.random()*fallbackQuotes.length)];q.innerText=`"${f.content}"`;a.innerText=`— ${f.author}`;}btn.disabled=false;btn.innerHTML='<i class="fa fa-refresh"></i> New Quote';quoteLoading=false;}
 newDailyQuote();
 
-// SONG SEARCH WITH PREVIEW
-let songTO;
-async function searchSong(q){
-    clearTimeout(songTO);
-    if(q.length<2)return document.getElementById('songResults').innerHTML='';
-    songTO=setTimeout(async()=>{
-        try{
-            const r=await fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(q)}&limit=5`);
-            const d=await r.json();
-            document.getElementById('songResults').innerHTML=d.results.map(s=>`<div class="song-result-row" onclick="selectSong('${s.trackName.replace(/'/g,"\\'")}','${s.artistName.replace(/'/g,"\\'")}','${s.artworkUrl100}','${s.previewUrl||''}')"><img src="${s.artworkUrl100}" onerror="this.style.display='none'"><div class="song-result-info"><div class="song-result-title">${s.trackName}</div><div class="song-result-artist">${s.artistName}</div></div><i class="fa fa-play-circle" style="color:var(--accent)"></i></div>`).join('');
-        }catch{document.getElementById('songResults').innerHTML='';}
-    },400);
-}
-function selectSong(t,a,aw,pv){
-    selectedSong={title:t,artist:a,artwork:aw,preview:pv};
-    document.getElementById('songSearch').value=`${t} - ${a}`;
-    document.getElementById('songResults').innerHTML='';
-    document.getElementById('selectedSongDisplay').innerHTML=`<div class="selected-song-card"><img src="${aw}" style="width:42px;height:42px;border-radius:6px"><div><b style="font-size:0.85rem">${t}</b><div style="font-size:0.7rem;color:var(--muted)">${a}</div></div><button class="btn btn-small" onclick="playPreview('${pv}')" style="margin-left:auto"><i class="fa fa-play"></i> Preview</button></div>`;
-    if(pv)playPreview(pv);
-}
-function playPreview(url){
-    if(audioPlayer){audioPlayer.pause();audioPlayer.remove();}
-    if(!url)return;
-    audioPlayer=new Audio(url);
-    audioPlayer.volume=0.5;
-    audioPlayer.play();
-    document.getElementById('songPreviewPlayer').innerHTML=`<div style="display:flex;align-items:center;gap:0.5rem;padding:0.5rem;background:rgba(173,255,47,0.1);border-radius:10px;margin-top:0.4rem"><i class="fa fa-volume-up" style="color:var(--accent)"></i><span style="font-size:0.8rem">Playing preview...</span><div class="playing-indicator"><span></span><span></span><span></span><span></span></div></div>`;
-    audioPlayer.onended=()=>{document.getElementById('songPreviewPlayer').innerHTML='';};
-}
+// SONG SEARCH (FIXED - FASTER)
+async function searchSong(q){clearTimeout(songSearchTimeout);if(q.length<2){document.getElementById('songResults').innerHTML='';return;}document.getElementById('songResults').innerHTML='<div style="padding:0.8rem;text-align:center"><div class="spinner"></div></div>';songSearchTimeout=setTimeout(async()=>{try{const r=await fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(q)}&limit=8&media=music`);const d=await r.json();document.getElementById('songResults').innerHTML=d.results.length?d.results.map(s=>`<div class="song-result-row" onclick="selectSong('${s.trackName.replace(/'/g,"\\'")}','${s.artistName.replace(/'/g,"\\'")}','${s.artworkUrl100}','${s.previewUrl||''}')"><img src="${s.artworkUrl100}" onerror="this.src='https://placehold.co/42'"><div class="song-result-info"><div class="song-result-title">${s.trackName}</div><div class="song-result-artist">${s.artistName}</div></div><i class="fa fa-play-circle" style="color:var(--accent)"></i></div>`).join(''):'<div style="padding:0.8rem;color:var(--muted)">No songs found</div>';}catch{document.getElementById('songResults').innerHTML='<div style="padding:0.8rem;color:var(--muted)">Search failed</div>';}},300);}
+function selectSong(t,a,aw,pv){selectedSong={title:t,artist:a,artwork:aw,preview:pv};document.getElementById('songSearch').value=`${t} - ${a}`;document.getElementById('songResults').innerHTML='';document.getElementById('selectedSongDisplay').innerHTML=`<div class="selected-song-card"><img src="${aw}" style="width:42px;height:42px;border-radius:6px" onerror="this.src='https://placehold.co/42'"><div style="flex:1"><b style="font-size:0.85rem">${t}</b><div style="font-size:0.7rem;color:var(--muted)">${a}</div></div><button class="btn btn-small" onclick="playPreview('${pv}')"><i class="fa fa-play"></i> Preview</button></div>`;if(pv)playPreview(pv);}
+function playPreview(url){if(audioPlayer){audioPlayer.pause();audioPlayer.remove();audioPlayer=null;}if(!url)return;audioPlayer=new Audio(url);audioPlayer.volume=0.5;audioPlayer.play().catch(()=>showToast('Preview unavailable','info'));document.getElementById('songPreviewPlayer').innerHTML=`<div style="display:flex;align-items:center;gap:0.5rem;padding:0.5rem;background:rgba(173,255,47,0.1);border-radius:10px;margin-top:0.4rem"><i class="fa fa-volume-up" style="color:var(--accent)"></i><span style="font-size:0.8rem">Playing...</span><div class="playing-indicator"><span></span><span></span><span></span><span></span></div></div>`;audioPlayer.onended=()=>{document.getElementById('songPreviewPlayer').innerHTML='';};}
 
 // IMG UPLOAD
 async function uploadBgImage(e){const f=e.target.files[0];if(!f)return;if(f.size>5*1024*1024)return showToast('Max 5MB','error');const fd=new FormData();fd.append("image",f);try{const r=await fetch("https://api.imgbb.com/1/upload?key=78883b1360bb85b347b444b05aa56826",{method:"POST",body:fd});const d=await r.json();if(d.success){selectedBg=`url(${d.data.url})`;updatePreview();showToast('Uploaded!','success');}}catch{showToast('Upload failed','error');}}
@@ -698,83 +484,93 @@ async function likePost(id){if(!currentUser)return showToast('Login to like','er
 
 // COMMENTS
 function toggleComments(id){document.querySelectorAll('.comments-panel.active').forEach(p=>{if(p.id!=='comments_'+id)p.classList.remove('active')});document.getElementById('comments_'+id)?.classList.toggle('active');}
-async function addComment(id){const inp=document.getElementById('commentInput_'+id),txt=inp?.value?.trim();if(!txt||!currentUser)return;try{inp.disabled=true;await db.collection('posts').doc(id).collection('comments').add({text:txt,author:currentUser.email.split('@')[0],time:firebase.firestore.FieldValue.serverTimestamp()});inp.value='';db.collection('posts').doc(id).update({commentsCount:firebase.firestore.FieldValue.increment(1)});}catch{showToast('Failed','error');}finally{inp.disabled=false;}}
+async function addComment(id){const inp=document.getElementById('commentInput_'+id),txt=inp?.value?.trim();if(!txt||!currentUser)return;try{inp.disabled=true;await db.collection('posts').doc(id).collection('comments').add({text:txt,author:currentUser.email.split('@')[0],authorId:currentUser.uid,time:firebase.firestore.FieldValue.serverTimestamp()});inp.value='';await db.collection('posts').doc(id).update({commentsCount:firebase.firestore.FieldValue.increment(1)});}catch{showToast('Failed','error');}finally{inp.disabled=false;}}
 
-// SHARE AS IMAGE WITH LOGO
-async function sharePost(id){const p=allPosts.find(x=>x.id===id);if(!p)return;const canvas=document.createElement('canvas');canvas.width=1080;canvas.height=1080;const ctx=canvas.getContext('2d');ctx.fillStyle='#667eea';ctx.fillRect(0,0,1080,1080);ctx.fillStyle='rgba(0,0,0,0.5)';ctx.fillRect(0,0,1080,1080);ctx.fillStyle='white';ctx.font=`bold 60px ${p.font||'Poppins'}`;ctx.textAlign='center';wrapText(ctx,`"${p.text}"`,540,420,850,70);ctx.fillStyle='#ADFF2F';ctx.font='bold 35px Poppins';ctx.fillText('— BROXENME',540,800);ctx.font='25px Poppins';ctx.fillStyle='rgba(255,255,255,0.7)';ctx.fillText(`@${p.authorName}`,540,860);ctx.fillStyle='rgba(255,255,255,0.5)';ctx.font='20px Poppins';ctx.fillText('"',510,300);ctx.fillText('"',570,300);canvas.toBlob(blob=>{const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=`broxenme-${Date.now()}.png`;a.click();showToast('Quote saved as image!','success');db.collection('posts').doc(id).update({shares:firebase.firestore.FieldValue.increment(1)});});}
+// SHARE WITH LOGO
+async function sharePost(id){const p=allPosts.find(x=>x.id===id);if(!p)return;const canvas=document.createElement('canvas');canvas.width=1080;canvas.height=1080;const ctx=canvas.getContext('2d');ctx.fillStyle='#1a1a2e';ctx.fillRect(0,0,1080,1080);ctx.fillStyle='rgba(0,0,0,0.6)';ctx.fillRect(0,0,1080,1080);ctx.fillStyle='white';ctx.font=`bold 55px ${p.font||'Poppins'}`;ctx.textAlign='center';wrapText(ctx,`"${p.text}"`,540,400,850,65);ctx.fillStyle='#ADFF2F';ctx.font='bold 30px Poppins';ctx.fillText('BROXENME',540,750);ctx.font='20px Poppins';ctx.fillStyle='rgba(255,255,255,0.7)';ctx.fillText(`@${p.authorName}`,540,800);ctx.font='50px Poppins';ctx.fillStyle='rgba(255,255,255,0.3)';ctx.fillText('"',520,280);ctx.fillText('"',560,280);canvas.toBlob(blob=>{const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=`broxenme-quote-${Date.now()}.png`;a.click();showToast('Saved as image!','success');db.collection('posts').doc(id).update({shares:firebase.firestore.FieldValue.increment(1)});});}
 function wrapText(ctx,text,x,y,maxW,lh){const words=text.split(' ');let line='',ly=y;for(let w of words){const test=line+w+' ';if(ctx.measureText(test).width>maxW&&line){ctx.fillText(line.trim(),x,ly);line=w+' ';ly+=lh;}else{line=test;}}ctx.fillText(line.trim(),x,ly);}
 
 // SAVE
-async function savePost(id){if(!currentUser)return;const ref=db.collection('users').doc(currentUser.uid),d=await ref.get();let s=d.data().savedPosts||[];s.includes(id)?s=s.filter(x=>x!==id):s.push(id);await ref.update({savedPosts:s});showToast(s.includes(id)?'Saved!':'Removed','info');loadSavedPosts();}
+async function savePost(id){if(!currentUser)return;const ref=db.collection('users').doc(currentUser.uid),d=await ref.get();let s=d.data().savedPosts||[];s.includes(id)?s=s.filter(x=>x!==id):s.push(id);await ref.update({savedPosts:s});showToast(s.includes(id)?'Saved!':'Removed','info');if(profileTab==='saved')loadSavedPosts();}
 
 // DELETE POST
-async function deletePost(id){if(!confirm('Delete this post?'))return;await db.collection('posts').doc(id).delete();showToast('Post deleted','info');}
+async function deletePost(id){if(!confirm('Delete this post?'))return;await db.collection('posts').doc(id).delete();showToast('Deleted','info');}
 
-// LOAD POSTS
-function loadPosts(){if(!currentUser)return;cleanup();const unsub=db.collection('posts').orderBy('time','desc').limit(50).onSnapshot(snap=>{allPosts=[];document.getElementById('reelsViewer').innerHTML='';document.getElementById('profileGrid').innerHTML='';let pc=0,tl=0;snap.forEach(doc=>{const p=doc.data();p.id=doc.id;allPosts.push(p);document.getElementById('reelsViewer').innerHTML+=buildReel(p,doc.id);if(p.authorId===currentUser?.uid){document.getElementById('profileGrid').innerHTML+=`<div class="post-grid-item" style="background:${p.bg};font-family:${p.font}" onclick="showPage('reelsPage')">${sanitize(p.text.substring(0,35))}<div class="delete-btn" onclick="event.stopPropagation();deletePost('${doc.id}')"><i class="fa fa-trash"></i></div></div>`;pc++;tl+=(p.likes||0);}loadCommentsForPost(doc.id);checkUserLike(doc.id);});document.getElementById('postCount').innerText=pc;document.getElementById('totalLikes').innerText=tl;});unsubscribers.push(unsub);}
-function buildReel(p,id){const st=sanitize(p.text||''),sa=sanitize(p.authorName||'Anonymous');const musicHTML=p.songTitle?`<div class="reel-music-display" onclick="playReelMusic('${p.songPreview||''}')"><i class="fa fa-music"></i><span class="reel-music-text">${sanitize(p.songTitle)} — ${sanitize(p.songArtist||'')}</span><div class="playing-indicator"><span></span><span></span><span></span><span></span></div></div>`:'';return`<div class="reel-slide" style="background:${p.bg}"><div class="reel-overlay"></div><div class="reel-content-area"><div class="reel-quote-text" style="font-family:${p.font||'Poppins'}">${st}</div><div class="reel-tags-row">${(p.tags||[]).map(t=>`<span class="reel-tag-badge">#${sanitize(t)}</span>`).join('')}</div><div class="reel-user-row"><img src="${p.authorPic||'https://placehold.co/36'}" class="reel-user-pic" onerror="this.src='https://placehold.co/36'"><div><div class="reel-user-name">${sa}</div><div style="font-size:0.7rem;color:rgba(255,255,255,0.5)"><i class="fa fa-eye"></i> ${p.views||0} <i class="fa fa-heart"></i> ${p.likes||0} <i class="fa fa-comment"></i> ${p.commentsCount||0}</div></div></div>${musicHTML}</div><div class="reel-actions-sidebar"><div class="reel-action-btn" onclick="likePost('${id}')" id="likeBtn_${id}"><div class="action-icon"><i class="fa fa-heart"></i></div><span class="action-label">${p.likes||0}</span></div><div class="reel-action-btn" onclick="toggleComments('${id}')"><div class="action-icon"><i class="fa fa-comment"></i></div><span class="action-label">Comment</span></div><div class="reel-action-btn" onclick="sharePost('${id}')"><div class="action-icon"><i class="fa fa-download"></i></div><span class="action-label">Save</span></div><div class="reel-action-btn" onclick="savePost('${id}')"><div class="action-icon"><i class="fa fa-bookmark"></i></div><span class="action-label">Bookmark</span></div></div><div class="comments-panel" id="comments_${id}"><div class="comments-list" id="commentList_${id}"></div><div class="comment-input-row"><input id="commentInput_${id}" placeholder="Add comment..." onkeypress="if(event.key==='Enter')addComment('${id}')"><button onclick="addComment('${id}')"><i class="fa fa-paper-plane"></i></button></div></div></div>`;}
-function loadCommentsForPost(id){db.collection('posts').doc(id).collection('comments').orderBy('time','asc').onSnapshot(snap=>{const l=document.getElementById('commentList_'+id);if(!l)return;l.innerHTML=snap.empty?'<p style="text-align:center;color:rgba(255,255,255,0.4);padding:1rem;font-size:0.8rem">No comments yet</p>':'';snap.forEach(doc=>{const c=doc.data();l.innerHTML+=`<div class="comment-item"><img src="https://placehold.co/28" class="comment-avatar"><div class="comment-content"><div class="comment-author">${sanitize(c.author||'User')}</div><div class="comment-text">${sanitize(c.text)}</div></div></div>`;});});}
+// LOAD POSTS (WITH VIEWS/LIKES/SHARES)
+function loadPosts(){if(!currentUser)return;cleanup();const unsub=db.collection('posts').orderBy('time','desc').limit(50).onSnapshot(snap=>{allPosts=[];const rv=document.getElementById('reelsViewer');const pg=document.getElementById('profileGrid');if(rv)rv.innerHTML='';if(pg)pg.innerHTML='';let pc=0,tl=0;snap.forEach(doc=>{const p=doc.data();p.id=doc.id;allPosts.push(p);if(rv)rv.innerHTML+=buildReel(p,doc.id);if(p.authorId===currentUser?.uid&&pg){pg.innerHTML+=`<div class="post-grid-item" style="background:${p.bg};font-family:${p.font}" onclick="showPage('reelsPage')">${sanitize((p.text||'').substring(0,30))}<div class="post-stats-overlay"><span><i class="fa fa-eye"></i> ${p.views||0}</span><span><i class="fa fa-heart"></i> ${p.likes||0}</span><span><i class="fa fa-share"></i> ${p.shares||0}</span></div><div class="delete-btn" onclick="event.stopPropagation();deletePost('${doc.id}')"><i class="fa fa-trash"></i></div></div>`;pc++;tl+=(p.likes||0);}loadCommentsForPost(doc.id);checkUserLike(doc.id);});if(document.getElementById('postCount'))document.getElementById('postCount').innerText=pc;if(document.getElementById('totalLikes'))document.getElementById('totalLikes').innerText=tl;});unsubscribers.push(unsub);}
+function buildReel(p,id){const st=sanitize(p.text||''),sa=sanitize(p.authorName||'Anonymous');const musicHTML=p.songTitle?`<div class="reel-music-display" onclick="playReelMusic('${p.songPreview||''}')"><i class="fa fa-music"></i><span class="reel-music-text">${sanitize(p.songTitle)} — ${sanitize(p.songArtist||'')}</span><div class="playing-indicator"><span></span><span></span><span></span><span></span></div></div>`:'';return`<div class="reel-slide" style="background:${p.bg}"><div class="reel-overlay"></div><div class="reel-content-area"><div class="reel-quote-text" style="font-family:${p.font||'Poppins'}">${st}</div><div class="reel-tags-row">${(p.tags||[]).map(t=>`<span class="reel-tag-badge">#${sanitize(t)}</span>`).join('')}</div><div class="reel-user-row"><img src="${p.authorPic||'https://placehold.co/36'}" class="reel-user-pic" onerror="this.src='https://placehold.co/36'"><div><div class="reel-user-name">${sa}</div><div class="reel-stats-row"><span><i class="fa fa-eye"></i> ${p.views||0}</span><span><i class="fa fa-heart"></i> ${p.likes||0}</span><span><i class="fa fa-share"></i> ${p.shares||0}</span><span><i class="fa fa-comment"></i> ${p.commentsCount||0}</span></div></div></div>${musicHTML}</div><div class="reel-actions-sidebar"><div class="reel-action-btn" onclick="likePost('${id}')" id="likeBtn_${id}"><div class="action-icon"><i class="fa fa-heart"></i></div><span class="action-label">${p.likes||0}</span></div><div class="reel-action-btn" onclick="toggleComments('${id}')"><div class="action-icon"><i class="fa fa-comment"></i></div><span class="action-label">Comment</span></div><div class="reel-action-btn" onclick="sharePost('${id}')"><div class="action-icon"><i class="fa fa-download"></i></div><span class="action-label">Save</span></div><div class="reel-action-btn" onclick="savePost('${id}')"><div class="action-icon"><i class="fa fa-bookmark"></i></div><span class="action-label">Keep</span></div></div><div class="comments-panel" id="comments_${id}"><div class="comments-list" id="commentList_${id}"></div><div class="comment-input-row"><input id="commentInput_${id}" placeholder="Comment..." onkeypress="if(event.key==='Enter')addComment('${id}')"><button onclick="addComment('${id}')"><i class="fa fa-paper-plane"></i></button></div></div></div>`;}
+function loadCommentsForPost(id){db.collection('posts').doc(id).collection('comments').orderBy('time','asc').onSnapshot(snap=>{const l=document.getElementById('commentList_'+id);if(!l)return;l.innerHTML=snap.empty?'<p style="text-align:center;color:rgba(255,255,255,0.4);padding:1rem;font-size:0.8rem">No comments</p>':'';snap.forEach(doc=>{const c=doc.data();l.innerHTML+=`<div class="comment-item"><img src="https://placehold.co/28" class="comment-avatar"><div class="comment-content"><div class="comment-author">${sanitize(c.author||'User')}</div><div class="comment-text">${sanitize(c.text)}</div></div></div>`;});});}
 async function checkUserLike(id){if(!currentUser)return;const d=await db.collection('likes').doc(currentUser.uid+'_'+id).get();if(d.exists)document.getElementById('likeBtn_'+id)?.classList.add('liked');}
-function playReelMusic(url){if(!url)return;if(audioPlayer){audioPlayer.pause();audioPlayer.remove();}audioPlayer=new Audio(url);audioPlayer.volume=0.4;audioPlayer.play();}
+function playReelMusic(url){if(!url)return;if(audioPlayer){audioPlayer.pause();audioPlayer.remove();audioPlayer=null;}audioPlayer=new Audio(url);audioPlayer.volume=0.4;audioPlayer.play().catch(()=>{});}
 
 // SAVED POSTS
-function loadSavedPosts(){if(!currentUser)return;db.collection('users').doc(currentUser.uid).get().then(doc=>{const saved=doc.data().savedPosts||[];const grid=document.getElementById('savedGrid');grid.innerHTML='';if(saved.length===0){grid.innerHTML='<p style="text-align:center;padding:2rem;color:var(--muted);grid-column:1/-1">No saved posts yet</p>';return;}saved.forEach(id=>{db.collection('posts').doc(id).get().then(pDoc=>{if(pDoc.exists){const p=pDoc.data();grid.innerHTML+=`<div class="post-grid-item" style="background:${p.bg};font-family:${p.font}" onclick="showPage('reelsPage')">${sanitize((p.text||'').substring(0,35))}<div class="delete-btn" onclick="event.stopPropagation();savePost('${id}')"><i class="fa fa-times"></i></div></div>`;}});});});}
-function switchProfileTab(tab){profileTab=tab;document.querySelectorAll('.profile-tab').forEach(t=>t.classList.remove('active'));event.target.classList.add('active');document.getElementById('profileGrid').style.display=tab==='posts'?'grid':'none';document.getElementById('savedGrid').style.display=tab==='saved'?'grid':'none';if(tab==='saved')loadSavedPosts();}
+function loadSavedPosts(){if(!currentUser)return;db.collection('users').doc(currentUser.uid).get().then(doc=>{const saved=doc.data().savedPosts||[];const grid=document.getElementById('savedGrid');if(!grid)return;grid.innerHTML=saved.length===0?'<p style="text-align:center;padding:2rem;color:var(--muted);grid-column:1/-1">No saved posts</p>':'';saved.forEach(id=>{db.collection('posts').doc(id).get().then(pDoc=>{if(pDoc.exists){const p=pDoc.data();grid.innerHTML+=`<div class="post-grid-item" style="background:${p.bg};font-family:${p.font}" onclick="showPage('reelsPage')">${sanitize((p.text||'').substring(0,30))}<div class="post-stats-overlay"><span><i class="fa fa-eye"></i> ${p.views||0}</span><span><i class="fa fa-heart"></i> ${p.likes||0}</span></div><div class="delete-btn" onclick="event.stopPropagation();savePost('${id}')"><i class="fa fa-times"></i></div></div>`;}});});});}
+function switchProfileTab(tab){profileTab=tab;document.querySelectorAll('.profile-tab').forEach(t=>t.classList.remove('active'));event.target.classList.add('active');const pg=document.getElementById('profileGrid'),sg=document.getElementById('savedGrid');if(pg)pg.style.display=tab==='posts'?'grid':'none';if(sg)sg.style.display=tab==='saved'?'grid':'none';if(tab==='saved')loadSavedPosts();}
 
 // CREATE POST
-function updatePreview(){const p=document.getElementById('quotePreview');p.style.background=selectedBg;p.style.fontFamily=selectedFont;p.innerHTML=(document.getElementById('newPostText').value||'Your quote preview')+'<div style="position:absolute;bottom:8px;right:10px;font-size:0.6rem;color:rgba(255,255,255,0.6);display:flex;align-items:center;gap:0.3rem"><i class="fa fa-quote-right"></i> BROXENME</div>';}
+function updatePreview(){const p=document.getElementById('quotePreview');if(!p)return;p.style.background=selectedBg;p.style.fontFamily=selectedFont;p.innerHTML=(document.getElementById('newPostText')?.value||'Preview')+'<div style="position:absolute;bottom:8px;right:10px;font-size:0.6rem;color:rgba(255,255,255,0.6)"><i class="fa fa-quote-right"></i> BROXENME</div>';}
 function toggleTag(el,tag){el.classList.toggle('active');selectedTagsArr.includes(tag)?selectedTagsArr=selectedTagsArr.filter(t=>t!==tag):selectedTagsArr.push(tag);}
 function selectBg(el,bg){document.querySelectorAll('#gradientPicker div').forEach(b=>b.style.borderColor='transparent');el.style.borderColor='var(--accent)';selectedBg=bg;updatePreview();}
 function selectFont(el,font){document.querySelectorAll('#fontPicker .tag-btn').forEach(b=>b.classList.remove('active'));el.classList.add('active');selectedFont=font;updatePreview();}
 function openCreatePostModal(){if(!currentUser)return showToast('Login first','error');document.getElementById('createPostModal').classList.add('active');updatePreview();}
-function closeCreatePostModal(){document.getElementById('createPostModal').classList.remove('active');selectedSong={title:'',artist:'',artwork:'',preview:''};document.getElementById('selectedSongDisplay').innerHTML='';document.getElementById('songPreviewPlayer').innerHTML='';if(audioPlayer){audioPlayer.pause();audioPlayer.remove();}}
-function submitPost(){const text=document.getElementById('newPostText').value.trim();if(!text)return showToast('Write a quote!','error');db.collection('posts').add({text,bg:selectedBg,font:selectedFont,tags:selectedTagsArr,songTitle:selectedSong.title,songArtist:selectedSong.artist,songArtwork:selectedSong.artwork,songPreview:selectedSong.preview,authorId:currentUser.uid,authorName:currentUser.email.split('@')[0],authorPic:currentUser.photoURL||'https://placehold.co/36',time:firebase.firestore.FieldValue.serverTimestamp(),likes:0,views:0,commentsCount:0,shares:0}).then(()=>{closeCreatePostModal();showToast('Posted!','success');document.getElementById('newPostText').value='';selectedTagsArr=[];selectedBg=gradients[0];selectedFont='Poppins';}).catch(()=>showToast('Failed','error'));}
+function closeCreatePostModal(){document.getElementById('createPostModal').classList.remove('active');selectedSong={title:'',artist:'',artwork:'',preview:''};document.getElementById('selectedSongDisplay').innerHTML='';document.getElementById('songPreviewPlayer').innerHTML='';if(audioPlayer){audioPlayer.pause();audioPlayer.remove();audioPlayer=null;}}
+function submitPost(){const text=document.getElementById('newPostText')?.value?.trim();if(!text)return showToast('Write a quote!','error');db.collection('posts').add({text,bg:selectedBg,font:selectedFont,tags:selectedTagsArr,songTitle:selectedSong.title,songArtist:selectedSong.artist,songArtwork:selectedSong.artwork,songPreview:selectedSong.preview,authorId:currentUser.uid,authorName:currentUser.email.split('@')[0],authorPic:currentUser.photoURL||'https://placehold.co/36',time:firebase.firestore.FieldValue.serverTimestamp(),likes:0,views:0,commentsCount:0,shares:0}).then(()=>{closeCreatePostModal();showToast('Posted!','success');document.getElementById('newPostText').value='';selectedTagsArr=[];selectedBg=gradients[0];selectedFont='Poppins';}).catch(()=>showToast('Failed','error'));}
 
 // PROFILE
-function openEditProfile(){document.getElementById('editName').value=document.getElementById('profileName').innerText;document.getElementById('editLocation').value=document.getElementById('profileLocation').innerText;document.getElementById('editBio').value=document.getElementById('profileBio').innerText;document.getElementById('editProfilePicPreview').src=document.getElementById('profilePic').src;document.getElementById('editProfileModal').classList.add('active');}
+function openEditProfile(){if(!currentUser)return;document.getElementById('editName').value=document.getElementById('profileName').innerText;document.getElementById('editLocation').value=document.getElementById('profileLocation').innerText;document.getElementById('editBio').value=document.getElementById('profileBio').innerText;document.getElementById('editProfilePicPreview').src=document.getElementById('profilePic').src;document.getElementById('editProfileModal').classList.add('active');}
 function closeEditProfile(){document.getElementById('editProfileModal').classList.remove('active');}
 function saveProfile(){const n=document.getElementById('editName').value.trim();if(!n)return showToast('Name required','error');db.collection('users').doc(currentUser.uid).update({name:n,location:document.getElementById('editLocation').value.trim(),bio:document.getElementById('editBio').value.trim()}).then(()=>{loadUserData();closeEditProfile();showToast('Updated!','success');});}
-function loadUserData(){if(!currentUser)return;db.collection('users').doc(currentUser.uid).get().then(doc=>{if(doc.exists){const d=doc.data();document.getElementById('profileName').innerText=d.name;document.getElementById('profileBio').innerText=d.bio||'';document.getElementById('profileLocation').innerText=d.location||'';document.getElementById('followerCount').innerText=d.followers||0;document.getElementById('followingCount').innerText=d.following||0;if(d.photoURL){document.getElementById('profilePic').src=d.photoURL;document.getElementById('editProfilePicPreview').src=d.photoURL;}setProfBg();}});}
-document.getElementById('profileUpload').addEventListener('change',async(e)=>{const f=e.target.files[0];if(!f||!currentUser)return;const fd=new FormData();fd.append("image",f);try{const r=await fetch("https://api.imgbb.com/1/upload?key=78883b1360bb85b347b444b05aa56826",{method:"POST",body:fd});const d=await r.json();if(d.success){const u=d.data.url;document.getElementById('profilePic').src=u;document.getElementById('editProfilePicPreview').src=u;await db.collection('users').doc(currentUser.uid).update({photoURL:u});showToast('Photo updated!','success');}}catch{showToast('Upload failed','error');}});
+function loadUserData(){if(!currentUser)return;db.collection('users').doc(currentUser.uid).get().then(doc=>{if(doc.exists){const d=doc.data();document.getElementById('profileName').innerText=d.name||'User';document.getElementById('profileBio').innerText=d.bio||'';document.getElementById('profileLocation').innerText=d.location||'Unknown';document.getElementById('followerCount').innerText=d.followers||0;document.getElementById('followingCount').innerText=d.following||0;if(d.photoURL){document.getElementById('profilePic').src=d.photoURL;}}setProfBg();});}
+document.getElementById('profileUpload')?.addEventListener('change',async(e)=>{const f=e.target.files[0];if(!f||!currentUser)return;const fd=new FormData();fd.append("image",f);try{const r=await fetch("https://api.imgbb.com/1/upload?key=78883b1360bb85b347b444b05aa56826",{method:"POST",body:fd});const d=await r.json();if(d.success){const u=d.data.url;document.getElementById('profilePic').src=u;await db.collection('users').doc(currentUser.uid).update({photoURL:u});showToast('Photo updated!','success');}}catch{showToast('Upload failed','error');}});
 
 // STORIES
-function openCreateStory(){showToast('Story feature coming soon!','info');}
-function loadStories(){db.collection('stories').where('expiresAt','>',new Date()).onSnapshot(snap=>{const row=document.getElementById('storiesRow');row.innerHTML='<div style="text-align:center;flex-shrink:0;cursor:pointer" onclick="openCreateStory()"><div class="story-circle add-story"><i class="fa fa-plus" style="font-size:1.3rem;color:var(--accent)"></i></div><div style="font-size:0.6rem">Add Story</div></div>';snap.forEach(doc=>{const s=doc.data();row.innerHTML+=`<div style="text-align:center;flex-shrink:0;cursor:pointer"><div class="story-circle"><img src="${s.imageUrl||'https://placehold.co/60'}" style="width:100%;height:100%;border-radius:50%;object-fit:cover;border:3px solid var(--bg)"></div><div style="font-size:0.6rem">${sanitize(s.userName||'User')}</div></div>`;});});}
+function openCreateStory(){showToast('Coming soon!','info');}
+function loadStories(){db.collection('stories').where('expiresAt','>',new Date()).onSnapshot(snap=>{const row=document.getElementById('storiesRow');if(!row)return;row.innerHTML='<div style="text-align:center;flex-shrink:0;cursor:pointer" onclick="openCreateStory()"><div class="story-circle add-story"><i class="fa fa-plus"></i></div><div style="font-size:0.6rem">Story</div></div>';snap.forEach(doc=>{const s=doc.data();row.innerHTML+=`<div style="text-align:center;flex-shrink:0;cursor:pointer"><div class="story-circle"><img src="${s.imageUrl||'https://placehold.co/60'}" style="width:100%;height:100%;border-radius:50%;object-fit:cover;border:3px solid var(--bg)"></div><div style="font-size:0.6rem">${sanitize(s.userName||'')}</div></div>`;});});}
 
-// COMMUNITY FEED
-function loadCommunityFeed(){db.collection('feedPosts').orderBy('time','desc').limit(30).onSnapshot(snap=>{document.getElementById('communityFeed').innerHTML='';snap.forEach(doc=>{const p=doc.data();document.getElementById('communityFeed').innerHTML+=`<div class="feed-card glass"><div class="feed-card-header"><img src="${p.authorPic||'https://placehold.co/38'}" class="feed-card-avatar"><div><b>${sanitize(p.authorName||'Anonymous')}</b><div style="font-size:0.7rem;color:var(--muted)">${p.time?.toDate?.()?new Date(p.time.toDate()).toLocaleString():''}</div></div></div><div class="feed-card-body">${sanitize(p.text||'')}</div>${p.imageUrl?`<div class="feed-card-image" style="background-image:url(${p.imageUrl})"></div>`:''}<div class="feed-card-actions"><span><i class="fa fa-heart"></i> ${p.likes||0}</span><span><i class="fa fa-comment"></i> Comment</span><span><i class="fa fa-share"></i> Share</span></div></div>`;});});}
-function openCreateFeedPost(){document.getElementById('createFeedModal').classList.add('active');}
-async function previewFeedImage(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>{document.getElementById('feedImagePreview').src=ev.target.result;document.getElementById('feedImagePreview').style.display='block';};r.readAsDataURL(f);}
-async function submitFeedPost(){const text=document.getElementById('feedPostText').value.trim();if(!text)return showToast('Write something!','error');const imgFile=document.getElementById('feedImageUpload').files[0];let imageUrl='';if(imgFile){const fd=new FormData();fd.append("image",imgFile);try{const r=await fetch("https://api.imgbb.com/1/upload?key=78883b1360bb85b347b444b05aa56826",{method:"POST",body:fd});const d=await r.json();if(d.success)imageUrl=d.data.url;}catch{}}db.collection('feedPosts').add({text,imageUrl,authorId:currentUser.uid,authorName:currentUser.email.split('@')[0],authorPic:currentUser.photoURL||'https://placehold.co/38',time:firebase.firestore.FieldValue.serverTimestamp(),likes:0}).then(()=>{document.getElementById('createFeedModal').classList.remove('active');document.getElementById('feedPostText').value='';document.getElementById('feedImagePreview').style.display='none';showToast('Posted!','success');});}
+// FEED
+function loadCommunityFeed(){db.collection('feedPosts').orderBy('time','desc').limit(30).onSnapshot(snap=>{const feed=document.getElementById('communityFeed');if(!feed)return;feed.innerHTML=snap.empty?'<p style="text-align:center;padding:2rem;color:var(--muted)">No posts yet</p>':'';snap.forEach(doc=>{const p=doc.data();feed.innerHTML+=`<div class="feed-card glass"><div class="feed-card-header"><img src="${p.authorPic||'https://placehold.co/38'}" class="feed-card-avatar"><div><b>${sanitize(p.authorName||'User')}</b><div style="font-size:0.7rem;color:var(--muted)">${p.time?.toDate?.()?new Date(p.time.toDate()).toLocaleString():''}</div></div></div><div class="feed-card-body">${sanitize(p.text||'')}</div>${p.imageUrl?`<div class="feed-card-image" style="background-image:url(${p.imageUrl})"></div>`:''}<div class="feed-card-actions"><span><i class="fa fa-heart"></i> ${p.likes||0}</span><span><i class="fa fa-comment"></i> Comment</span><span><i class="fa fa-share"></i> Share</span></div></div>`;});});}
+function openCreateFeedPost(){if(!currentUser)return showToast('Login first','error');document.getElementById('createFeedModal').classList.add('active');}
+function previewFeedImage(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>{const img=document.getElementById('feedImagePreview');img.src=ev.target.result;img.style.display='block';};r.readAsDataURL(f);}
+async function submitFeedPost(){const text=document.getElementById('feedPostText').value.trim();const imgFile=document.getElementById('feedImageUpload').files[0];if(!text&&!imgFile)return showToast('Add text or image','error');let imageUrl='';if(imgFile){const fd=new FormData();fd.append("image",imgFile);try{const r=await fetch("https://api.imgbb.com/1/upload?key=78883b1360bb85b347b444b05aa56826",{method:"POST",body:fd});const d=await r.json();if(d.success)imageUrl=d.data.url;}catch{}}db.collection('feedPosts').add({text:text||'',imageUrl,authorId:currentUser.uid,authorName:currentUser.email.split('@')[0],authorPic:currentUser.photoURL||'https://placehold.co/38',time:firebase.firestore.FieldValue.serverTimestamp(),likes:0}).then(()=>{document.getElementById('createFeedModal').classList.remove('active');document.getElementById('feedPostText').value='';document.getElementById('feedImagePreview').style.display='none';showToast('Posted!','success');}).catch(()=>showToast('Failed','error'));}
+
+// GROUP CHATS
+function openNewGroupChat(){document.getElementById('newGroupModal').classList.add('active');}
+function createGroupChat(){const name=document.getElementById('groupName').value.trim();const desc=document.getElementById('groupDesc').value.trim();if(!name)return showToast('Enter group name','error');db.collection('groups').add({name,description:desc||'',createdBy:currentUser.uid,creatorName:currentUser.email.split('@')[0],members:[currentUser.uid],memberCount:1,pic:'https://placehold.co/38',lastMsg:'',time:firebase.firestore.FieldValue.serverTimestamp()}).then(docRef=>{document.getElementById('newGroupModal').classList.remove('active');showToast('Group created!','success');}).catch(()=>showToast('Failed','error'));}
+function loadChats(){if(!currentUser)return;db.collection('groups').where('members','array-contains',currentUser.uid).orderBy('time','desc').onSnapshot(snap=>{const cl=document.getElementById('chatList');if(!cl)return;cl.innerHTML=snap.empty?'<p style="text-align:center;padding:2rem;color:var(--muted)">No groups yet</p>':'';snap.forEach(doc=>{const g=doc.data();cl.innerHTML+=`<div class="chat-list-row" onclick="openChat('${doc.id}','${sanitize(g.name)}','${g.pic||'https://placehold.co/38'}')"><img src="${g.pic||'https://placehold.co/38'}" style="width:45px;height:45px;border-radius:50%"><div style="flex:1"><b>${sanitize(g.name)}</b><div style="font-size:0.75rem;color:var(--muted)">${sanitize(g.description||'')}</div><div style="font-size:0.8rem;color:var(--muted)">${sanitize(g.lastMsg||'No messages yet')}</div></div><div class="member-count">${g.memberCount||1}</div></div>`;});});}
+function openChat(id,name,pic){currentChat=id;document.getElementById('chatName').innerText=name;document.getElementById('chatAvatar').src=pic||'https://placehold.co/38';document.getElementById('chatWindow').classList.add('active');document.getElementById('chatMessages').innerHTML='<div style="text-align:center;padding:2rem"><div class="spinner"></div></div>';db.collection('groups').doc(id).get().then(doc=>{if(doc.exists)document.getElementById('chatMemberCount').innerText=doc.data().memberCount||1;});const unsub=db.collection('groups').doc(id).collection('messages').orderBy('time','asc').onSnapshot(snap=>{const msgs=document.getElementById('chatMessages');if(!msgs)return;msgs.innerHTML='';snap.forEach(doc=>{const m=doc.data();const isMe=m.from===currentUser?.uid;msgs.innerHTML+=`<div class="msg-bubble ${isMe?'me':'other'}"><div class="msg-sender">${isMe?'You':sanitize(m.senderName||'User')}</div>${sanitize(m.text)}</div>`;});msgs.scrollTop=msgs.scrollHeight;});unsubscribers.push(unsub);}
+function closeChat(){document.getElementById('chatWindow').classList.remove('active');currentChat=null;}
+function sendMsg(){const t=document.getElementById('chatInput')?.value?.trim();if(!t||!currentChat||!currentUser)return;const senderName=document.getElementById('profileName')?.innerText||currentUser.email.split('@')[0];db.collection('groups').doc(currentChat).collection('messages').add({text:t,from:currentUser.uid,senderName,time:firebase.firestore.FieldValue.serverTimestamp()}).then(()=>{db.collection('groups').doc(currentChat).update({lastMsg:t,time:firebase.firestore.FieldValue.serverTimestamp()});document.getElementById('chatInput').value='';});}
 
 // SEARCH ACCOUNTS
 function loadAllAccounts(){db.collection('users').onSnapshot(snap=>{window.allAccounts=[];snap.forEach(doc=>{const d=doc.data();d.uid=doc.id;window.allAccounts.push(d);});});}
-function searchAccounts(){const q=document.getElementById('accountSearchInput')?.value?.toLowerCase()||'';const filtered=(window.allAccounts||[]).filter(a=>(a.name||'').toLowerCase().includes(q)||(a.location||'').toLowerCase().includes(q));document.getElementById('accountsList').innerHTML=filtered.map(a=>`<div class="user-card glass"><img src="${a.photoURL||'https://placehold.co/48'}" onerror="this.src='https://placehold.co/48'"><div class="user-info"><b>${sanitize(a.name||'Unknown')}</b><div style="font-size:0.8rem;color:var(--muted)"><i class="fa fa-location-dot"></i> ${sanitize(a.location||'Unknown')}</div><div style="font-size:0.75rem;color:var(--muted)">${sanitize(a.bio||'')}</div></div><div style="text-align:right"><div style="font-weight:700;color:var(--accent)">${a.followers||0}</div><div style="font-size:0.7rem;color:var(--muted)">followers</div></div></div>`).join('');}
+function searchAccounts(){const q=document.getElementById('accountSearchInput')?.value?.toLowerCase()||'';const filtered=(window.allAccounts||[]).filter(a=>(a.name||'').toLowerCase().includes(q)||(a.location||'').toLowerCase().includes(q));const list=document.getElementById('accountsList');if(!list)return;list.innerHTML=filtered.map(a=>`<div class="user-card glass"><img src="${a.photoURL||'https://placehold.co/48'}" onerror="this.src='https://placehold.co/48'" style="width:48px;height:48px;border-radius:50%;object-fit:cover"><div style="flex:1"><b>${sanitize(a.name||'Unknown')}</b><div style="font-size:0.8rem;color:var(--muted)"><i class="fa fa-location-dot"></i> ${sanitize(a.location||'Unknown')}</div></div><div style="text-align:right"><b style="color:var(--accent)">${a.followers||0}</b><div style="font-size:0.7rem;color:var(--muted)">followers</div></div></div>`).join('')||'<p style="text-align:center;padding:2rem;color:var(--muted)">No users found</p>';}
 
-// CHATS WITH POPUP
-function openNewChatPopup(){document.getElementById('newChatName').value='';document.getElementById('newChatDisplayName').value=document.getElementById('profileName').innerText;document.getElementById('newChatModal').classList.add('active');}
-function createNewChat(){const name=document.getElementById('newChatName').value.trim();const displayName=document.getElementById('newChatDisplayName').value.trim();if(!name)return showToast('Enter a chat name','error');db.collection('chats').add({users:[currentUser.uid],name,displayName:displayName||currentUser.email.split('@')[0],pic:'https://placehold.co/38',lastMsg:'',time:firebase.firestore.FieldValue.serverTimestamp()}).then(docRef=>{document.getElementById('newChatModal').classList.remove('active');showToast('Chat created!','success');setTimeout(()=>openChat(docRef.id,name,'https://placehold.co/38'),500);});}
-function loadChats(){if(!currentUser)return;db.collection('chats').where('users','array-contains',currentUser.uid).orderBy('time','desc').onSnapshot(snap=>{document.getElementById('chatList').innerHTML='';snap.forEach(doc=>{const c=doc.data();document.getElementById('chatList').innerHTML+=`<div class="chat-list-row" onclick="openChat('${doc.id}','${sanitize(c.name)}','${c.pic}')"><img src="${c.pic}" style="width:45px;height:45px;border-radius:50%"><div style="flex:1"><b>${sanitize(c.name)}</b><div style="font-size:0.75rem;color:var(--muted)">${sanitize(c.displayName||'')}</div><div style="font-size:0.8rem;color:var(--muted)">${sanitize(c.lastMsg||'Start chatting...')}</div></div></div>`;});});}
-function openChat(id,name,pic){currentChat=id;document.getElementById('chatName').innerText=name;document.getElementById('chatAvatar').src=pic;document.getElementById('chatWindow').classList.add('active');document.getElementById('chatMessages').innerHTML='<div style="text-align:center;padding:2rem"><div class="spinner"></div></div>';const unsub=db.collection('chats').doc(id).collection('messages').orderBy('time','asc').onSnapshot(snap=>{document.getElementById('chatMessages').innerHTML='';snap.forEach(doc=>{const m=doc.data();document.getElementById('chatMessages').innerHTML+=`<div class="msg-bubble ${m.from===currentUser.uid?'me':'other'}">${sanitize(m.text)}</div>`;});document.getElementById('chatMessages').scrollTop=document.getElementById('chatMessages').scrollHeight;});unsubscribers.push(unsub);}
-function closeChat(){document.getElementById('chatWindow').classList.remove('active');currentChat=null;}
-function sendMsg(){const t=document.getElementById('chatInput').value.trim();if(!t||!currentChat)return;db.collection('chats').doc(currentChat).collection('messages').add({text:t,from:currentUser.uid,time:firebase.firestore.FieldValue.serverTimestamp()}).then(()=>{db.collection('chats').doc(currentChat).update({lastMsg:t,time:firebase.firestore.FieldValue.serverTimestamp()});});document.getElementById('chatInput').value='';}
+// ADMIN PANEL
+async function loadAdminPanel(){if(currentUser?.uid!==ADMIN_UID)return;const totalUsers=(await db.collection('users').get()).size;const totalPosts=(await db.collection('posts').get()).size;const totalGroups=(await db.collection('groups').get()).size;document.getElementById('adminStats').innerHTML=`<div class="admin-stat-card"><h2>${totalUsers}</h2><p>Total Users</p></div><div class="admin-stat-card"><h2>${totalPosts}</h2><p>Total Posts</p></div><div class="admin-stat-card"><h2>${totalGroups}</h2><p>Groups</p></div><div class="admin-stat-card"><h2>5</h2><p>Dummy Bots</p></div>`;const userSnap=await db.collection('users').get();let userRows='';userSnap.forEach(doc=>{const u=doc.data();userRows+=`<tr><td><b>${sanitize(u.name||'Unknown')}</b></td><td>${doc.id.substring(0,10)}...</td><td>0</td><td>${u.followers||0}</td><td>${u.isDummy?'<span style="color:var(--admin-accent)">🤖 Bot</span>':'<span style="color:var(--success)">Active</span>'}</td><td><button class="btn btn-small btn-danger" onclick="adminDeleteUser('${doc.id}')"><i class="fa fa-trash"></i></button></td></tr>`;});document.getElementById('adminUserTable').innerHTML=userRows;const postSnap=await db.collection('posts').orderBy('time','desc').limit(20).get();let postHTML='';postSnap.forEach(doc=>{const p=doc.data();postHTML+=`<div class="feed-card" style="margin:0.5rem 0"><div class="feed-card-header"><b>${sanitize(p.authorName||'Unknown')}</b></div><div>${sanitize((p.text||'').substring(0,100))}</div><div style="font-size:0.75rem;color:var(--muted)">❤️ ${p.likes||0} | 👁️ ${p.views||0} | 💬 ${p.commentsCount||0}</div></div>`;});document.getElementById('adminPostsList').innerHTML=postHTML;document.getElementById('adminAnalytics').innerHTML=`<p><b>Platform:</b> BROXENME v4.0</p><p><b>Dummy Bots:</b> 5 active</p><p><b>Auto-post:</b> Every 12 hours</p><p><b>Free Music:</b> iTunes Preview API</p><p><b>Images:</b> ImgBB + Unsplash</p>`;}
+async function adminDeleteUser(uid){if(!confirm('Delete this user?'))return;await db.collection('users').doc(uid).delete();showToast('User deleted','info');loadAdminPanel();}
+
+// DUMMY ACCOUNTS
+const dummyAccounts=[{email:'dummy1@broxenme.com',pass:'dummy123',name:'Wisdom Warrior',location:'Nairobi, KE',photoURL:'https://placehold.co/100/ADFF2F/000?text=WW'},{email:'dummy2@broxenme.com',pass:'dummy123',name:'Dream Chaser',location:'Lagos, NG',photoURL:'https://placehold.co/100/FF6B6B/000?text=DC'},{email:'dummy3@broxenme.com',pass:'dummy123',name:'Soul Speaker',location:'Cape Town, ZA',photoURL:'https://placehold.co/100/4ECDC4/000?text=SS'},{email:'dummy4@broxenme.com',pass:'dummy123',name:'Mind Mentor',location:'Accra, GH',photoURL:'https://placehold.co/100/FFE66D/000?text=MM'},{email:'dummy5@broxenme.com',pass:'dummy123',name:'Star Gazer',location:'Kigali, RW',photoURL:'https://placehold.co/100/A78BFA/000?text=SG'}];
+async function setupDummyAccounts(){for(const acc of dummyAccounts){try{const cred=await auth.createUserWithEmailAndPassword(acc.email,acc.pass);await db.collection('users').doc(cred.user.uid).set({name:acc.name,location:acc.location,photoURL:acc.photoURL,bio:'Spreading positivity daily ✨',followers:Math.floor(Math.random()*500),following:Math.floor(Math.random()*50),savedPosts:[],createdAt:firebase.firestore.FieldValue.serverTimestamp(),isDummy:true});await auth.signOut();}catch(e){if(e.code!=='auth/email-already-in-use')console.log('Dummy:',e.message);}}if(!currentUser)await auth.signInAnonymously();}
+async function triggerDummyPosts(){document.getElementById('botStatus').innerText='Posting...';await autoPostDummyQuotes();document.getElementById('botStatus').innerText='✅ Done!';setTimeout(()=>document.getElementById('botStatus').innerText='',3000);}
+async function autoPostDummyQuotes(){const usersSnap=await db.collection('users').where('isDummy','==',true).get();const quotes=[{text:"The journey of a thousand miles begins with one step.",tags:['Motivation','Life']},{text:"Your vibe attracts your tribe.",tags:['Life','Love']},{text:"Dream big, work hard, stay focused.",tags:['Success','Business']},{text:"Every moment is a fresh beginning.",tags:['Life','Wisdom']},{text:"Create the life you can't wait to wake up to.",tags:['Success','Motivation']}];const songs=[{title:'Ambient Inspiration',artist:'Relaxing Music',artwork:'',preview:''}];usersSnap.forEach(async userDoc=>{const user=userDoc.data();const q=quotes[Math.floor(Math.random()*quotes.length)];const bg=gradients[Math.floor(Math.random()*gradients.length)];const font=fonts[Math.floor(Math.random()*fonts.length)];try{const r=await fetch('https://itunes.apple.com/search?term=inspiration+instrumental&limit=5');const d=await r.json();const song=d.results?.[Math.floor(Math.random()*d.results.length)];await db.collection('posts').add({text:q.text,bg,font,tags:q.tags,songTitle:song?.trackName||'',songArtist:song?.artistName||'',songArtwork:song?.artworkUrl100||'',songPreview:song?.previewUrl||'',authorId:userDoc.id,authorName:user.name,authorPic:user.photoURL,time:firebase.firestore.FieldValue.serverTimestamp(),likes:Math.floor(Math.random()*30),views:Math.floor(Math.random()*100),commentsCount:Math.floor(Math.random()*5),shares:Math.floor(Math.random()*10)});}catch(e){console.log('Auto-post error:',e);}});}
 
 // NAVIGATION
-function showPage(id){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById(id)?.classList.add('active');document.getElementById('navMenu').classList.remove('active');if(id==='homePage')setHeroBg();if(id==='profilePage'){setProfBg();loadSavedPosts();}if(id==='searchAccountsPage')searchAccounts();}
+function showPage(id){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));const page=document.getElementById(id);if(page)page.classList.add('active');document.getElementById('navMenu').classList.remove('active');if(id==='homePage')setHeroBg();if(id==='profilePage'){setProfBg();loadSavedPosts();}if(id==='adminPage'&&currentUser?.uid===ADMIN_UID)loadAdminPanel();if(id==='searchAccountsPage')searchAccounts();}
 function toggleMenu(){document.getElementById('navMenu').classList.toggle('active');}
-function switchCommTab(t){document.getElementById('feedTabContent').style.display=t==='feed'?'block':'none';document.getElementById('chatsTabContent').style.display=t==='chats'?'block':'none';document.getElementById('tabFeed').classList.toggle('active',t==='feed');document.getElementById('tabChats').classList.toggle('active',t==='chats');}
-function searchQuotes(){clearTimeout(searchTO);searchTO=setTimeout(()=>{const q=document.getElementById('searchInput')?.value?.toLowerCase()||'';if(!q){loadPosts();return;}const f=allPosts.filter(p=>(p.text||'').toLowerCase().includes(q)||(p.tags||[]).join(' ').toLowerCase().includes(q));document.getElementById('reelsViewer').innerHTML=f.length?f.map(p=>`<div class="reel-slide" style="background:${p.bg}"><div class="reel-overlay"></div><div class="reel-content-area"><div class="reel-quote-text" style="font-family:${p.font}">${sanitize(p.text)}</div></div></div>`).join(''):'<div style="text-align:center;padding:4rem"><h3>No results</h3></div>';},300);}
+function switchCommTab(t){const ft=document.getElementById('feedTabContent'),ct=document.getElementById('chatsTabContent');if(ft)ft.style.display=t==='feed'?'block':'none';if(ct)ct.style.display=t==='chats'?'block':'none';document.getElementById('tabFeed')?.classList.toggle('active',t==='feed');document.getElementById('tabChats')?.classList.toggle('active',t==='chats');}
+function searchQuotes(){clearTimeout(searchTO);searchTO=setTimeout(()=>{const q=document.getElementById('searchInput')?.value?.toLowerCase()||'';if(!q){loadPosts();return;}const f=allPosts.filter(p=>(p.text||'').toLowerCase().includes(q)||(p.tags||[]).join(' ').toLowerCase().includes(q));const rv=document.getElementById('reelsViewer');if(rv)rv.innerHTML=f.length?f.map(p=>`<div class="reel-slide" style="background:${p.bg}"><div class="reel-overlay"></div><div class="reel-content-area"><div class="reel-quote-text" style="font-family:${p.font}">${sanitize(p.text)}</div></div></div>`).join(''):'<div style="text-align:center;padding:4rem"><h3>No results</h3></div>';},300);}
 
 // THEME
 document.getElementById('themeToggle').addEventListener('click',()=>{document.body.classList.toggle('light');const l=document.body.classList.contains('light');localStorage.setItem('theme',l?'light':'dark');document.getElementById('themeToggle').innerHTML=l?'<i class="fa fa-sun"></i>':'<i class="fa fa-moon"></i>';});
 if(localStorage.getItem('theme')==='light'){document.body.classList.add('light');document.getElementById('themeToggle').innerHTML='<i class="fa fa-sun"></i>';}
 
-// AUTO POST EVERY 12 HOURS
+// AUTO-POST SCHEDULE
 setInterval(async()=>{if(currentUser)await autoPostDummyQuotes();},43200000);
-setTimeout(async()=>{if(currentUser)await autoPostDummyQuotes();},5000);
+setTimeout(async()=>{if(currentUser)await autoPostDummyQuotes();},10000);
 
 window.addEventListener('beforeunload',cleanup);
-console.log('🚀 BROXENME ULTIMATE v3 - All Systems Integrated!');
+console.log('🚀 BROXENME v4.0 - Admin + Groups + Music + Analytics!');
 </script>
 </body>
 </html>
