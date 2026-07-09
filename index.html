@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>BROXENME</title>
+<title>BROXENME - Quote Social Platform</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
 
 :root {
     --bg: #060606;
@@ -19,9 +19,11 @@
     --purple: #8B5CF6;
     --danger: #ff4757;
     --success: #2ed573;
+    --warning: #ffa502;
     --glass-border: rgba(255,255,255,0.08);
     --glass-shadow: 0 8px 32px rgba(0,0,0,0.3);
     --admin-accent: #FFD700;
+    --whatsapp: #25D366;
 }
 
 .light {
@@ -41,11 +43,18 @@ body {
     background: var(--bg);
     color: var(--text);
     min-height: 100vh;
-    transition: 0.3s;
+    transition: all 0.3s ease;
     padding-top: 65px;
     overflow-x: hidden;
+    scroll-behavior: smooth;
 }
 
+/* SCROLLBAR */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 10px; }
+
+/* GLASS MORPHISM SYSTEM */
 .glass {
     background: var(--card);
     backdrop-filter: blur(20px);
@@ -64,6 +73,15 @@ body {
     border-radius: 20px;
 }
 
+.glass-light {
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 12px;
+}
+
+/* NAVIGATION */
 nav {
     display: flex;
     justify-content: space-between;
@@ -71,11 +89,13 @@ nav {
     padding: 0.6rem 3%;
     background: var(--nav-bg);
     backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
     position: fixed;
     top: 0;
     width: 100%;
     z-index: 1000;
     border-bottom: 1px solid var(--glass-border);
+    transition: all 0.3s ease;
 }
 
 .nav-logo {
@@ -86,6 +106,7 @@ nav {
     font-weight: 900;
     font-size: 1.3rem;
     letter-spacing: -0.5px;
+    user-select: none;
 }
 
 .nav-logo .icon {
@@ -99,23 +120,31 @@ nav {
     color: #000;
     font-size: 1rem;
     font-weight: 900;
+    animation: logoGlow 2s infinite;
 }
 
-nav ul { display: flex; gap: 1rem; list-style: none; align-items: center; }
+@keyframes logoGlow {
+    0%, 100% { box-shadow: 0 0 10px rgba(173,255,47,0.3); }
+    50% { box-shadow: 0 0 25px rgba(173,255,47,0.6); }
+}
+
+nav ul { display: flex; gap: 0.8rem; list-style: none; align-items: center; }
 nav ul li a {
     color: var(--text);
     text-decoration: none;
     cursor: pointer;
     font-weight: 600;
-    transition: 0.2s;
+    transition: all 0.2s ease;
     font-size: 0.85rem;
     padding: 0.5rem 0.8rem;
     border-radius: 20px;
     display: flex;
     align-items: center;
     gap: 0.4rem;
+    white-space: nowrap;
 }
-nav ul li a:hover { color: var(--accent); background: rgba(173,255,47,0.08); }
+nav ul li a:hover { color: var(--accent); background: rgba(173,255,47,0.08); transform: translateY(-1px); }
+nav ul li a.active-nav { color: var(--accent); background: rgba(173,255,47,0.12); }
 
 .nav-right { display: flex; gap: 0.5rem; align-items: center; }
 .nav-btn {
@@ -127,7 +156,7 @@ nav ul li a:hover { color: var(--accent); background: rgba(173,255,47,0.08); }
     cursor: pointer;
     font-weight: 700;
     font-size: 0.85rem;
-    transition: 0.2s;
+    transition: all 0.2s ease;
 }
 .nav-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(173,255,47,0.3); }
 #themeToggle {
@@ -141,14 +170,17 @@ nav ul li a:hover { color: var(--accent); background: rgba(173,255,47,0.08); }
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: all 0.3s ease;
 }
-.hamburger { display: none; cursor: pointer; font-size: 1.3rem; color: var(--text); }
+#themeToggle:hover { background: var(--accent); color: #000; transform: rotate(180deg); }
+.hamburger { display: none; cursor: pointer; font-size: 1.3rem; color: var(--text); z-index: 1001; }
 
-.page { display: none; min-height: 85vh; animation: fadeIn 0.4s ease; }
+/* PAGES */
+.page { display: none; min-height: 85vh; animation: fadeSlideIn 0.5s ease; }
 .page.active { display: block; }
-@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeSlideIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-/* HERO */
+/* HERO - FULL SCREEN DAILY INSPIRATION */
 .hero-full {
     display: flex;
     flex-direction: column;
@@ -159,185 +191,940 @@ nav ul li a:hover { color: var(--accent); background: rgba(173,255,47,0.08); }
     background-size: cover;
     background-position: center;
     position: relative;
+    transition: background-image 1.5s ease;
 }
-.hero-full::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(135deg, rgba(0,0,0,0.7), rgba(0,0,0,0.4)); z-index: 1; }
+.hero-full::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(135deg, rgba(0,0,0,0.75), rgba(0,0,0,0.35));
+    z-index: 1;
+}
 .hero-full > * { position: relative; z-index: 2; }
-.hero-full h1 { font-size: clamp(2.5rem, 6vw, 4rem); font-weight: 900; color: white; }
-.hero-full h1 span { background: linear-gradient(135deg, var(--accent), #00d4ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-.daily-quote-box { background: rgba(0,0,0,0.4); backdrop-filter: blur(15px); border: 1px solid rgba(255,255,255,0.15); border-radius: 20px; padding: 2rem; max-width: 600px; width: 90%; margin: 1.5rem 0; }
-#dailyQuote { font-size: clamp(1.1rem, 3vw, 1.5rem); color: white; font-weight: 600; line-height: 1.6; }
-.hero-full .author { color: var(--accent); margin-top: 0.8rem; font-style: italic; font-weight: 600; }
+.hero-full h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 900; color: white; margin-bottom: 0.3rem; }
+.hero-full h1 span {
+    background: linear-gradient(135deg, var(--accent), #00d4ff, var(--purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradientShift 3s infinite;
+}
+@keyframes gradientShift { 0%, 100% { filter: hue-rotate(0deg); } 50% { filter: hue-rotate(20deg); } }
+.hero-full .tagline { color: rgba(255,255,255,0.7); font-size: 1.1rem; margin-bottom: 2rem; }
+.daily-quote-box {
+    background: rgba(0,0,0,0.45);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 24px;
+    padding: 2.5rem 2rem;
+    max-width: 650px;
+    width: 90%;
+    margin: 0 auto 1.5rem;
+    transition: all 0.5s ease;
+}
+.daily-quote-box:hover { transform: translateY(-5px); box-shadow: 0 20px 50px rgba(0,0,0,0.4); }
+#dailyQuote { font-size: clamp(1.1rem, 3vw, 1.6rem); color: white; font-weight: 600; line-height: 1.7; }
+.hero-full .author { color: var(--accent); margin-top: 1rem; font-style: italic; font-weight: 600; font-size: 1rem; }
+.quote-meta { display: flex; gap: 1rem; justify-content: center; margin-top: 1rem; }
+.quote-meta span { color: rgba(255,255,255,0.5); font-size: 0.8rem; display: flex; align-items: center; gap: 0.3rem; }
 
-.btn { background: var(--accent); color: #000; padding: 0.8rem 1.6rem; border: none; border-radius: 14px; cursor: pointer; font-weight: 700; transition: 0.2s; font-size: 0.9rem; display: inline-flex; align-items: center; gap: 0.5rem; justify-content: center; }
-.btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(173,255,47,0.3); }
-.btn-outline { background: transparent; border: 2px solid var(--accent); color: var(--accent); padding: 0.8rem 1.6rem; border-radius: 14px; cursor: pointer; font-weight: 600; transition: 0.2s; }
-.btn-outline:hover { background: var(--accent); color: #000; }
-.btn-small { padding: 0.5rem 1rem; font-size: 0.8rem; width: auto; }
+/* BUTTONS SYSTEM */
+.btn {
+    background: var(--accent);
+    color: #000;
+    padding: 0.8rem 1.8rem;
+    border: none;
+    border-radius: 14px;
+    cursor: pointer;
+    font-weight: 700;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+.btn::after {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 0; height: 0;
+    background: rgba(255,255,255,0.3);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: all 0.5s ease;
+}
+.btn:active::after { width: 300px; height: 300px; }
+.btn:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(173,255,47,0.4); }
+.btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+.btn-outline {
+    background: transparent;
+    border: 2px solid var(--accent);
+    color: var(--accent);
+    padding: 0.8rem 1.8rem;
+    border-radius: 14px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+.btn-outline:hover { background: var(--accent); color: #000; transform: translateY(-2px); }
+.btn-small { padding: 0.5rem 1rem; font-size: 0.8rem; width: auto; border-radius: 10px; }
 .btn-danger { background: var(--danger); color: white; }
+.btn-danger:hover { box-shadow: 0 8px 25px rgba(255,71,87,0.4); }
 .btn-admin { background: var(--admin-accent); color: #000; }
+.btn-success { background: var(--success); color: white; }
+.btn-icon {
+    width: 42px; height: 42px; border-radius: 50%; padding: 0;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.btn-icon:hover { background: rgba(255,255,255,0.2); transform: scale(1.1); }
 
-/* REELS */
-.reels-page-container { height: calc(100vh - 65px); overflow-y: scroll; scroll-snap-type: y mandatory; scroll-behavior: smooth; }
+/* REELS - TIKTOK/INSTAGRAM STYLE */
+.reels-page-container {
+    height: calc(100vh - 65px);
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+}
 .reels-page-container::-webkit-scrollbar { width: 0; }
-.reel-slide { height: calc(100vh - 65px); width: 100%; scroll-snap-align: start; position: relative; display: flex; align-items: center; justify-content: center; background-size: cover; background-position: center; }
-.reel-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(0deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.2) 40%, rgba(0,0,0,0.3) 100%); }
-.reel-content-area { position: relative; z-index: 2; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; padding: 1rem 1rem 1.5rem; }
-.reel-quote-text { font-size: clamp(1.2rem, 4vw, 2rem); font-weight: 800; color: white; text-shadow: 2px 2px 15px rgba(0,0,0,0.9); margin-bottom: 1rem; line-height: 1.3; }
+.reel-slide {
+    height: calc(100vh - 65px);
+    width: 100%;
+    max-width: 100%;
+    scroll-snap-align: start;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-size: cover;
+    background-position: center;
+    transition: background-image 0.5s ease;
+}
+.reel-overlay {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(0deg, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.15) 45%, rgba(0,0,0,0.25) 100%);
+    z-index: 1;
+}
+.reel-content-area {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 1.5rem 1rem 2rem;
+}
+.reel-quote-text {
+    font-size: clamp(1.2rem, 4vw, 2.2rem);
+    font-weight: 800;
+    color: white;
+    text-shadow: 2px 2px 20px rgba(0,0,0,0.9);
+    margin-bottom: 0.8rem;
+    line-height: 1.3;
+    letter-spacing: -0.3px;
+}
 .reel-tags-row { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 0.6rem; }
-.reel-tag-badge { background: rgba(173,255,47,0.25); backdrop-filter: blur(8px); padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.7rem; font-weight: 600; color: white; }
-.reel-user-row { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.4rem; }
-.reel-user-pic { width: 36px; height: 36px; border-radius: 50%; border: 2px solid var(--accent); object-fit: cover; }
+.reel-tag-badge {
+    background: rgba(173,255,47,0.2);
+    backdrop-filter: blur(10px);
+    padding: 0.3rem 0.9rem;
+    border-radius: 15px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: white;
+    border: 1px solid rgba(173,255,47,0.3);
+}
+.reel-user-row { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.3rem; }
+.reel-user-pic { width: 38px; height: 38px; border-radius: 50%; border: 2px solid var(--accent); object-fit: cover; box-shadow: 0 0 15px rgba(173,255,47,0.3); }
 .reel-user-name { color: white; font-weight: 700; font-size: 0.9rem; }
-.reel-stats-row { display: flex; gap: 1rem; font-size: 0.7rem; color: rgba(255,255,255,0.5); margin-bottom: 0.3rem; }
+.reel-user-handle { color: rgba(255,255,255,0.6); font-size: 0.75rem; }
+.reel-stats-row { display: flex; gap: 1.2rem; font-size: 0.7rem; color: rgba(255,255,255,0.55); margin-bottom: 0.4rem; }
 .reel-stats-row span { display: flex; align-items: center; gap: 0.3rem; }
-.reel-music-display { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.8rem; cursor: pointer; padding: 0.4rem 0.8rem; background: rgba(0,0,0,0.4); border-radius: 20px; width: fit-content; }
-.reel-music-display i { color: var(--accent); font-size: 0.9rem; }
+.reel-music-display {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.8rem;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    background: rgba(0,0,0,0.45);
+    backdrop-filter: blur(10px);
+    border-radius: 25px;
+    width: fit-content;
+    border: 1px solid rgba(255,255,255,0.1);
+    transition: all 0.3s ease;
+}
+.reel-music-display:hover { background: rgba(173,255,47,0.15); border-color: var(--accent); }
+.reel-music-display i { color: var(--accent); font-size: 0.9rem; animation: musicBounce 0.8s infinite alternate; }
+@keyframes musicBounce { from { transform: translateY(0); } to { transform: translateY(-4px); } }
 .reel-music-text { color: white; font-size: 0.75rem; }
-.reel-actions-sidebar { position: absolute; right: 0.8rem; bottom: 120px; display: flex; flex-direction: column; gap: 1.2rem; z-index: 5; }
-.reel-action-btn { display: flex; flex-direction: column; align-items: center; gap: 0.2rem; cursor: pointer; transition: 0.2s; }
-.reel-action-btn:hover { transform: scale(1.15); }
-.reel-action-btn .action-icon { width: 44px; height: 44px; border-radius: 50%; background: rgba(0,0,0,0.4); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; color: white; font-size: 1.3rem; border: 1px solid rgba(255,255,255,0.15); }
-.reel-action-btn.liked .action-icon { background: rgba(255,71,87,0.5); color: #ff4757; }
-.reel-action-btn .action-label { color: white; font-size: 0.65rem; font-weight: 700; }
-.reels-search-overlay { position: fixed; top: 65px; left: 0; right: 0; z-index: 50; padding: 0.8rem 1rem; display: flex; justify-content: center; }
-.reels-search-overlay input { width: 100%; max-width: 450px; padding: 0.7rem 1.2rem; border-radius: 25px; border: 1px solid rgba(255,255,255,0.2); background: rgba(0,0,0,0.4); backdrop-filter: blur(15px); color: white; outline: none; font-size: 0.9rem; }
+.reel-music-artist { color: rgba(255,255,255,0.5); font-size: 0.65rem; }
+.music-wave { display: flex; gap: 2px; align-items: flex-end; height: 16px; margin-left: 0.5rem; }
+.music-wave span { width: 2px; background: var(--accent); border-radius: 2px; animation: waveAnim 0.7s infinite alternate; }
+.music-wave span:nth-child(1) { height: 7px; }
+.music-wave span:nth-child(2) { height: 13px; animation-delay: 0.15s; }
+.music-wave span:nth-child(3) { height: 5px; animation-delay: 0.3s; }
+.music-wave span:nth-child(4) { height: 11px; animation-delay: 0.45s; }
+@keyframes waveAnim { to { height: 3px; } }
 
-/* COMMENTS */
-.comments-panel { position: absolute; bottom: 0; left: 0; width: 100%; max-height: 45%; background: rgba(0,0,0,0.95); backdrop-filter: blur(20px); border-radius: 20px 20px 0 0; padding: 1rem; display: none; flex-direction: column; z-index: 20; animation: slideUp 0.3s ease; }
+/* REEL ACTIONS SIDEBAR */
+.reel-actions-sidebar {
+    position: absolute;
+    right: 0.8rem;
+    bottom: 130px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    z-index: 5;
+}
+.reel-action-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.2rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.reel-action-btn:hover { transform: scale(1.15); }
+.reel-action-btn .action-icon {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.4);
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.3rem;
+    border: 1px solid rgba(255,255,255,0.15);
+    transition: all 0.3s ease;
+}
+.reel-action-btn.liked .action-icon { background: rgba(255,71,87,0.5); color: #ff4757; border-color: #ff4757; }
+.reel-action-btn.saved .action-icon { background: rgba(255,215,0,0.5); color: #FFD700; border-color: #FFD700; }
+.reel-action-btn .action-label { color: white; font-size: 0.65rem; font-weight: 700; text-shadow: 1px 1px 3px rgba(0,0,0,0.8); }
+
+/* REELS SEARCH OVERLAY */
+.reels-search-overlay {
+    position: fixed;
+    top: 65px;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    padding: 0.8rem 1rem;
+    display: flex;
+    justify-content: center;
+    pointer-events: none;
+}
+.reels-search-overlay input {
+    width: 100%;
+    max-width: 450px;
+    padding: 0.8rem 1.5rem;
+    border-radius: 30px;
+    border: 1px solid rgba(255,255,255,0.2);
+    background: rgba(0,0,0,0.45);
+    backdrop-filter: blur(20px);
+    color: white;
+    outline: none;
+    font-size: 0.9rem;
+    pointer-events: auto;
+    transition: all 0.3s ease;
+}
+.reels-search-overlay input::placeholder { color: rgba(255,255,255,0.5); }
+.reels-search-overlay input:focus { border-color: var(--accent); box-shadow: 0 0 20px rgba(173,255,47,0.2); }
+
+/* COMMENTS PANEL */
+.comments-panel {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    max-height: 50%;
+    background: rgba(0,0,0,0.96);
+    backdrop-filter: blur(25px);
+    border-radius: 24px 24px 0 0;
+    padding: 1.2rem;
+    display: none;
+    flex-direction: column;
+    z-index: 20;
+    animation: slideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
 @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
 .comments-panel.active { display: flex; }
-.comments-list { flex: 1; overflow-y: auto; margin-bottom: 0.5rem; }
-.comment-item { display: flex; gap: 0.6rem; padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.03); }
-.comment-avatar { width: 28px; height: 28px; border-radius: 50%; object-fit: cover; }
-.comment-content { flex: 1; }
+.comments-panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.8rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.comments-panel-header h4 { color: white; font-size: 0.95rem; }
+.comments-panel-header button { background: none; border: none; color: var(--muted); cursor: pointer; font-size: 1.2rem; }
+.comments-list { flex: 1; overflow-y: auto; margin-bottom: 0.5rem; padding-right: 0.3rem; }
+.comment-item { display: flex; gap: 0.7rem; padding: 0.6rem 0; border-bottom: 1px solid rgba(255,255,255,0.03); animation: fadeSlideIn 0.3s ease; }
+.comment-avatar { width: 30px; height: 30px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
+.comment-content { flex: 1; min-width: 0; }
 .comment-author { font-weight: 700; font-size: 0.8rem; color: var(--accent); }
-.comment-text { font-size: 0.82rem; color: rgba(255,255,255,0.8); }
-.comment-input-row { display: flex; gap: 0.4rem; }
-.comment-input-row input { flex: 1; padding: 0.6rem 0.8rem; border-radius: 15px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.08); color: white; outline: none; font-size: 0.85rem; }
-.comment-input-row button { background: var(--accent); color: #000; border: none; border-radius: 50%; width: 35px; height: 35px; cursor: pointer; }
+.comment-text { font-size: 0.82rem; color: rgba(255,255,255,0.8); margin-top: 0.1rem; word-wrap: break-word; }
+.comment-time { font-size: 0.65rem; color: rgba(255,255,255,0.3); margin-top: 0.2rem; }
+.comment-input-row { display: flex; gap: 0.5rem; align-items: center; }
+.comment-input-row input {
+    flex: 1;
+    padding: 0.7rem 1rem;
+    border-radius: 20px;
+    border: 1px solid rgba(255,255,255,0.2);
+    background: rgba(255,255,255,0.08);
+    color: white;
+    outline: none;
+    font-size: 0.85rem;
+}
+.comment-input-row input:focus { border-color: var(--accent); }
+.comment-input-row button {
+    background: var(--accent);
+    color: #000;
+    border: none;
+    border-radius: 50%;
+    width: 38px;
+    height: 38px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    flex-shrink: 0;
+    transition: all 0.2s ease;
+}
+.comment-input-row button:hover { transform: scale(1.1); }
 
-/* PROFILE */
-.profile-wrapper { max-width: 700px; margin: 0.5rem auto; border-radius: 24px; overflow: hidden; }
-.profile-cover { height: 160px; background-size: cover; background-position: center; position: relative; }
-.profile-cover-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(135deg, rgba(0,255,136,0.3), rgba(0,212,255,0.3)); }
-.profile-avatar-wrap { position: absolute; bottom: -45px; left: 50%; transform: translateX(-50%); z-index: 3; }
-.profile-avatar { width: 90px; height: 90px; border-radius: 50%; border: 4px solid var(--card); object-fit: cover; background: #222; }
-.profile-info-section { padding: 55px 1.5rem 1.5rem; text-align: center; }
-.profile-name-display { font-size: 1.4rem; font-weight: 800; }
-.profile-stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.6rem; margin: 1.2rem 0; }
-.stat-card { text-align: center; padding: 0.6rem; background: rgba(255,255,255,0.03); border-radius: 10px; }
-.stat-card h3 { font-size: 1.2rem; color: var(--accent); font-weight: 800; }
-.stat-card p { font-size: 0.65rem; color: var(--muted); }
-.profile-action-btns { display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: center; margin: 1rem 0; }
-.profile-tabs { display: flex; gap: 0.5rem; margin: 1rem 0; border-bottom: 1px solid var(--glass-border); }
-.profile-tab { padding: 0.6rem 1rem; cursor: pointer; font-weight: 600; font-size: 0.85rem; color: var(--muted); border-bottom: 3px solid transparent; transition: 0.2s; }
+/* PROFILE PAGE */
+.profile-wrapper { max-width: 750px; margin: 0.5rem auto; border-radius: 24px; overflow: hidden; }
+.profile-cover {
+    height: 180px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    transition: background-image 1.5s ease;
+}
+.profile-cover-overlay {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(135deg, rgba(0,255,136,0.25), rgba(0,212,255,0.25));
+}
+.profile-avatar-wrap { position: absolute; bottom: -50px; left: 50%; transform: translateX(-50%); z-index: 3; }
+.profile-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 4px solid var(--card);
+    object-fit: cover;
+    background: #222;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+}
+.profile-avatar-camera {
+    position: absolute;
+    bottom: 3px;
+    right: 3px;
+    background: var(--accent);
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #000;
+    font-size: 0.7rem;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+.profile-info-section { padding: 60px 1.5rem 1.5rem; text-align: center; }
+.profile-name-display { font-size: 1.5rem; font-weight: 800; }
+.profile-username-display { color: var(--muted); font-size: 0.85rem; margin: 0.2rem 0; }
+.profile-location-display { color: var(--muted); font-size: 0.85rem; }
+.profile-bio-display { color: var(--muted); margin: 0.8rem auto; font-style: italic; font-size: 0.9rem; max-width: 450px; }
+.profile-stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.8rem; margin: 1.5rem 0; }
+.stat-card {
+    text-align: center;
+    padding: 0.8rem;
+    background: rgba(255,255,255,0.03);
+    border-radius: 12px;
+    border: 1px solid var(--glass-border);
+    transition: all 0.3s ease;
+}
+.stat-card:hover { transform: translateY(-3px); background: rgba(173,255,47,0.05); }
+.stat-card h3 { font-size: 1.4rem; color: var(--accent); font-weight: 800; }
+.stat-card p { font-size: 0.7rem; color: var(--muted); margin-top: 0.2rem; }
+.profile-action-btns { display: flex; gap: 0.6rem; flex-wrap: wrap; justify-content: center; margin: 1rem 0; }
+.profile-tabs { display: flex; gap: 0.5rem; margin: 1.2rem 0; border-bottom: 1px solid var(--glass-border); padding-bottom: 0.5rem; }
+.profile-tab {
+    padding: 0.7rem 1.2rem;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: var(--muted);
+    border-bottom: 3px solid transparent;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+.profile-tab:hover { color: var(--text); }
 .profile-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
-.profile-posts-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: 1rem; }
-.post-grid-item { aspect-ratio: 1; border-radius: 12px; display: flex; align-items: center; justify-content: center; padding: 0.6rem; text-align: center; font-weight: bold; color: white; cursor: pointer; transition: 0.2s; font-size: 0.7rem; word-break: break-word; position: relative; }
-.post-grid-item:hover { transform: scale(1.05); }
-.post-grid-item .post-stats-overlay { position: absolute; bottom: 0; left: 0; right: 0; background: rgba(0,0,0,0.7); padding: 0.3rem; font-size: 0.55rem; display: flex; justify-content: space-around; border-radius: 0 0 12px 12px; }
-.post-grid-item .delete-btn { position: absolute; top: 5px; right: 5px; background: rgba(255,0,0,0.7); border-radius: 50%; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 0.6rem; opacity: 0; transition: 0.2s; z-index: 5; }
-.post-grid-item:hover .delete-btn { opacity: 1; }
+.profile-posts-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 1rem; }
+.post-grid-item {
+    aspect-ratio: 1;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.6rem;
+    text-align: center;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.72rem;
+    word-break: break-word;
+    position: relative;
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+}
+.post-grid-item:hover { transform: scale(1.06); box-shadow: 0 10px 30px rgba(0,0,0,0.4); }
+.post-grid-item .post-stats-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(0deg, rgba(0,0,0,0.85), transparent);
+    padding: 0.5rem 0.3rem 0.3rem;
+    font-size: 0.55rem;
+    display: flex;
+    justify-content: space-around;
+    color: white;
+}
+.post-grid-item .post-delete-btn {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    background: rgba(255,0,0,0.8);
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 0.6rem;
+    opacity: 0;
+    transition: all 0.3s ease;
+    z-index: 5;
+    color: white;
+}
+.post-grid-item:hover .post-delete-btn { opacity: 1; }
+
+/* SEARCH ACCOUNTS PAGE */
+.search-page-container { max-width: 650px; margin: 0 auto; padding: 1.5rem; }
+.search-page-container h2 { margin-bottom: 1.5rem; font-size: 1.5rem; }
+.search-input-wrapper { position: relative; margin-bottom: 1.5rem; }
+.search-input-wrapper input {
+    width: 100%;
+    padding: 1rem 1.5rem 1rem 3rem;
+    border-radius: 30px;
+    border: 2px solid var(--accent);
+    background: var(--card);
+    color: var(--text);
+    outline: none;
+    font-size: 0.95rem;
+}
+.search-input-wrapper i { position: absolute; left: 1.2rem; top: 50%; transform: translateY(-50%); color: var(--accent); }
+.user-result-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: var(--card);
+    border-radius: 14px;
+    margin: 0.6rem 0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px solid var(--glass-border);
+}
+.user-result-card:hover { transform: translateX(5px); border-color: var(--accent); }
+.user-result-card img { width: 50px; height: 50px; border-radius: 50%; object-fit: cover; }
+.user-result-info { flex: 1; }
+.user-result-name { font-weight: 700; }
+.user-result-location { font-size: 0.8rem; color: var(--muted); }
+.user-result-stats { text-align: right; }
+.user-result-stats b { color: var(--accent); display: block; }
+.user-result-stats span { font-size: 0.7rem; color: var(--muted); }
+
+/* COMMUNITY PAGE */
+.community-page-container { max-width: 700px; margin: 0 auto; padding: 0.5rem; }
+.community-tabs-row { display: flex; gap: 0.5rem; margin-bottom: 1rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 0.5rem; }
+.community-tab-btn {
+    padding: 0.6rem 1.2rem;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: var(--muted);
+    border: none;
+    background: none;
+    border-bottom: 3px solid transparent;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+.community-tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+.stories-row { display: flex; gap: 0.8rem; padding: 0.8rem 0; overflow-x: auto; margin-bottom: 0.5rem; }
+.stories-row::-webkit-scrollbar { height: 0; }
+.story-circle-item { text-align: center; flex-shrink: 0; cursor: pointer; }
+.story-circle-ring {
+    width: 62px;
+    height: 62px;
+    border-radius: 50%;
+    padding: 3px;
+    background: linear-gradient(135deg, var(--accent), var(--purple), #EC4899);
+}
+.story-circle-ring.add-story-ring { background: var(--muted); }
+.story-circle-ring img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--bg);
+}
+.story-username-label { font-size: 0.6rem; color: var(--muted); margin-top: 0.3rem; max-width: 62px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* FEED CARDS */
+.feed-post-card {
+    background: var(--card);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 18px;
+    padding: 1.2rem;
+    margin: 0.8rem 0;
+    transition: all 0.3s ease;
+}
+.feed-post-card:hover { transform: translateY(-3px); box-shadow: 0 15px 40px rgba(0,0,0,0.3); }
+.feed-post-header { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.8rem; }
+.feed-post-avatar { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; }
+.feed-post-author { font-weight: 700; }
+.feed-post-time { font-size: 0.7rem; color: var(--muted); }
+.feed-post-body { font-size: 0.95rem; line-height: 1.6; margin-bottom: 0.8rem; }
+.feed-post-image {
+    width: 100%;
+    border-radius: 14px;
+    margin-bottom: 0.8rem;
+    aspect-ratio: 16/10;
+    object-fit: cover;
+    background-size: cover;
+    background-position: center;
+}
+.feed-post-actions {
+    display: flex;
+    gap: 1.5rem;
+    color: var(--muted);
+    font-size: 0.85rem;
+    padding-top: 0.6rem;
+    border-top: 1px solid var(--glass-border);
+}
+.feed-post-actions span {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    transition: all 0.2s ease;
+    padding: 0.3rem 0.6rem;
+    border-radius: 20px;
+}
+.feed-post-actions span:hover { color: var(--accent); background: rgba(173,255,47,0.06); }
+
+/* GROUP CHATS */
+.chat-window-full {
+    display: none;
+    position: fixed;
+    top: 65px;
+    left: 0;
+    width: 100%;
+    height: calc(100vh - 65px);
+    background: var(--bg);
+    z-index: 999;
+    flex-direction: column;
+}
+.chat-window-full.active { display: flex; }
+.chat-window-header {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.8rem 1rem;
+    background: #075E54;
+    color: white;
+}
+.chat-window-header button { background: none; border: none; color: white; font-size: 1.2rem; cursor: pointer; }
+.chat-window-header img { width: 38px; height: 38px; border-radius: 50%; }
+.chat-window-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1rem;
+    background: #1a1a2e;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+.chat-window-input-row {
+    display: flex;
+    gap: 0.5rem;
+    padding: 0.6rem 0.8rem;
+    background: var(--card);
+    align-items: center;
+}
+.chat-window-input-row input {
+    flex: 1;
+    padding: 0.7rem 1rem;
+    border-radius: 25px;
+    border: 1px solid var(--glass-border);
+    background: rgba(0,0,0,0.2);
+    color: var(--text);
+    outline: none;
+    font-size: 0.9rem;
+}
+.chat-window-input-row button {
+    background: #25D366;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 42px;
+    height: 42px;
+    cursor: pointer;
+    font-size: 1rem;
+    flex-shrink: 0;
+}
+.msg-bubble {
+    padding: 0.5rem 0.9rem;
+    border-radius: 10px;
+    max-width: 75%;
+    font-size: 0.88rem;
+    word-wrap: break-word;
+    position: relative;
+}
+.msg-bubble.me { background: #dcf8c6; color: #000; align-self: flex-end; border-top-right-radius: 2px; }
+.msg-bubble.other { background: white; color: #000; align-self: flex-start; border-top-left-radius: 2px; }
+.msg-bubble .msg-sender-name { font-size: 0.7rem; font-weight: 700; color: var(--accent); margin-bottom: 0.15rem; }
+.msg-bubble .msg-time-stamp { font-size: 0.6rem; color: #667781; text-align: right; margin-top: 0.15rem; }
+.chat-list-item-row {
+    display: flex;
+    gap: 0.8rem;
+    padding: 0.8rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-radius: 12px;
+    align-items: center;
+}
+.chat-list-item-row:hover { background: rgba(255,255,255,0.03); }
+.chat-list-avatar { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; }
+.chat-list-info { flex: 1; min-width: 0; }
+.chat-list-name { font-weight: 700; font-size: 0.9rem; }
+.chat-list-preview { font-size: 0.78rem; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.chat-list-meta { text-align: right; }
+.chat-list-time { font-size: 0.7rem; color: var(--muted); }
+.chat-list-badge {
+    background: var(--accent);
+    color: #000;
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    font-weight: 700;
+    margin-top: 0.2rem;
+}
 
 /* ADMIN PANEL */
-.admin-panel { max-width: 900px; margin: 0 auto; padding: 1rem; }
-.admin-header { background: linear-gradient(135deg, #1a1a2e, #16213e); padding: 2rem; border-radius: 20px; margin-bottom: 1.5rem; text-align: center; }
-.admin-header h1 { color: var(--admin-accent); font-size: 2rem; }
-.admin-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
-.admin-stat-card { background: var(--card); padding: 1.2rem; border-radius: 14px; text-align: center; border: 1px solid var(--glass-border); }
-.admin-stat-card h2 { font-size: 2rem; color: var(--admin-accent); }
-.admin-stat-card p { font-size: 0.8rem; color: var(--muted); margin-top: 0.3rem; }
-.admin-section { background: var(--card); padding: 1.5rem; border-radius: 14px; margin-bottom: 1rem; border: 1px solid var(--glass-border); }
-.admin-section h3 { margin-bottom: 1rem; color: var(--admin-accent); }
-.admin-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
-.admin-table th, .admin-table td { padding: 0.6rem; text-align: left; border-bottom: 1px solid var(--glass-border); }
-.admin-table th { color: var(--accent); font-weight: 700; }
-.admin-actions { display: flex; gap: 0.3rem; }
-
-/* FEED & STORIES */
-.stories-row { display: flex; gap: 0.8rem; padding: 1rem 0; overflow-x: auto; }
-.stories-row::-webkit-scrollbar { height: 0; }
-.story-circle { width: 60px; height: 60px; border-radius: 50%; padding: 3px; background: linear-gradient(135deg, var(--accent), var(--purple), #EC4899); cursor: pointer; flex-shrink: 0; }
-.story-circle.add-story { background: var(--muted); display: flex; align-items: center; justify-content: center; }
-.feed-card { background: var(--card); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: 16px; padding: 1rem; margin: 0.8rem 0; }
-.feed-card-header { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.8rem; }
-.feed-card-avatar { width: 38px; height: 38px; border-radius: 50%; object-fit: cover; }
-.feed-card-body { font-size: 0.95rem; line-height: 1.5; margin-bottom: 0.8rem; }
-.feed-card-image { width: 100%; border-radius: 12px; margin-bottom: 0.8rem; aspect-ratio: 16/9; object-fit: cover; background-size: cover; }
-.feed-card-actions { display: flex; gap: 1.5rem; color: var(--muted); font-size: 0.85rem; padding-top: 0.5rem; border-top: 1px solid var(--glass-border); }
-.feed-card-actions span { cursor: pointer; display: flex; align-items: center; gap: 0.4rem; }
-.feed-card-actions span:hover { color: var(--accent); }
-
-/* GROUP CHAT */
-.chat-window { display: none; position: fixed; top: 65px; left: 0; width: 100%; height: calc(100vh - 65px); background: var(--bg); z-index: 999; flex-direction: column; }
-.chat-window.active { display: flex; }
-.chat-header-bar { display: flex; align-items: center; gap: 0.8rem; padding: 0.8rem; background: #075E54; color: white; }
-.chat-messages-area { flex: 1; overflow-y: auto; padding: 1rem; background: #1a1a2e; display: flex; flex-direction: column; gap: 0.3rem; }
-.chat-input-row { display: flex; gap: 0.5rem; padding: 0.6rem; background: var(--card); align-items: center; }
-.msg-bubble { padding: 0.5rem 0.8rem; border-radius: 8px; max-width: 75%; font-size: 0.9rem; }
-.msg-bubble.me { background: #dcf8c6; color: #000; align-self: flex-end; }
-.msg-bubble.other { background: white; color: #000; align-self: flex-start; }
-.msg-bubble .msg-sender { font-size: 0.7rem; font-weight: 700; color: var(--accent); margin-bottom: 0.2rem; }
-.chat-list-row { display: flex; gap: 0.8rem; padding: 0.8rem; cursor: pointer; transition: 0.2s; border-radius: 10px; align-items: center; }
-.chat-list-row:hover { background: rgba(255,255,255,0.03); }
-.chat-list-row .member-count { background: var(--accent); color: #000; border-radius: 50%; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 700; }
+.admin-dashboard { max-width: 1000px; margin: 0 auto; padding: 1rem; }
+.admin-welcome-banner {
+    background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+    padding: 2.5rem;
+    border-radius: 24px;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    border: 1px solid rgba(255,215,0,0.3);
+}
+.admin-welcome-banner h1 { color: var(--admin-accent); font-size: 2rem; margin-bottom: 0.5rem; }
+.admin-stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+.admin-stat-box {
+    background: var(--card);
+    padding: 1.5rem;
+    border-radius: 16px;
+    text-align: center;
+    border: 1px solid var(--glass-border);
+    transition: all 0.3s ease;
+}
+.admin-stat-box:hover { transform: translateY(-5px); border-color: var(--admin-accent); }
+.admin-stat-box h2 { font-size: 2.2rem; color: var(--admin-accent); }
+.admin-stat-box p { font-size: 0.8rem; color: var(--muted); margin-top: 0.3rem; }
+.admin-section-panel {
+    background: var(--card);
+    padding: 1.5rem;
+    border-radius: 16px;
+    margin-bottom: 1rem;
+    border: 1px solid var(--glass-border);
+}
+.admin-section-panel h3 { margin-bottom: 1rem; color: var(--admin-accent); display: flex; align-items: center; gap: 0.5rem; }
+.admin-data-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+.admin-data-table th, .admin-data-table td { padding: 0.7rem 0.5rem; text-align: left; border-bottom: 1px solid var(--glass-border); }
+.admin-data-table th { color: var(--accent); font-weight: 700; position: sticky; top: 0; background: var(--card); }
+.admin-action-btns { display: flex; gap: 0.3rem; }
 
 /* MODALS */
-.modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 2000; align-items: center; justify-content: center; padding: 0.5rem; }
-.modal.active { display: flex; }
-.modal-dialog { background: var(--card); backdrop-filter: blur(25px); border: 1px solid var(--glass-border); padding: 1.5rem; border-radius: 20px; width: 100%; max-width: 480px; max-height: 85vh; overflow-y: auto; }
-.modal-title { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 1.2rem; font-size: 1.2rem; font-weight: 700; }
-.modal-title i { color: var(--accent); }
-.form-input { width: 100%; padding: 0.8rem 1rem; margin: 0.4rem 0; border-radius: 12px; border: 1px solid var(--glass-border); background: rgba(0,0,0,0.2); color: var(--text); outline: none; font-size: 0.9rem; }
-.form-input:focus { border-color: var(--accent); }
-.form-label { display: block; font-weight: 600; margin-top: 0.8rem; margin-bottom: 0.3rem; color: var(--muted); font-size: 0.8rem; }
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.92);
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem;
+    animation: fadeIn 0.3s ease;
+}
+.modal-overlay.active { display: flex; }
+.modal-dialog-box {
+    background: var(--card);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    border: 1px solid var(--glass-border);
+    padding: 1.8rem;
+    border-radius: 22px;
+    width: 100%;
+    max-width: 500px;
+    max-height: 85vh;
+    overflow-y: auto;
+    box-shadow: 0 25px 60px rgba(0,0,0,0.5);
+    animation: modalPopIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@keyframes modalPopIn {
+    from { transform: scale(0.9); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+.modal-title-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    margin-bottom: 1.5rem;
+    font-size: 1.3rem;
+    font-weight: 700;
+}
+.modal-title-bar i { color: var(--accent); font-size: 1.4rem; }
+.form-input-field {
+    width: 100%;
+    padding: 0.9rem 1rem;
+    margin: 0.4rem 0;
+    border-radius: 12px;
+    border: 1px solid var(--glass-border);
+    background: rgba(0,0,0,0.2);
+    color: var(--text);
+    outline: none;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+.form-input-field:focus { border-color: var(--accent); box-shadow: 0 0 15px rgba(173,255,47,0.1); }
+.form-label-text { display: block; font-weight: 600; margin-top: 0.8rem; margin-bottom: 0.3rem; color: var(--muted); font-size: 0.82rem; }
+textarea.form-input-field { resize: vertical; min-height: 60px; font-family: 'Poppins', sans-serif; }
 
-/* SONG SEARCH */
-.song-search-container { position: relative; }
-.song-results-dropdown { max-height: 180px; overflow-y: auto; border-radius: 10px; background: rgba(0,0,0,0.4); margin-top: 0.3rem; }
-.song-result-row { display: flex; align-items: center; gap: 0.6rem; padding: 0.6rem 0.8rem; cursor: pointer; transition: 0.2s; border-bottom: 1px solid rgba(255,255,255,0.03); }
-.song-result-row:hover { background: rgba(173,255,47,0.1); }
-.song-result-row img { width: 42px; height: 42px; border-radius: 8px; object-fit: cover; }
-.selected-song-card { display: flex; align-items: center; gap: 0.6rem; padding: 0.6rem; background: rgba(173,255,47,0.1); border-radius: 12px; margin-top: 0.4rem; }
-.playing-indicator { display: flex; gap: 2px; align-items: flex-end; height: 15px; }
-.playing-indicator span { width: 2px; background: var(--accent); border-radius: 2px; animation: wave 0.6s infinite alternate; }
-.playing-indicator span:nth-child(1) { height: 8px; } .playing-indicator span:nth-child(2) { height: 14px; animation-delay: 0.15s; } .playing-indicator span:nth-child(3) { height: 6px; animation-delay: 0.3s; } .playing-indicator span:nth-child(4) { height: 12px; animation-delay: 0.45s; }
-@keyframes wave { to { height: 3px; } }
+/* SONG SEARCH SYSTEM */
+.song-search-wrapper { position: relative; }
+.song-search-wrapper .search-icon { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); color: var(--accent); }
+.song-results-container { max-height: 200px; overflow-y: auto; border-radius: 12px; background: rgba(0,0,0,0.4); margin-top: 0.4rem; }
+.song-result-entry {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0.7rem 0.8rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-bottom: 1px solid rgba(255,255,255,0.03);
+}
+.song-result-entry:hover { background: rgba(173,255,47,0.1); }
+.song-result-entry img { width: 44px; height: 44px; border-radius: 8px; object-fit: cover; }
+.song-result-details { flex: 1; min-width: 0; }
+.song-result-details .song-name { font-weight: 600; font-size: 0.85rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.song-result-details .song-artist { font-size: 0.72rem; color: var(--muted); }
+.selected-song-display-card {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0.7rem;
+    background: rgba(173,255,47,0.08);
+    border-radius: 14px;
+    margin-top: 0.5rem;
+    border: 1px solid rgba(173,255,47,0.2);
+}
+.selected-song-display-card img { width: 44px; height: 44px; border-radius: 8px; object-fit: cover; }
+.song-preview-player-area { margin-top: 0.4rem; }
+
+/* QUOTE PREVIEW */
+.quote-preview-canvas {
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    margin: 1rem 0;
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: white;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+.quote-preview-watermark {
+    position: absolute;
+    bottom: 10px;
+    right: 12px;
+    font-size: 0.6rem;
+    color: rgba(255,255,255,0.6);
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+    font-weight: 600;
+}
 
 /* TOASTS */
-.toast-container { position: fixed; top: 75px; right: 15px; z-index: 5000; display: flex; flex-direction: column; gap: 8px; }
-.toast { padding: 0.8rem 1.2rem; border-radius: 10px; color: white; font-weight: 600; min-width: 200px; backdrop-filter: blur(20px); animation: slideInRight 0.3s ease; font-size: 0.85rem; }
-.toast.success { background: rgba(46,213,115,0.95); } .toast.error { background: rgba(255,71,87,0.95); } .toast.info { background: rgba(0,122,122,0.95); }
-@keyframes slideInRight { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
-.spinner { border: 3px solid rgba(255,255,255,0.1); border-top: 3px solid var(--accent); border-radius: 50%; width: 28px; height: 28px; animation: spin 1s linear infinite; margin: 1rem auto; }
-@keyframes spin { to { transform: rotate(360deg); } }
-
-@media (max-width: 768px) {
-    nav ul { position: fixed; top: 65px; left: -100%; width: 100%; height: calc(100vh - 65px); background: var(--bg); flex-direction: column; align-items: center; padding-top: 2rem; transition: 0.3s; gap: 1.2rem; z-index: 999; }
-    nav ul.active { left: 0; }
-    .hamburger { display: block; }
-    .reel-actions-sidebar { right: 0.4rem; bottom: 100px; gap: 1rem; }
-    .reel-action-btn .action-icon { width: 38px; height: 38px; font-size: 1.1rem; }
-    .profile-stats-row { grid-template-columns: repeat(2, 1fr); }
-    .admin-stats { grid-template-columns: repeat(2, 1fr); }
+.toast-notification-container {
+    position: fixed;
+    top: 80px;
+    right: 15px;
+    z-index: 5000;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
-@media (max-width: 480px) {
+.toast-notification {
+    padding: 0.9rem 1.3rem;
+    border-radius: 12px;
+    color: white;
+    font-weight: 600;
+    min-width: 220px;
+    backdrop-filter: blur(25px);
+    animation: toastSlideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+.toast-notification.success { background: rgba(46,213,115,0.95); }
+.toast-notification.error { background: rgba(255,71,87,0.95); }
+.toast-notification.info { background: rgba(0,122,122,0.95); }
+.toast-notification.warning { background: rgba(255,165,2,0.95); }
+@keyframes toastSlideIn { from { transform: translateX(120%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+
+/* LOADING SPINNER */
+.loading-spinner {
+    border: 3px solid rgba(255,255,255,0.08);
+    border-top: 3px solid var(--accent);
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spinnerRotate 0.8s linear infinite;
+    margin: 1.5rem auto;
+}
+@keyframes spinnerRotate { to { transform: rotate(360deg); } }
+
+/* PLAYING INDICATOR */
+.playing-indicator-bars {
+    display: flex;
+    gap: 2px;
+    align-items: flex-end;
+    height: 18px;
+}
+.playing-indicator-bars span {
+    width: 2.5px;
+    background: var(--accent);
+    border-radius: 2px;
+    animation: barBounce 0.7s infinite alternate;
+}
+.playing-indicator-bars span:nth-child(1) { height: 8px; }
+.playing-indicator-bars span:nth-child(2) { height: 14px; animation-delay: 0.1s; }
+.playing-indicator-bars span:nth-child(3) { height: 6px; animation-delay: 0.2s; }
+.playing-indicator-bars span:nth-child(4) { height: 12px; animation-delay: 0.3s; }
+@keyframes barBounce { to { height: 3px; } }
+
+/* RESPONSIVE DESIGN SYSTEM */
+@media (max-width: 950px) {
+    nav ul {
+        position: fixed;
+        top: 65px;
+        left: -100%;
+        width: 100%;
+        height: calc(100vh - 65px);
+        background: var(--bg);
+        flex-direction: column;
+        align-items: center;
+        padding-top: 2.5rem;
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        gap: 1.5rem;
+        z-index: 999;
+    }
+    nav ul.active { left: 0; }
+    nav ul li a { font-size: 1.1rem; padding: 0.8rem 2rem; }
+    .hamburger { display: block; }
+    .reel-actions-sidebar { right: 0.5rem; bottom: 110px; gap: 1rem; }
+    .reel-action-btn .action-icon { width: 40px; height: 40px; font-size: 1.1rem; }
+    .reel-action-btn .action-label { font-size: 0.6rem; }
+    .profile-stats-row { grid-template-columns: repeat(2, 1fr); }
+    .admin-stats-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 600px) {
+    body { padding-top: 60px; }
+    nav { padding: 0.5rem 3%; }
+    .nav-logo { font-size: 1.1rem; }
+    .nav-logo .icon { width: 30px; height: 30px; font-size: 0.8rem; }
+    .reel-actions-sidebar { right: 0.3rem; bottom: 90px; gap: 0.8rem; }
+    .reel-action-btn .action-icon { width: 36px; height: 36px; font-size: 1rem; }
+    .reels-search-overlay input { font-size: 0.8rem; padding: 0.6rem 1rem; }
     .profile-posts-grid { grid-template-columns: repeat(2, 1fr); }
-    .admin-stats { grid-template-columns: 1fr; }
+    .admin-stats-grid { grid-template-columns: 1fr; }
+    .daily-quote-box { padding: 1.5rem; }
+    .hero-full h1 { font-size: 2rem; }
 }
 </style>
 </head>
 <body>
 
-<div class="toast-container" id="toastContainer"></div>
+<!-- TOAST NOTIFICATIONS -->
+<div class="toast-notification-container" id="toastContainer"></div>
 
+<!-- NAVIGATION -->
 <nav>
-    <div class="nav-logo" onclick="showPage('homePage')"><div class="icon"><i class="fa fa-quote-right"></i></div>BROXENME</div>
+    <div class="nav-logo" onclick="showPage('homePage')">
+        <div class="icon"><i class="fa fa-quote-right"></i></div>BROXENME
+    </div>
     <ul id="navMenu">
-        <li><a onclick="showPage('homePage')"><i class="fa fa-home"></i> Home</a></li>
+        <li><a onclick="showPage('homePage')" class="active-nav"><i class="fa fa-home"></i> Home</a></li>
         <li><a onclick="showPage('reelsPage')"><i class="fa fa-play"></i> Reels</a></li>
         <li><a onclick="showPage('communityPage')"><i class="fa fa-users"></i> Community</a></li>
-        <li><a onclick="showPage('searchAccountsPage')"><i class="fa fa-search"></i> Search</a></li>
+        <li><a onclick="showPage('searchAccountsPage')"><i class="fa fa-search"></i> Discover</a></li>
         <li><a onclick="showPage('profilePage')"><i class="fa fa-user"></i> Profile</a></li>
         <li id="adminNavLink" style="display:none"><a onclick="showPage('adminPage')"><i class="fa fa-crown"></i> Admin</a></li>
     </ul>
@@ -348,81 +1135,264 @@ nav ul li a:hover { color: var(--accent); background: rgba(173,255,47,0.08); }
     </div>
 </nav>
 
-<!-- PAGES -->
+<!-- ============ ALL PAGES ============ -->
+
+<!-- HOME PAGE -->
 <div id="homePage" class="page active">
     <section class="hero-full" id="heroSection">
         <h1>BROX<span>ENME</span></h1>
-        <p style="color:rgba(255,255,255,0.7);font-size:1.1rem">Daily Inspiration for your soul</p>
-        <div class="daily-quote-box glass-heavy"><p id="dailyQuote">"Loading..."</p><p class="author" id="quoteAuthor"></p></div>
+        <p class="tagline">Where Words Become Art</p>
+        <div class="daily-quote-box glass-heavy">
+            <p id="dailyQuote">"Loading your daily inspiration..."</p>
+            <p class="author" id="quoteAuthor"></p>
+            <div class="quote-meta">
+                <span><i class="fa fa-heart"></i> <span id="quoteLikes">0</span></span>
+                <span><i class="fa fa-share"></i> <span id="quoteShares">0</span></span>
+            </div>
+        </div>
         <button class="btn" id="newQuoteBtn" onclick="newDailyQuote()"><i class="fa fa-refresh"></i> New Quote</button>
     </section>
 </div>
 
+<!-- REELS PAGE -->
 <div id="reelsPage" class="page" style="padding:0">
-    <div class="reels-search-overlay"><input type="text" id="searchInput" placeholder="🔍 Search..." oninput="searchQuotes()"></div>
-    <div class="reels-page-container" id="reelsViewer"><div style="text-align:center;padding:4rem"><div class="spinner"></div></div></div>
-</div>
-
-<div id="searchAccountsPage" class="page"><div class="search-page" style="max-width:600px;margin:0 auto;padding:1rem"><h2><i class="fa fa-search"></i> Discover People</h2><input type="text" id="accountSearchInput" placeholder="Search..." class="form-input" oninput="searchAccounts()" style="margin:1rem 0"><div id="accountsList"></div></div></div>
-
-<div id="communityPage" class="page" style="max-width:650px;margin:0 auto;padding:0.5rem">
-    <div style="display:flex;gap:0.5rem;margin-bottom:1rem;border-bottom:1px solid var(--glass-border);padding-bottom:0.5rem">
-        <button class="btn btn-small active" id="tabFeed" onclick="switchCommTab('feed')"><i class="fa fa-newspaper"></i> Feed</button>
-        <button class="btn btn-small" id="tabChats" onclick="switchCommTab('chats')"><i class="fa fa-comments"></i> Groups</button>
+    <div class="reels-search-overlay">
+        <input type="text" id="searchInput" placeholder="🔍 Search quotes, tags, or users..." oninput="searchQuotes()">
     </div>
-    <div class="stories-row" id="storiesRow"><div style="text-align:center;flex-shrink:0;cursor:pointer" onclick="openCreateStory()"><div class="story-circle add-story"><i class="fa fa-plus"></i></div><div style="font-size:0.6rem">Story</div></div></div>
-    <div id="feedTabContent"><button class="btn btn-outline" onclick="openCreateFeedPost()" style="margin-bottom:1rem"><i class="fa fa-plus"></i> Create Post</button><div id="communityFeed"><div class="spinner"></div></div></div>
-    <div id="chatsTabContent" style="display:none"><button class="btn btn-outline" onclick="openNewGroupChat()" style="margin-bottom:1rem"><i class="fa fa-plus"></i> Create Group</button><div id="chatList"></div></div>
+    <div class="reels-page-container" id="reelsViewer">
+        <div style="text-align:center;padding:5rem;color:var(--muted)">
+            <div class="loading-spinner"></div>
+            <p style="margin-top:1rem">Loading amazing quotes...</p>
+        </div>
+    </div>
 </div>
 
-<div id="profilePage" class="page" style="max-width:700px;margin:0 auto">
+<!-- SEARCH ACCOUNTS PAGE -->
+<div id="searchAccountsPage" class="page">
+    <div class="search-page-container">
+        <h2><i class="fa fa-search"></i> Discover People</h2>
+        <div class="search-input-wrapper">
+            <i class="fa fa-search"></i>
+            <input type="text" id="accountSearchInput" placeholder="Search by name or location..." oninput="searchAccounts()">
+        </div>
+        <div id="accountsList"></div>
+    </div>
+</div>
+
+<!-- COMMUNITY PAGE -->
+<div id="communityPage" class="page">
+    <div class="community-page-container">
+        <div class="community-tabs-row">
+            <button class="community-tab-btn active" id="tabFeed" onclick="switchCommTab('feed')"><i class="fa fa-newspaper"></i> Feed</button>
+            <button class="community-tab-btn" id="tabGroups" onclick="switchCommTab('groups')"><i class="fa fa-comments"></i> Groups</button>
+        </div>
+        <div class="stories-row" id="storiesRow">
+            <div class="story-circle-item" onclick="openCreateStory()">
+                <div class="story-circle-ring add-story-ring" style="display:flex;align-items:center;justify-content:center">
+                    <i class="fa fa-plus" style="font-size:1.5rem;color:var(--accent)"></i>
+                </div>
+                <div class="story-username-label">Add Story</div>
+            </div>
+        </div>
+        <div id="feedTabContent">
+            <button class="btn btn-outline" onclick="openCreateFeedPost()" style="margin-bottom:1rem;width:100%"><i class="fa fa-plus-circle"></i> Create Post</button>
+            <div id="communityFeed"><div class="loading-spinner"></div></div>
+        </div>
+        <div id="groupsTabContent" style="display:none">
+            <button class="btn btn-outline" onclick="openNewGroupChat()" style="margin-bottom:1rem;width:100%"><i class="fa fa-plus-circle"></i> Create Group</button>
+            <div id="chatList"></div>
+        </div>
+    </div>
+</div>
+
+<!-- PROFILE PAGE -->
+<div id="profilePage" class="page" style="max-width:750px;margin:0 auto">
     <div class="profile-wrapper glass">
-        <div class="profile-cover" id="profileHeaderBg"><div class="profile-cover-overlay"></div>
-            <div class="profile-avatar-wrap"><img src="https://placehold.co/90" class="profile-avatar" id="profilePic">
+        <div class="profile-cover" id="profileHeaderBg">
+            <div class="profile-cover-overlay"></div>
+            <div class="profile-avatar-wrap">
+                <img src="https://placehold.co/100" class="profile-avatar" id="profilePic">
                 <input type="file" id="profileUpload" accept="image/*" style="display:none">
-                <button class="btn-icon" onclick="document.getElementById('profileUpload').click()" style="position:absolute;bottom:0;right:0;width:28px;height:28px"><i class="fa fa-camera"></i></button>
+                <div class="profile-avatar-camera" onclick="document.getElementById('profileUpload').click()"><i class="fa fa-camera"></i></div>
             </div>
         </div>
         <div class="profile-info-section">
             <h2 class="profile-name-display" id="profileName">Guest</h2>
-            <p style="color:var(--muted);font-size:0.85rem"><i class="fa fa-location-dot" style="color:#ff4757"></i> <span id="profileLocation">Harare, ZW</span></p>
-            <p id="profileBio" style="color:var(--muted);font-size:0.85rem;margin:0.5rem 0"></p>
+            <p class="profile-username-display" id="profileUsername">@guest</p>
+            <p class="profile-location-display"><i class="fa fa-location-dot" style="color:#ff4757"></i> <span id="profileLocation">Harare, ZW</span></p>
+            <p class="profile-bio-display" id="profileBio"></p>
             <div class="profile-stats-row">
                 <div class="stat-card"><h3 id="postCount">0</h3><p>Posts</p></div>
                 <div class="stat-card"><h3 id="followerCount">0</h3><p>Followers</p></div>
                 <div class="stat-card"><h3 id="followingCount">0</h3><p>Following</p></div>
                 <div class="stat-card"><h3 id="totalLikes">0</h3><p>Likes</p></div>
             </div>
-            <div class="profile-action-btns"><button class="btn btn-small" onclick="openEditProfile()"><i class="fa fa-pen"></i> Edit</button><button class="btn btn-small" onclick="openCreatePostModal()"><i class="fa fa-plus"></i> New Quote</button></div>
-            <div class="profile-tabs"><div class="profile-tab active" onclick="switchProfileTab('posts')"><i class="fa fa-grid-2"></i> My Posts</div><div class="profile-tab" onclick="switchProfileTab('saved')"><i class="fa fa-bookmark"></i> Saved</div></div>
+            <div class="profile-action-btns">
+                <button class="btn btn-small" onclick="openEditProfile()"><i class="fa fa-pen"></i> Edit Profile</button>
+                <button class="btn btn-small" onclick="openCreatePostModal()"><i class="fa fa-plus"></i> New Quote</button>
+            </div>
+            <div class="profile-tabs">
+                <div class="profile-tab active" onclick="switchProfileTab('posts')"><i class="fa fa-grid-2"></i> My Posts</div>
+                <div class="profile-tab" onclick="switchProfileTab('saved')"><i class="fa fa-bookmark"></i> Saved</div>
+            </div>
             <div class="profile-posts-grid" id="profileGrid"></div>
             <div class="profile-posts-grid" id="savedGrid" style="display:none"></div>
         </div>
     </div>
 </div>
 
-<div id="adminPage" class="page"><div class="admin-panel"><div class="admin-header"><h1><i class="fa fa-crown"></i> Admin Dashboard</h1><p style="color:var(--muted)">BROXENME Management Console</p></div><div class="admin-stats" id="adminStats"></div><div class="admin-section"><h3><i class="fa fa-users"></i> User Management</h3><div style="overflow-x:auto"><table class="admin-table"><thead><tr><th>User</th><th>Email</th><th>Posts</th><th>Followers</th><th>Status</th><th>Actions</th></tr></thead><tbody id="adminUserTable"></tbody></table></div></div><div class="admin-section"><h3><i class="fa fa-image"></i> Post Management</h3><div id="adminPostsList" style="max-height:400px;overflow-y:auto"></div></div><div class="admin-section"><h3><i class="fa fa-chart-line"></i> Platform Analytics</h3><div id="adminAnalytics"></div></div><div class="admin-section"><h3><i class="fa fa-robot"></i> Auto-Post Bot</h3><p style="font-size:0.85rem;color:var(--muted);margin-bottom:1rem">Dummy accounts post 2 quotes every 12 hours automatically</p><button class="btn btn-admin" onclick="triggerDummyPosts()"><i class="fa fa-play"></i> Trigger Posts Now</button> <span id="botStatus" style="margin-left:1rem;font-size:0.85rem"></span></div></div></div>
+<!-- ADMIN PAGE -->
+<div id="adminPage" class="page">
+    <div class="admin-dashboard">
+        <div class="admin-welcome-banner glass-heavy">
+            <h1><i class="fa fa-crown"></i> Admin Dashboard</h1>
+            <p style="color:var(--muted)">BROXENME Platform Management Console</p>
+        </div>
+        <div class="admin-stats-grid" id="adminStatsGrid"></div>
+        <div class="admin-section-panel glass">
+            <h3><i class="fa fa-users"></i> User Management</h3>
+            <div style="overflow-x:auto">
+                <table class="admin-data-table">
+                    <thead><tr><th>Name</th><th>UID</th><th>Posts</th><th>Status</th><th>Actions</th></tr></thead>
+                    <tbody id="adminUserTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+        <div class="admin-section-panel glass">
+            <h3><i class="fa fa-image"></i> Recent Posts</h3>
+            <div id="adminPostsContainer" style="max-height:400px;overflow-y:auto"></div>
+        </div>
+        <div class="admin-section-panel glass">
+            <h3><i class="fa fa-robot"></i> Auto-Post Bot Control</h3>
+            <p style="font-size:0.85rem;color:var(--muted);margin-bottom:1rem">5 dummy accounts post 2 quotes every 12 hours</p>
+            <button class="btn btn-admin" onclick="triggerDummyPosts()"><i class="fa fa-play"></i> Trigger Posts Now</button>
+            <span id="botStatusMsg" style="margin-left:1rem;font-size:0.85rem"></span>
+        </div>
+    </div>
+</div>
 
-<div id="loginPage" class="page"><div class="modal-dialog glass-heavy" style="max-width:420px;margin:2rem auto"><div class="modal-title"><i class="fa fa-lock"></i> Welcome</div><input type="email" id="loginEmail" placeholder="Email" class="form-input"><input type="password" id="loginPass" placeholder="Password" class="form-input"><button class="btn" onclick="login()" style="margin-top:0.8rem"><i class="fa fa-right-to-bracket"></i> <span id="loginBtnText">Login</span></button><button class="btn-outline" onclick="signup()" style="margin-top:0.5rem"><i class="fa fa-user-plus"></i> <span id="signupBtnText">Sign Up</span></button><p style="text-align:center;margin-top:1rem;font-size:0.8rem"><span id="authToggleText">New here?</span> <a style="color:var(--accent);cursor:pointer" onclick="toggleAuthMode()">Sign Up</a></p></div></div>
+<!-- LOGIN PAGE -->
+<div id="loginPage" class="page">
+    <div style="max-width:440px;margin:3rem auto">
+        <div class="modal-dialog-box glass-heavy">
+            <div class="modal-title-bar"><i class="fa fa-lock"></i> Welcome to BROXENME</div>
+            <input type="email" id="loginEmail" placeholder="Email address" class="form-input-field">
+            <input type="password" id="loginPass" placeholder="Password" class="form-input-field">
+            <button class="btn" onclick="login()" style="margin-top:1rem;width:100%"><i class="fa fa-right-to-bracket"></i> <span id="loginBtnText">Login</span></button>
+            <button class="btn-outline" onclick="signup()" style="margin-top:0.6rem;width:100%"><i class="fa fa-user-plus"></i> <span id="signupBtnText">Sign Up</span></button>
+            <p style="text-align:center;margin-top:1.2rem;font-size:0.82rem;color:var(--muted)">
+                <span id="authToggleText">New here?</span>
+                <a style="color:var(--accent);cursor:pointer;font-weight:700" onclick="toggleAuthMode()">Create Account</a>
+            </p>
+        </div>
+    </div>
+</div>
 
 <!-- MODALS -->
-<div id="createPostModal" class="modal"><div class="modal-dialog glass-heavy"><div class="modal-title"><i class="fa fa-pen-to-square"></i> Create Quote</div><textarea id="newPostText" placeholder="Write something inspiring..." class="form-input" rows="2" oninput="updatePreview()"></textarea><label class="form-label"><i class="fa fa-image"></i> Background</label><input type="file" id="bgImageUpload" accept="image/*" onchange="uploadBgImage(event)" class="form-input"><div style="display:grid;grid-template-columns:repeat(4,1fr);gap:0.4rem;margin:0.5rem 0" id="gradientPicker"></div><label class="form-label"><i class="fa fa-font"></i> Font</label><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.3rem" id="fontPicker"></div><label class="form-label"><i class="fa fa-tags"></i> Tags</label><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.3rem"><button class="tag-btn" onclick="toggleTag(this,'Motivation')">#Motivation</button><button class="tag-btn" onclick="toggleTag(this,'Life')">#Life</button><button class="tag-btn" onclick="toggleTag(this,'Love')">#Love</button><button class="tag-btn" onclick="toggleTag(this,'Success')">#Success</button><button class="tag-btn" onclick="toggleTag(this,'Business')">#Business</button><button class="tag-btn" onclick="toggleTag(this,'Wisdom')">#Wisdom</button></div><label class="form-label"><i class="fa fa-music"></i> Add Music</label><div class="song-search-container"><input type="text" id="songSearch" placeholder="Search song..." class="form-input" oninput="searchSong(this.value)"><i class="fa fa-music" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);color:var(--accent)"></i></div><div class="song-results-dropdown" id="songResults"></div><div id="selectedSongDisplay"></div><div id="songPreviewPlayer"></div><div id="quotePreview" style="width:100%;aspect-ratio:1;border-radius:16px;display:flex;align-items:center;justify-content:center;padding:1.2rem;margin:1rem 0;text-align:center;font-size:1.2rem;font-weight:bold;color:white;background-size:cover;position:relative">Preview<div style="position:absolute;bottom:8px;right:10px;font-size:0.6rem;color:rgba(255,255,255,0.6)"><i class="fa fa-quote-right"></i> BROXENME</div></div><button class="btn" onclick="submitPost()"><i class="fa fa-paper-plane"></i> Post</button><button class="btn-outline" onclick="closeCreatePostModal()" style="margin-top:0.4rem">Cancel</button></div></div>
+<div id="createPostModal" class="modal-overlay">
+    <div class="modal-dialog-box glass-heavy">
+        <div class="modal-title-bar"><i class="fa fa-pen-to-square"></i> Create Quote Post</div>
+        <textarea id="newPostText" placeholder="Write something inspiring..." class="form-input-field" rows="2" oninput="updatePreview()"></textarea>
+        <label class="form-label-text"><i class="fa fa-image"></i> Background</label>
+        <input type="file" id="bgImageUpload" accept="image/*" onchange="uploadBgImage(event)" class="form-input-field">
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:0.5rem;margin:0.6rem 0" id="gradientPicker"></div>
+        <label class="form-label-text"><i class="fa fa-font"></i> Font Style</label>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.4rem" id="fontPicker"></div>
+        <label class="form-label-text"><i class="fa fa-tags"></i> Tags</label>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.4rem" id="tagSelectorContainer">
+            <button class="tag-btn" onclick="toggleTag(this,'Motivation')">#Motivation</button>
+            <button class="tag-btn" onclick="toggleTag(this,'Life')">#Life</button>
+            <button class="tag-btn" onclick="toggleTag(this,'Love')">#Love</button>
+            <button class="tag-btn" onclick="toggleTag(this,'Success')">#Success</button>
+            <button class="tag-btn" onclick="toggleTag(this,'Business')">#Business</button>
+            <button class="tag-btn" onclick="toggleTag(this,'Wisdom')">#Wisdom</button>
+        </div>
+        <label class="form-label-text"><i class="fa fa-music"></i> Add Music</label>
+        <div class="song-search-wrapper">
+            <input type="text" id="songSearch" placeholder="Search for a song..." class="form-input-field" oninput="searchSong(this.value)">
+            <i class="fa fa-music search-icon"></i>
+        </div>
+        <div class="song-results-container" id="songResults"></div>
+        <div id="selectedSongDisplay"></div>
+        <div id="songPreviewPlayer"></div>
+        <div class="quote-preview-canvas" id="quotePreview">
+            Your quote preview
+            <div class="quote-preview-watermark"><i class="fa fa-quote-right"></i> BROXENME</div>
+        </div>
+        <button class="btn" onclick="submitPost()" style="width:100%"><i class="fa fa-paper-plane"></i> Post Quote</button>
+        <button class="btn-outline" onclick="closeCreatePostModal()" style="width:100%;margin-top:0.5rem">Cancel</button>
+    </div>
+</div>
 
-<div id="editProfileModal" class="modal"><div class="modal-dialog glass-heavy"><div class="modal-title"><i class="fa fa-user-pen"></i> Edit Profile</div><div style="text-align:center"><img src="https://placehold.co/80" id="editProfilePicPreview" style="width:80px;height:80px;border-radius:50%;border:3px solid var(--accent)"></div><label class="form-label">Name</label><input type="text" id="editName" class="form-input"><label class="form-label">Location</label><input type="text" id="editLocation" class="form-input"><label class="form-label">Bio</label><textarea id="editBio" class="form-input" rows="2"></textarea><button class="btn" onclick="saveProfile()" style="margin-top:1rem">Save</button><button class="btn-outline" onclick="closeEditProfile()" style="margin-top:0.4rem">Cancel</button></div></div>
+<div id="editProfileModal" class="modal-overlay">
+    <div class="modal-dialog-box glass-heavy">
+        <div class="modal-title-bar"><i class="fa fa-user-pen"></i> Edit Profile</div>
+        <div style="text-align:center;margin-bottom:1rem">
+            <img src="https://placehold.co/90" id="editProfilePicPreview" style="width:90px;height:90px;border-radius:50%;border:3px solid var(--accent);object-fit:cover">
+        </div>
+        <label class="form-label-text">Full Name</label>
+        <input type="text" id="editName" class="form-input-field" placeholder="Your name">
+        <label class="form-label-text">Location</label>
+        <input type="text" id="editLocation" class="form-input-field" placeholder="City, Country">
+        <label class="form-label-text">Bio</label>
+        <textarea id="editBio" class="form-input-field" rows="2" placeholder="Tell us about yourself..."></textarea>
+        <button class="btn" onclick="saveProfile()" style="width:100%;margin-top:1rem"><i class="fa fa-check"></i> Save Changes</button>
+        <button class="btn-outline" onclick="closeEditProfile()" style="width:100%;margin-top:0.5rem">Cancel</button>
+    </div>
+</div>
 
-<div id="createFeedModal" class="modal"><div class="modal-dialog glass-heavy"><div class="modal-title"><i class="fa fa-newspaper"></i> Create Post</div><textarea id="feedPostText" placeholder="What's on your mind?" class="form-input" rows="3"></textarea><input type="file" id="feedImageUpload" accept="image/*" class="form-input" onchange="previewFeedImage(event)"><img id="feedImagePreview" style="width:100%;border-radius:12px;margin:0.5rem 0;display:none"><button class="btn" onclick="submitFeedPost()">Post</button><button class="btn-outline" onclick="document.getElementById('createFeedModal').classList.remove('active')" style="margin-top:0.4rem">Cancel</button></div></div>
+<div id="createFeedModal" class="modal-overlay">
+    <div class="modal-dialog-box glass-heavy">
+        <div class="modal-title-bar"><i class="fa fa-newspaper"></i> Create Feed Post</div>
+        <textarea id="feedPostText" placeholder="What's on your mind?" class="form-input-field" rows="3"></textarea>
+        <input type="file" id="feedImageUpload" accept="image/*" class="form-input-field" onchange="previewFeedImage(event)">
+        <img id="feedImagePreview" style="width:100%;border-radius:14px;margin:0.5rem 0;display:none">
+        <button class="btn" onclick="submitFeedPost()" style="width:100%"><i class="fa fa-paper-plane"></i> Post to Feed</button>
+        <button class="btn-outline" onclick="document.getElementById('createFeedModal').classList.remove('active')" style="width:100%;margin-top:0.5rem">Cancel</button>
+    </div>
+</div>
 
-<div id="newGroupModal" class="modal"><div class="modal-dialog glass-heavy"><div class="modal-title"><i class="fa fa-users"></i> Create Group Chat</div><label class="form-label">Group Name</label><input type="text" id="groupName" placeholder="Enter group name..." class="form-input"><label class="form-label">Description</label><input type="text" id="groupDesc" placeholder="What's this group about?" class="form-input"><button class="btn" onclick="createGroupChat()" style="margin-top:1rem">Create Group</button><button class="btn-outline" onclick="document.getElementById('newGroupModal').classList.remove('active')" style="margin-top:0.4rem">Cancel</button></div></div>
+<div id="newGroupModal" class="modal-overlay">
+    <div class="modal-dialog-box glass-heavy">
+        <div class="modal-title-bar"><i class="fa fa-users"></i> Create Group Chat</div>
+        <label class="form-label-text">Group Name</label>
+        <input type="text" id="groupName" placeholder="Enter group name..." class="form-input-field">
+        <label class="form-label-text">Description</label>
+        <input type="text" id="groupDesc" placeholder="What's this group about?" class="form-input-field">
+        <button class="btn" onclick="createGroupChat()" style="width:100%;margin-top:1rem"><i class="fa fa-check"></i> Create Group</button>
+        <button class="btn-outline" onclick="document.getElementById('newGroupModal').classList.remove('active')" style="width:100%;margin-top:0.5rem">Cancel</button>
+    </div>
+</div>
 
-<div id="chatWindow" class="chat-window"><div class="chat-header-bar"><button onclick="closeChat()" style="background:none;border:none;color:white;font-size:1.2rem;cursor:pointer"><i class="fa fa-arrow-left"></i></button><div><b id="chatName">Chat</b><div style="font-size:0.65rem;opacity:0.8"><span id="chatMemberCount"></span> members</div></div></div><div class="chat-messages-area" id="chatMessages"></div><div class="chat-input-row"><input type="text" id="chatInput" placeholder="Message..." class="form-input" style="margin:0;border-radius:20px" onkeypress="if(event.key==='Enter')sendMsg()"><button class="btn btn-icon" onclick="sendMsg()" style="background:#25D366;color:white;width:42px;height:42px"><i class="fa fa-paper-plane"></i></button></div></div>
+<!-- CHAT WINDOW -->
+<div id="chatWindow" class="chat-window-full">
+    <div class="chat-window-header">
+        <button onclick="closeChat()"><i class="fa fa-arrow-left"></i></button>
+        <img src="https://placehold.co/38" id="chatAvatar" style="width:38px;height:38px;border-radius:50%">
+        <div>
+            <b id="chatName">Group Chat</b>
+            <div style="font-size:0.65rem;opacity:0.8"><span id="chatMemberCount">0</span> members</div>
+        </div>
+    </div>
+    <div class="chat-window-messages" id="chatMessages">
+        <div style="text-align:center;padding:3rem;color:rgba(255,255,255,0.3)">
+            <i class="fa fa-lock" style="font-size:2rem;display:block;margin-bottom:0.5rem"></i>
+            Messages are secure
+        </div>
+    </div>
+    <div class="chat-window-input-row">
+        <input type="text" id="chatInput" placeholder="Type a message..." onkeypress="if(event.key==='Enter')sendMsg()">
+        <button onclick="sendMsg()"><i class="fa fa-paper-plane"></i></button>
+    </div>
+</div>
 
+<!-- SCRIPTS -->
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 
 <script>
-const ADMIN_UID = 'lGCfuMhmsdSh1yBcXrtrgStsvq13'; // Your admin UID
-
+// ==================== FIREBASE CONFIGURATION ====================
 const firebaseConfig = {
     apiKey: "AIzaSyDC7MtlDi8Sl7ai3GjEnh06AoR7hZV_4Vs",
     authDomain: "broxenme-quotes.firebaseapp.com",
@@ -431,146 +1401,1753 @@ const firebaseConfig = {
     messagingSenderId: "625885740482",
     appId: "1:625885740482:web:fce8637986109f8ab82a5b"
 };
+
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 const auth = firebase.auth();
-db.enablePersistence().catch(()=>{});
 
-// CONSTANTS
-const gradients=['linear-gradient(135deg,#667eea,#764ba2)','linear-gradient(135deg,#f093fb,#f5576c)','linear-gradient(135deg,#43e97b,#38f9d7)','linear-gradient(135deg,#fa709a,#fee140)','linear-gradient(135deg,#30cfd0,#330867)','linear-gradient(135deg,#a8edea,#fed6e3)','linear-gradient(135deg,#ff9a9e,#fecfef)','linear-gradient(135deg,#ffecd2,#fcb69f)','linear-gradient(135deg,#ff6a00,#ee0979)','linear-gradient(135deg,#4facfe,#00f2fe)','linear-gradient(135deg,#8B5CF6,#EC4899)','linear-gradient(135deg,#00ff88,#00d4ff)'];
-const fonts=['Poppins','Georgia','Arial','Impact','Courier New','Trebuchet MS','Verdana','Times New Roman','Comic Sans MS','Roboto'];
-const wallpapers=['https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200','https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=1200','https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=1200','https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=1200'];
-const fallbackQuotes=[{content:"The only way to do great work is to love what you do.",author:"Steve Jobs"},{content:"In the middle of difficulty lies opportunity.",author:"Albert Einstein"},{content:"Believe you can and you're halfway there.",author:"Theodore Roosevelt"}];
+// Enable offline persistence
+db.enablePersistence().catch(err => console.log('Offline persistence:', err.code));
 
-// STATE
-let currentUser=null,selectedBg=gradients[0],selectedFont='Poppins',selectedTagsArr=[],currentChat=null,allPosts=[],unsubscribers=[],searchTO=null,selectedSong={title:'',artist:'',artwork:'',preview:''},isLoginMode=true,audioPlayer=null,quoteLoading=false,profileTab='posts',songSearchTimeout=null;
+// ==================== ADMIN CONFIGURATION ====================
+const ADMIN_UID = 'lGCfuMhmsdSh1yBcXrtrgStsvq13';
+const IMGBB_API_KEY = '78883b1360bb85b347b444b05aa56826';
 
-// INIT
-document.getElementById('fontPicker').innerHTML=fonts.map(f=>`<button class="tag-btn" style="font-family:${f}" onclick="selectFont(this,'${f}')">${f.split(' ')[0]}</button>`).join('');
-document.getElementById('gradientPicker').innerHTML=gradients.map(g=>`<div style="width:100%;aspect-ratio:1;border-radius:10px;cursor:pointer;border:2px solid transparent;background:${g}" onclick="selectBg(this,'${g}')"></div>`).join('');
+// ==================== CONSTANTS & DATA ====================
+const gradients = [
+    'linear-gradient(135deg, #667eea, #764ba2)',
+    'linear-gradient(135deg, #f093fb, #f5576c)',
+    'linear-gradient(135deg, #43e97b, #38f9d7)',
+    'linear-gradient(135deg, #fa709a, #fee140)',
+    'linear-gradient(135deg, #30cfd0, #330867)',
+    'linear-gradient(135deg, #a8edea, #fed6e3)',
+    'linear-gradient(135deg, #ff9a9e, #fecfef)',
+    'linear-gradient(135deg, #ffecd2, #fcb69f)',
+    'linear-gradient(135deg, #ff6a00, #ee0979)',
+    'linear-gradient(135deg, #4facfe, #00f2fe)',
+    'linear-gradient(135deg, #8B5CF6, #EC4899)',
+    'linear-gradient(135deg, #00ff88, #00d4ff)'
+];
 
-function showToast(m,t='info'){const el=document.createElement('div');el.className=`toast ${t}`;el.innerHTML=`<i class="fa fa-${t==='success'?'circle-check':t==='error'?'circle-xmark':'circle-info'}"></i> ${m}`;document.getElementById('toastContainer').appendChild(el);setTimeout(()=>{el.style.opacity='0';el.style.transition='0.3s';setTimeout(()=>el.remove(),300)},3000);}
-function sanitize(s){const d=document.createElement('div');d.textContent=s;return d.innerHTML;}
-function cleanup(){unsubscribers.forEach(u=>{try{u()}catch(e){}});unsubscribers=[];}
-function rndWall(){return wallpapers[Math.floor(Math.random()*wallpapers.length)];}
-function setHeroBg(){const h=document.getElementById('heroSection');if(h)h.style.backgroundImage=`url(${rndWall()})`;}
-function setProfBg(){const h=document.getElementById('profileHeaderBg');if(h)h.style.backgroundImage=`url(${rndWall()})`;}
-setHeroBg();setProfBg();setInterval(setHeroBg,30000);setInterval(setProfBg,60000);
+const fonts = [
+    'Poppins', 'Georgia', 'Arial', 'Impact', 
+    'Courier New', 'Trebuchet MS', 'Verdana', 
+    'Times New Roman', 'Comic Sans MS', 'Roboto'
+];
 
-// AUTH
-function toggleAuthMode(){isLoginMode=!isLoginMode;document.getElementById('loginBtnText').innerText=isLoginMode?'Login':'Login';document.getElementById('signupBtnText').innerText=isLoginMode?'Sign Up':'Sign Up Now';document.getElementById('authToggleText').innerText=isLoginMode?'New here?':'Have account?';}
-auth.onAuthStateChanged(user=>{
-    if(user){currentUser=user;document.getElementById('authBtn').innerText='Logout';document.getElementById('authBtn').onclick=logout;document.getElementById('adminNavLink').style.display=user.uid===ADMIN_UID?'block':'none';loadUserData();loadPosts();loadChats();loadCommunityFeed();loadStories();loadAllAccounts();showPage('reelsPage');if(user.uid===ADMIN_UID)loadAdminPanel();setupDummyAccounts();}
-    else{cleanup();currentUser=null;document.getElementById('authBtn').innerText='Login';document.getElementById('authBtn').onclick=()=>showPage('loginPage');document.getElementById('adminNavLink').style.display='none';showPage('homePage');}
+const wallpapers = [
+    'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200',
+    'https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=1200',
+    'https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=1200',
+    'https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=1200',
+    'https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=1200',
+    'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1200',
+    'https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1200'
+];
+
+const fallbackQuotes = [
+    { content: "The only way to do great work is to love what you do.", author: "Steve Jobs" },
+    { content: "In the middle of difficulty lies opportunity.", author: "Albert Einstein" },
+    { content: "Believe you can and you're halfway there.", author: "Theodore Roosevelt" },
+    { content: "Success is not final, failure is not fatal.", author: "Winston Churchill" },
+    { content: "The future belongs to those who believe in the beauty of their dreams.", author: "Eleanor Roosevelt" },
+    { content: "It does not matter how slowly you go as long as you do not stop.", author: "Confucius" }
+];
+
+const dummyAccounts = [
+    { email: 'dummy1@broxenme.com', pass: 'dummy123', name: 'Wisdom Warrior', location: 'Nairobi, KE', photoURL: 'https://placehold.co/100/ADFF2F/000?text=WW' },
+    { email: 'dummy2@broxenme.com', pass: 'dummy123', name: 'Dream Chaser', location: 'Lagos, NG', photoURL: 'https://placehold.co/100/FF6B6B/000?text=DC' },
+    { email: 'dummy3@broxenme.com', pass: 'dummy123', name: 'Soul Speaker', location: 'Cape Town, ZA', photoURL: 'https://placehold.co/100/4ECDC4/000?text=SS' },
+    { email: 'dummy4@broxenme.com', pass: 'dummy123', name: 'Mind Mentor', location: 'Accra, GH', photoURL: 'https://placehold.co/100/FFE66D/000?text=MM' },
+    { email: 'dummy5@broxenme.com', pass: 'dummy123', name: 'Star Gazer', location: 'Kigali, RW', photoURL: 'https://placehold.co/100/A78BFA/000?text=SG' }
+];
+
+const dummyQuoteBank = [
+    { text: "The journey of a thousand miles begins with one step.", tags: ['Motivation', 'Life'] },
+    { text: "Your vibe attracts your tribe.", tags: ['Life', 'Love'] },
+    { text: "Dream big, work hard, stay focused.", tags: ['Success', 'Business'] },
+    { text: "Every moment is a fresh beginning.", tags: ['Life', 'Wisdom'] },
+    { text: "Create the life you can't wait to wake up to.", tags: ['Success', 'Motivation'] },
+    { text: "Happiness is not by chance, but by choice.", tags: ['Life', 'Wisdom'] },
+    { text: "Turn your wounds into wisdom.", tags: ['Wisdom', 'Life'] },
+    { text: "The best time for new beginnings is now.", tags: ['Motivation', 'Success'] },
+    { text: "Your only limit is your mind.", tags: ['Motivation', 'Wisdom'] },
+    { text: "Stars can't shine without darkness.", tags: ['Life', 'Wisdom'] }
+];
+
+// ==================== GLOBAL STATE ====================
+let currentUser = null;
+let selectedBg = gradients[0];
+let selectedFont = 'Poppins';
+let selectedTagsArr = [];
+let currentChat = null;
+let allPosts = [];
+let unsubscribers = [];
+let searchTimeout = null;
+let songSearchTimeout = null;
+let selectedSong = { title: '', artist: '', artwork: '', preview: '' };
+let isLoginMode = true;
+let audioPlayer = null;
+let quoteLoading = false;
+let profileTab = 'posts';
+
+// ==================== INITIALIZATION ====================
+function initUI() {
+    const fontPicker = document.getElementById('fontPicker');
+    if (fontPicker) {
+        fontPicker.innerHTML = fonts.map(f => 
+            `<button class="tag-btn" style="font-family:${f}" onclick="selectFont(this,'${f}')">${f.split(' ')[0]}</button>`
+        ).join('');
+    }
+    
+    const gradientPicker = document.getElementById('gradientPicker');
+    if (gradientPicker) {
+        gradientPicker.innerHTML = gradients.map(g => 
+            `<div style="width:100%;aspect-ratio:1;border-radius:10px;cursor:pointer;border:2px solid transparent;background:${g}" onclick="selectBg(this,'${g}')"></div>`
+        ).join('');
+    }
+}
+
+initUI();
+
+// ==================== UTILITY FUNCTIONS ====================
+function showToast(message, type = 'info') {
+    const container = document.getElementById('toastContainer');
+    if (!container) return;
+    
+    const toast = document.createElement('div');
+    toast.className = `toast-notification ${type}`;
+    
+    const icons = {
+        success: 'fa-circle-check',
+        error: 'fa-circle-xmark',
+        info: 'fa-circle-info',
+        warning: 'fa-triangle-exclamation'
+    };
+    
+    toast.innerHTML = `<i class="fa ${icons[type] || icons.info}"></i> ${message}`;
+    container.appendChild(toast);
+    
+    setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateX(120%)';
+        toast.style.transition = 'all 0.3s ease';
+        setTimeout(() => toast.remove(), 300);
+    }, 3000);
+}
+
+function sanitize(str) {
+    if (!str) return '';
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+}
+
+function cleanupListeners() {
+    unsubscribers.forEach(unsub => {
+        try { unsub(); } catch (e) { /* ignore */ }
+    });
+    unsubscribers = [];
+}
+
+function getRandomWallpaper() {
+    return wallpapers[Math.floor(Math.random() * wallpapers.length)];
+}
+
+function setHeroBackground() {
+    const hero = document.getElementById('heroSection');
+    if (hero) hero.style.backgroundImage = `url(${getRandomWallpaper()})`;
+}
+
+function setProfileBackground() {
+    const header = document.getElementById('profileHeaderBg');
+    if (header) header.style.backgroundImage = `url(${getRandomWallpaper()})`;
+}
+
+function timeAgo(timestamp) {
+    if (!timestamp) return '';
+    const now = new Date();
+    const past = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
+    const diff = Math.floor((now - past) / 1000);
+    if (diff < 60) return 'just now';
+    if (diff < 3600) return `${Math.floor(diff / 60)}m`;
+    if (diff < 86400) return `${Math.floor(diff / 3600)}h`;
+    return `${Math.floor(diff / 86400)}d`;
+}
+
+// Initialize backgrounds
+setHeroBackground();
+setProfileBackground();
+setInterval(setHeroBackground, 45000);
+setInterval(setProfileBackground, 90000);
+
+// ==================== AUTHENTICATION SYSTEM ====================
+function toggleAuthMode() {
+    isLoginMode = !isLoginMode;
+    document.getElementById('loginBtnText').innerText = isLoginMode ? 'Login' : 'Login';
+    document.getElementById('signupBtnText').innerText = isLoginMode ? 'Sign Up' : 'Sign Up Now';
+    document.getElementById('authToggleText').innerText = isLoginMode ? 'New here?' : 'Already have an account?';
+}
+
+auth.onAuthStateChanged(user => {
+    if (user) {
+        currentUser = user;
+        document.getElementById('authBtn').innerText = 'Logout';
+        document.getElementById('authBtn').onclick = logout;
+        
+        // Show admin link if admin
+        const adminLink = document.getElementById('adminNavLink');
+        if (adminLink) adminLink.style.display = user.uid === ADMIN_UID ? 'block' : 'none';
+        
+        loadUserData();
+        loadPosts();
+        loadGroupChats();
+        loadCommunityFeed();
+        loadStories();
+        loadAllAccounts();
+        showPage('reelsPage');
+        
+        if (user.uid === ADMIN_UID) loadAdminPanel();
+        setupDummyAccounts();
+    } else {
+        cleanupListeners();
+        currentUser = null;
+        document.getElementById('authBtn').innerText = 'Login';
+        document.getElementById('authBtn').onclick = () => showPage('loginPage');
+        if (document.getElementById('adminNavLink')) document.getElementById('adminNavLink').style.display = 'none';
+        showPage('homePage');
+    }
 });
-function login(){const e=document.getElementById('loginEmail').value.trim(),p=document.getElementById('loginPass').value;if(!e||!p)return showToast('Fill all fields','error');auth.signInWithEmailAndPassword(e,p).then(()=>showToast('Welcome!','success')).catch(err=>showToast(err.message,'error'));}
-function signup(){const e=document.getElementById('loginEmail').value.trim(),p=document.getElementById('loginPass').value;if(!e||!p)return showToast('Fill all fields','error');if(p.length<6)return showToast('Password too short','error');auth.createUserWithEmailAndPassword(e,p).then(cred=>{db.collection('users').doc(cred.user.uid).set({name:e.split('@')[0],bio:'',location:'Harare, ZW',photoURL:'',followers:0,following:0,savedPosts:[],createdAt:firebase.firestore.FieldValue.serverTimestamp()});showToast('Account created!','success');}).catch(err=>showToast(err.message,'error'));}
-function logout(){cleanup();auth.signOut();}
 
-// DAILY QUOTE (FIXED)
-async function newDailyQuote(){if(quoteLoading)return;quoteLoading=true;const btn=document.getElementById('newQuoteBtn');btn.disabled=true;btn.innerHTML='<div class="spinner" style="width:20px;height:20px;margin:0"></div>';const q=document.getElementById('dailyQuote'),a=document.getElementById('quoteAuthor');try{const c=new AbortController();setTimeout(()=>c.abort(),5000);const r=await fetch('https://api.quotable.io/random',{signal:c.signal});const d=await r.json();q.innerText=`"${d.content}"`;a.innerText=`— ${d.author}`;}catch{const f=fallbackQuotes[Math.floor(Math.random()*fallbackQuotes.length)];q.innerText=`"${f.content}"`;a.innerText=`— ${f.author}`;}btn.disabled=false;btn.innerHTML='<i class="fa fa-refresh"></i> New Quote';quoteLoading=false;}
+function login() {
+    const email = document.getElementById('loginEmail').value.trim();
+    const pass = document.getElementById('loginPass').value;
+    
+    if (!email || !pass) return showToast('Please fill all fields', 'error');
+    
+    auth.signInWithEmailAndPassword(email, pass)
+        .then(() => showToast('Welcome back! 🎉', 'success'))
+        .catch(err => {
+            const messages = {
+                'auth/user-not-found': 'No account found with this email',
+                'auth/wrong-password': 'Incorrect password',
+                'auth/invalid-email': 'Invalid email format',
+                'auth/too-many-requests': 'Too many attempts. Try again later'
+            };
+            showToast(messages[err.code] || err.message, 'error');
+        });
+}
+
+function signup() {
+    const email = document.getElementById('loginEmail').value.trim();
+    const pass = document.getElementById('loginPass').value;
+    
+    if (!email || !pass) return showToast('Please fill all fields', 'error');
+    if (pass.length < 6) return showToast('Password must be at least 6 characters', 'error');
+    
+    auth.createUserWithEmailAndPassword(email, pass)
+        .then(cred => {
+            return db.collection('users').doc(cred.user.uid).set({
+                name: email.split('@')[0],
+                username: email.split('@')[0].toLowerCase(),
+                bio: '',
+                location: 'Harare, ZW',
+                photoURL: '',
+                followers: 0,
+                following: 0,
+                savedPosts: [],
+                likedPosts: [],
+                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                isDummy: false
+            });
+        })
+        .then(() => showToast('Account created! Welcome! 🎉', 'success'))
+        .catch(err => showToast(err.message, 'error'));
+}
+
+function logout() {
+    cleanupListeners();
+    if (audioPlayer) {
+        audioPlayer.pause();
+        audioPlayer.remove();
+        audioPlayer = null;
+    }
+    auth.signOut();
+}
+
+// ==================== DAILY QUOTE SYSTEM ====================
+async function newDailyQuote() {
+    if (quoteLoading) return;
+    quoteLoading = true;
+    
+    const btn = document.getElementById('newQuoteBtn');
+    const quoteEl = document.getElementById('dailyQuote');
+    const authorEl = document.getElementById('quoteAuthor');
+    
+    if (btn) {
+        btn.disabled = true;
+        btn.innerHTML = '<div class="loading-spinner" style="width:20px;height:20px;margin:0;border-width:2px"></div>';
+    }
+    
+    try {
+        const controller = new AbortController();
+        setTimeout(() => controller.abort(), 6000);
+        
+        const res = await fetch('https://api.quotable.io/random', { signal: controller.signal });
+        if (!res.ok) throw new Error('API failed');
+        
+        const data = await res.json();
+        if (quoteEl) quoteEl.innerText = `"${data.content}"`;
+        if (authorEl) authorEl.innerText = `— ${data.author}`;
+        if (document.getElementById('quoteLikes')) document.getElementById('quoteLikes').innerText = Math.floor(Math.random() * 100);
+        if (document.getElementById('quoteShares')) document.getElementById('quoteShares').innerText = Math.floor(Math.random() * 30);
+        
+    } catch (e) {
+        const fallback = fallbackQuotes[Math.floor(Math.random() * fallbackQuotes.length)];
+        if (quoteEl) quoteEl.innerText = `"${fallback.content}"`;
+        if (authorEl) authorEl.innerText = `— ${fallback.author}`;
+    }
+    
+    if (btn) {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fa fa-refresh"></i> New Quote';
+    }
+    quoteLoading = false;
+}
+
+// Load initial quote
 newDailyQuote();
 
-// SONG SEARCH (FIXED - FASTER)
-async function searchSong(q){clearTimeout(songSearchTimeout);if(q.length<2){document.getElementById('songResults').innerHTML='';return;}document.getElementById('songResults').innerHTML='<div style="padding:0.8rem;text-align:center"><div class="spinner"></div></div>';songSearchTimeout=setTimeout(async()=>{try{const r=await fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(q)}&limit=8&media=music`);const d=await r.json();document.getElementById('songResults').innerHTML=d.results.length?d.results.map(s=>`<div class="song-result-row" onclick="selectSong('${s.trackName.replace(/'/g,"\\'")}','${s.artistName.replace(/'/g,"\\'")}','${s.artworkUrl100}','${s.previewUrl||''}')"><img src="${s.artworkUrl100}" onerror="this.src='https://placehold.co/42'"><div class="song-result-info"><div class="song-result-title">${s.trackName}</div><div class="song-result-artist">${s.artistName}</div></div><i class="fa fa-play-circle" style="color:var(--accent)"></i></div>`).join(''):'<div style="padding:0.8rem;color:var(--muted)">No songs found</div>';}catch{document.getElementById('songResults').innerHTML='<div style="padding:0.8rem;color:var(--muted)">Search failed</div>';}},300);}
-function selectSong(t,a,aw,pv){selectedSong={title:t,artist:a,artwork:aw,preview:pv};document.getElementById('songSearch').value=`${t} - ${a}`;document.getElementById('songResults').innerHTML='';document.getElementById('selectedSongDisplay').innerHTML=`<div class="selected-song-card"><img src="${aw}" style="width:42px;height:42px;border-radius:6px" onerror="this.src='https://placehold.co/42'"><div style="flex:1"><b style="font-size:0.85rem">${t}</b><div style="font-size:0.7rem;color:var(--muted)">${a}</div></div><button class="btn btn-small" onclick="playPreview('${pv}')"><i class="fa fa-play"></i> Preview</button></div>`;if(pv)playPreview(pv);}
-function playPreview(url){if(audioPlayer){audioPlayer.pause();audioPlayer.remove();audioPlayer=null;}if(!url)return;audioPlayer=new Audio(url);audioPlayer.volume=0.5;audioPlayer.play().catch(()=>showToast('Preview unavailable','info'));document.getElementById('songPreviewPlayer').innerHTML=`<div style="display:flex;align-items:center;gap:0.5rem;padding:0.5rem;background:rgba(173,255,47,0.1);border-radius:10px;margin-top:0.4rem"><i class="fa fa-volume-up" style="color:var(--accent)"></i><span style="font-size:0.8rem">Playing...</span><div class="playing-indicator"><span></span><span></span><span></span><span></span></div></div>`;audioPlayer.onended=()=>{document.getElementById('songPreviewPlayer').innerHTML='';};}
+// ==================== SONG SEARCH SYSTEM (ITUNES FREE API) ====================
+async function searchSong(query) {
+    clearTimeout(songSearchTimeout);
+    
+    if (!query || query.length < 2) {
+        const resultsEl = document.getElementById('songResults');
+        if (resultsEl) resultsEl.innerHTML = '';
+        return;
+    }
+    
+    const resultsEl = document.getElementById('songResults');
+    if (resultsEl) resultsEl.innerHTML = '<div style="padding:1rem;text-align:center"><div class="loading-spinner"></div></div>';
+    
+    songSearchTimeout = setTimeout(async () => {
+        try {
+            const res = await fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(query)}&limit=8&media=music&entity=song`);
+            const data = await res.json();
+            
+            if (!resultsEl) return;
+            
+            if (data.results && data.results.length > 0) {
+                resultsEl.innerHTML = data.results.map(song => `
+                    <div class="song-result-entry" onclick="selectSong(
+                        '${song.trackName.replace(/'/g, "\\'")}',
+                        '${song.artistName.replace(/'/g, "\\'")}',
+                        '${song.artworkUrl100 || ''}',
+                        '${song.previewUrl || ''}'
+                    )">
+                        <img src="${song.artworkUrl100 || 'https://placehold.co/44'}" onerror="this.src='https://placehold.co/44'">
+                        <div class="song-result-details">
+                            <div class="song-name">${song.trackName}</div>
+                            <div class="song-artist">${song.artistName}</div>
+                        </div>
+                        <i class="fa fa-play-circle" style="color:var(--accent);font-size:1.2rem"></i>
+                    </div>
+                `).join('');
+            } else {
+                resultsEl.innerHTML = '<div style="padding:0.8rem;color:var(--muted);text-align:center">No songs found</div>';
+            }
+        } catch (e) {
+            if (resultsEl) resultsEl.innerHTML = '<div style="padding:0.8rem;color:var(--muted);text-align:center">Search failed. Try again.</div>';
+        }
+    }, 400);
+}
 
-// IMG UPLOAD
-async function uploadBgImage(e){const f=e.target.files[0];if(!f)return;if(f.size>5*1024*1024)return showToast('Max 5MB','error');const fd=new FormData();fd.append("image",f);try{const r=await fetch("https://api.imgbb.com/1/upload?key=78883b1360bb85b347b444b05aa56826",{method:"POST",body:fd});const d=await r.json();if(d.success){selectedBg=`url(${d.data.url})`;updatePreview();showToast('Uploaded!','success');}}catch{showToast('Upload failed','error');}}
+function selectSong(title, artist, artwork, preview) {
+    selectedSong = { title, artist, artwork, preview };
+    
+    const searchInput = document.getElementById('songSearch');
+    const resultsEl = document.getElementById('songResults');
+    const displayEl = document.getElementById('selectedSongDisplay');
+    
+    if (searchInput) searchInput.value = `${title} - ${artist}`;
+    if (resultsEl) resultsEl.innerHTML = '';
+    
+    if (displayEl) {
+        displayEl.innerHTML = `
+            <div class="selected-song-display-card">
+                <img src="${artwork || 'https://placehold.co/44'}" onerror="this.src='https://placehold.co/44'">
+                <div style="flex:1;min-width:0">
+                    <b style="font-size:0.85rem">${title}</b>
+                    <div style="font-size:0.7rem;color:var(--muted)">${artist}</div>
+                </div>
+                <button class="btn btn-small" onclick="playPreview('${preview}')"><i class="fa fa-play"></i> Preview</button>
+            </div>
+        `;
+    }
+    
+    if (preview) playPreview(preview);
+}
 
-// LIKE
-async function likePost(id){if(!currentUser)return showToast('Login to like','error');const ref=db.collection('likes').doc(currentUser.uid+'_'+id);const d=await ref.get();if(d.exists){await ref.delete();await db.collection('posts').doc(id).update({likes:firebase.firestore.FieldValue.increment(-1)});}else{await ref.set({userId:currentUser.uid});await db.collection('posts').doc(id).update({likes:firebase.firestore.FieldValue.increment(1)});}}
+function playPreview(url) {
+    if (!url) return;
+    
+    if (audioPlayer) {
+        audioPlayer.pause();
+        audioPlayer.remove();
+        audioPlayer = null;
+    }
+    
+    audioPlayer = new Audio(url);
+    audioPlayer.volume = 0.5;
+    audioPlayer.play().catch(() => showToast('Preview unavailable', 'info'));
+    
+    const playerEl = document.getElementById('songPreviewPlayer');
+    if (playerEl) {
+        playerEl.innerHTML = `
+            <div style="display:flex;align-items:center;gap:0.5rem;padding:0.5rem 0.8rem;background:rgba(173,255,47,0.1);border-radius:12px;margin-top:0.4rem">
+                <i class="fa fa-volume-up" style="color:var(--accent)"></i>
+                <span style="font-size:0.8rem">Now playing...</span>
+                <div class="playing-indicator-bars"><span></span><span></span><span></span><span></span></div>
+            </div>
+        `;
+    }
+    
+    audioPlayer.onended = () => {
+        if (playerEl) playerEl.innerHTML = '';
+    };
+}
 
-// COMMENTS
-function toggleComments(id){document.querySelectorAll('.comments-panel.active').forEach(p=>{if(p.id!=='comments_'+id)p.classList.remove('active')});document.getElementById('comments_'+id)?.classList.toggle('active');}
-async function addComment(id){const inp=document.getElementById('commentInput_'+id),txt=inp?.value?.trim();if(!txt||!currentUser)return;try{inp.disabled=true;await db.collection('posts').doc(id).collection('comments').add({text:txt,author:currentUser.email.split('@')[0],authorId:currentUser.uid,time:firebase.firestore.FieldValue.serverTimestamp()});inp.value='';await db.collection('posts').doc(id).update({commentsCount:firebase.firestore.FieldValue.increment(1)});}catch{showToast('Failed','error');}finally{inp.disabled=false;}}
+// ==================== IMAGE UPLOAD SYSTEM (ImgBB) ====================
+async function uploadBgImage(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    
+    if (file.size > 5 * 1024 * 1024) {
+        return showToast('Image must be under 5MB', 'error');
+    }
+    
+    showToast('Uploading image...', 'info');
+    
+    const formData = new FormData();
+    formData.append('image', file);
+    
+    try {
+        const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {
+            method: 'POST',
+            body: formData
+        });
+        
+        const data = await res.json();
+        
+        if (data.success) {
+            selectedBg = `url(${data.data.url})`;
+            updatePreview();
+            showToast('Background uploaded! ✅', 'success');
+        } else {
+            throw new Error('Upload failed');
+        }
+    } catch (e) {
+        showToast('Upload failed. Try a gradient instead.', 'error');
+    }
+}
 
-// SHARE WITH LOGO
-async function sharePost(id){const p=allPosts.find(x=>x.id===id);if(!p)return;const canvas=document.createElement('canvas');canvas.width=1080;canvas.height=1080;const ctx=canvas.getContext('2d');ctx.fillStyle='#1a1a2e';ctx.fillRect(0,0,1080,1080);ctx.fillStyle='rgba(0,0,0,0.6)';ctx.fillRect(0,0,1080,1080);ctx.fillStyle='white';ctx.font=`bold 55px ${p.font||'Poppins'}`;ctx.textAlign='center';wrapText(ctx,`"${p.text}"`,540,400,850,65);ctx.fillStyle='#ADFF2F';ctx.font='bold 30px Poppins';ctx.fillText('BROXENME',540,750);ctx.font='20px Poppins';ctx.fillStyle='rgba(255,255,255,0.7)';ctx.fillText(`@${p.authorName}`,540,800);ctx.font='50px Poppins';ctx.fillStyle='rgba(255,255,255,0.3)';ctx.fillText('"',520,280);ctx.fillText('"',560,280);canvas.toBlob(blob=>{const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=`broxenme-quote-${Date.now()}.png`;a.click();showToast('Saved as image!','success');db.collection('posts').doc(id).update({shares:firebase.firestore.FieldValue.increment(1)});});}
-function wrapText(ctx,text,x,y,maxW,lh){const words=text.split(' ');let line='',ly=y;for(let w of words){const test=line+w+' ';if(ctx.measureText(test).width>maxW&&line){ctx.fillText(line.trim(),x,ly);line=w+' ';ly+=lh;}else{line=test;}}ctx.fillText(line.trim(),x,ly);}
+// ==================== LIKE SYSTEM ====================
+async function likePost(postId) {
+    if (!currentUser) return showToast('Login to like posts!', 'error');
+    
+    const likeRef = db.collection('likes').doc(`${currentUser.uid}_${postId}`);
+    
+    try {
+        const doc = await likeRef.get();
+        const postRef = db.collection('posts').doc(postId);
+        
+        if (doc.exists) {
+            await likeRef.delete();
+            await postRef.update({ likes: firebase.firestore.FieldValue.increment(-1) });
+        } else {
+            await likeRef.set({
+                userId: currentUser.uid,
+                time: firebase.firestore.FieldValue.serverTimestamp()
+            });
+            await postRef.update({ likes: firebase.firestore.FieldValue.increment(1) });
+        }
+    } catch (e) {
+        console.error('Like error:', e);
+    }
+}
 
-// SAVE
-async function savePost(id){if(!currentUser)return;const ref=db.collection('users').doc(currentUser.uid),d=await ref.get();let s=d.data().savedPosts||[];s.includes(id)?s=s.filter(x=>x!==id):s.push(id);await ref.update({savedPosts:s});showToast(s.includes(id)?'Saved!':'Removed','info');if(profileTab==='saved')loadSavedPosts();}
+// ==================== COMMENT SYSTEM ====================
+function toggleComments(postId) {
+    document.querySelectorAll('.comments-panel.active').forEach(panel => {
+        if (panel.id !== `comments_${postId}`) panel.classList.remove('active');
+    });
+    
+    const panel = document.getElementById(`comments_${postId}`);
+    if (panel) panel.classList.toggle('active');
+}
 
-// DELETE POST
-async function deletePost(id){if(!confirm('Delete this post?'))return;await db.collection('posts').doc(id).delete();showToast('Deleted','info');}
+async function addComment(postId) {
+    const input = document.getElementById(`commentInput_${postId}`);
+    const text = input?.value?.trim();
+    
+    if (!text || !currentUser) return;
+    
+    try {
+        input.disabled = true;
+        
+        await db.collection('posts').doc(postId).collection('comments').add({
+            text,
+            author: currentUser.email.split('@')[0],
+            authorId: currentUser.uid,
+            time: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        
+        input.value = '';
+        await db.collection('posts').doc(postId).update({
+            commentsCount: firebase.firestore.FieldValue.increment(1)
+        });
+    } catch (e) {
+        showToast('Failed to add comment', 'error');
+    } finally {
+        if (input) input.disabled = false;
+    }
+}
 
-// LOAD POSTS (WITH VIEWS/LIKES/SHARES)
-function loadPosts(){if(!currentUser)return;cleanup();const unsub=db.collection('posts').orderBy('time','desc').limit(50).onSnapshot(snap=>{allPosts=[];const rv=document.getElementById('reelsViewer');const pg=document.getElementById('profileGrid');if(rv)rv.innerHTML='';if(pg)pg.innerHTML='';let pc=0,tl=0;snap.forEach(doc=>{const p=doc.data();p.id=doc.id;allPosts.push(p);if(rv)rv.innerHTML+=buildReel(p,doc.id);if(p.authorId===currentUser?.uid&&pg){pg.innerHTML+=`<div class="post-grid-item" style="background:${p.bg};font-family:${p.font}" onclick="showPage('reelsPage')">${sanitize((p.text||'').substring(0,30))}<div class="post-stats-overlay"><span><i class="fa fa-eye"></i> ${p.views||0}</span><span><i class="fa fa-heart"></i> ${p.likes||0}</span><span><i class="fa fa-share"></i> ${p.shares||0}</span></div><div class="delete-btn" onclick="event.stopPropagation();deletePost('${doc.id}')"><i class="fa fa-trash"></i></div></div>`;pc++;tl+=(p.likes||0);}loadCommentsForPost(doc.id);checkUserLike(doc.id);});if(document.getElementById('postCount'))document.getElementById('postCount').innerText=pc;if(document.getElementById('totalLikes'))document.getElementById('totalLikes').innerText=tl;});unsubscribers.push(unsub);}
-function buildReel(p,id){const st=sanitize(p.text||''),sa=sanitize(p.authorName||'Anonymous');const musicHTML=p.songTitle?`<div class="reel-music-display" onclick="playReelMusic('${p.songPreview||''}')"><i class="fa fa-music"></i><span class="reel-music-text">${sanitize(p.songTitle)} — ${sanitize(p.songArtist||'')}</span><div class="playing-indicator"><span></span><span></span><span></span><span></span></div></div>`:'';return`<div class="reel-slide" style="background:${p.bg}"><div class="reel-overlay"></div><div class="reel-content-area"><div class="reel-quote-text" style="font-family:${p.font||'Poppins'}">${st}</div><div class="reel-tags-row">${(p.tags||[]).map(t=>`<span class="reel-tag-badge">#${sanitize(t)}</span>`).join('')}</div><div class="reel-user-row"><img src="${p.authorPic||'https://placehold.co/36'}" class="reel-user-pic" onerror="this.src='https://placehold.co/36'"><div><div class="reel-user-name">${sa}</div><div class="reel-stats-row"><span><i class="fa fa-eye"></i> ${p.views||0}</span><span><i class="fa fa-heart"></i> ${p.likes||0}</span><span><i class="fa fa-share"></i> ${p.shares||0}</span><span><i class="fa fa-comment"></i> ${p.commentsCount||0}</span></div></div></div>${musicHTML}</div><div class="reel-actions-sidebar"><div class="reel-action-btn" onclick="likePost('${id}')" id="likeBtn_${id}"><div class="action-icon"><i class="fa fa-heart"></i></div><span class="action-label">${p.likes||0}</span></div><div class="reel-action-btn" onclick="toggleComments('${id}')"><div class="action-icon"><i class="fa fa-comment"></i></div><span class="action-label">Comment</span></div><div class="reel-action-btn" onclick="sharePost('${id}')"><div class="action-icon"><i class="fa fa-download"></i></div><span class="action-label">Save</span></div><div class="reel-action-btn" onclick="savePost('${id}')"><div class="action-icon"><i class="fa fa-bookmark"></i></div><span class="action-label">Keep</span></div></div><div class="comments-panel" id="comments_${id}"><div class="comments-list" id="commentList_${id}"></div><div class="comment-input-row"><input id="commentInput_${id}" placeholder="Comment..." onkeypress="if(event.key==='Enter')addComment('${id}')"><button onclick="addComment('${id}')"><i class="fa fa-paper-plane"></i></button></div></div></div>`;}
-function loadCommentsForPost(id){db.collection('posts').doc(id).collection('comments').orderBy('time','asc').onSnapshot(snap=>{const l=document.getElementById('commentList_'+id);if(!l)return;l.innerHTML=snap.empty?'<p style="text-align:center;color:rgba(255,255,255,0.4);padding:1rem;font-size:0.8rem">No comments</p>':'';snap.forEach(doc=>{const c=doc.data();l.innerHTML+=`<div class="comment-item"><img src="https://placehold.co/28" class="comment-avatar"><div class="comment-content"><div class="comment-author">${sanitize(c.author||'User')}</div><div class="comment-text">${sanitize(c.text)}</div></div></div>`;});});}
-async function checkUserLike(id){if(!currentUser)return;const d=await db.collection('likes').doc(currentUser.uid+'_'+id).get();if(d.exists)document.getElementById('likeBtn_'+id)?.classList.add('liked');}
-function playReelMusic(url){if(!url)return;if(audioPlayer){audioPlayer.pause();audioPlayer.remove();audioPlayer=null;}audioPlayer=new Audio(url);audioPlayer.volume=0.4;audioPlayer.play().catch(()=>{});}
+// ==================== SHARE SYSTEM (DOWNLOAD AS IMAGE WITH LOGO) ====================
+async function sharePost(postId) {
+    const post = allPosts.find(p => p.id === postId);
+    if (!post) return;
+    
+    const canvas = document.createElement('canvas');
+    canvas.width = 1080;
+    canvas.height = 1080;
+    const ctx = canvas.getContext('2d');
+    
+    // Background
+    ctx.fillStyle = '#1a1a2e';
+    ctx.fillRect(0, 0, 1080, 1080);
+    
+    // Overlay
+    ctx.fillStyle = 'rgba(0,0,0,0.55)';
+    ctx.fillRect(0, 0, 1080, 1080);
+    
+    // Quote text
+    ctx.fillStyle = '#ffffff';
+    ctx.font = `bold 52px ${post.font || 'Poppins'}`;
+    ctx.textAlign = 'center';
+    wrapTextOnCanvas(ctx, `"${post.text}"`, 540, 380, 850, 65);
+    
+    // BROXENME branding
+    ctx.fillStyle = '#ADFF2F';
+    ctx.font = 'bold 32px Poppins';
+    ctx.fillText('BROXENME', 540, 720);
+    
+    // Author
+    ctx.fillStyle = 'rgba(255,255,255,0.7)';
+    ctx.font = '22px Poppins';
+    ctx.fillText(`@${post.authorName || 'anonymous'}`, 540, 770);
+    
+    // Quote icon watermark
+    ctx.fillStyle = 'rgba(255,255,255,0.15)';
+    ctx.font = '60px Poppins';
+    ctx.fillText('"', 520, 260);
+    ctx.fillText('"', 560, 260);
+    
+    // Small logo watermark
+    ctx.fillStyle = 'rgba(255,255,255,0.4)';
+    ctx.font = '16px Poppins';
+    ctx.fillText('" BROXENME', 540, 1020);
+    
+    canvas.toBlob(blob => {
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `broxenme-quote-${Date.now()}.png`;
+        a.click();
+        URL.revokeObjectURL(url);
+        showToast('Quote saved as image! 📸', 'success');
+        
+        db.collection('posts').doc(postId).update({
+            shares: firebase.firestore.FieldValue.increment(1)
+        });
+    });
+}
 
-// SAVED POSTS
-function loadSavedPosts(){if(!currentUser)return;db.collection('users').doc(currentUser.uid).get().then(doc=>{const saved=doc.data().savedPosts||[];const grid=document.getElementById('savedGrid');if(!grid)return;grid.innerHTML=saved.length===0?'<p style="text-align:center;padding:2rem;color:var(--muted);grid-column:1/-1">No saved posts</p>':'';saved.forEach(id=>{db.collection('posts').doc(id).get().then(pDoc=>{if(pDoc.exists){const p=pDoc.data();grid.innerHTML+=`<div class="post-grid-item" style="background:${p.bg};font-family:${p.font}" onclick="showPage('reelsPage')">${sanitize((p.text||'').substring(0,30))}<div class="post-stats-overlay"><span><i class="fa fa-eye"></i> ${p.views||0}</span><span><i class="fa fa-heart"></i> ${p.likes||0}</span></div><div class="delete-btn" onclick="event.stopPropagation();savePost('${id}')"><i class="fa fa-times"></i></div></div>`;}});});});}
-function switchProfileTab(tab){profileTab=tab;document.querySelectorAll('.profile-tab').forEach(t=>t.classList.remove('active'));event.target.classList.add('active');const pg=document.getElementById('profileGrid'),sg=document.getElementById('savedGrid');if(pg)pg.style.display=tab==='posts'?'grid':'none';if(sg)sg.style.display=tab==='saved'?'grid':'none';if(tab==='saved')loadSavedPosts();}
+function wrapTextOnCanvas(ctx, text, x, y, maxWidth, lineHeight) {
+    const words = text.split(' ');
+    let line = '';
+    let currentY = y;
+    
+    for (const word of words) {
+        const testLine = line + word + ' ';
+        if (ctx.measureText(testLine).width > maxWidth && line) {
+            ctx.fillText(line.trim(), x, currentY);
+            line = word + ' ';
+            currentY += lineHeight;
+        } else {
+            line = testLine;
+        }
+    }
+    ctx.fillText(line.trim(), x, currentY);
+}
 
-// CREATE POST
-function updatePreview(){const p=document.getElementById('quotePreview');if(!p)return;p.style.background=selectedBg;p.style.fontFamily=selectedFont;p.innerHTML=(document.getElementById('newPostText')?.value||'Preview')+'<div style="position:absolute;bottom:8px;right:10px;font-size:0.6rem;color:rgba(255,255,255,0.6)"><i class="fa fa-quote-right"></i> BROXENME</div>';}
-function toggleTag(el,tag){el.classList.toggle('active');selectedTagsArr.includes(tag)?selectedTagsArr=selectedTagsArr.filter(t=>t!==tag):selectedTagsArr.push(tag);}
-function selectBg(el,bg){document.querySelectorAll('#gradientPicker div').forEach(b=>b.style.borderColor='transparent');el.style.borderColor='var(--accent)';selectedBg=bg;updatePreview();}
-function selectFont(el,font){document.querySelectorAll('#fontPicker .tag-btn').forEach(b=>b.classList.remove('active'));el.classList.add('active');selectedFont=font;updatePreview();}
-function openCreatePostModal(){if(!currentUser)return showToast('Login first','error');document.getElementById('createPostModal').classList.add('active');updatePreview();}
-function closeCreatePostModal(){document.getElementById('createPostModal').classList.remove('active');selectedSong={title:'',artist:'',artwork:'',preview:''};document.getElementById('selectedSongDisplay').innerHTML='';document.getElementById('songPreviewPlayer').innerHTML='';if(audioPlayer){audioPlayer.pause();audioPlayer.remove();audioPlayer=null;}}
-function submitPost(){const text=document.getElementById('newPostText')?.value?.trim();if(!text)return showToast('Write a quote!','error');db.collection('posts').add({text,bg:selectedBg,font:selectedFont,tags:selectedTagsArr,songTitle:selectedSong.title,songArtist:selectedSong.artist,songArtwork:selectedSong.artwork,songPreview:selectedSong.preview,authorId:currentUser.uid,authorName:currentUser.email.split('@')[0],authorPic:currentUser.photoURL||'https://placehold.co/36',time:firebase.firestore.FieldValue.serverTimestamp(),likes:0,views:0,commentsCount:0,shares:0}).then(()=>{closeCreatePostModal();showToast('Posted!','success');document.getElementById('newPostText').value='';selectedTagsArr=[];selectedBg=gradients[0];selectedFont='Poppins';}).catch(()=>showToast('Failed','error'));}
+// ==================== SAVE/BOOKMARK SYSTEM ====================
+async function savePost(postId) {
+    if (!currentUser) return showToast('Login to save posts!', 'error');
+    
+    try {
+        const userRef = db.collection('users').doc(currentUser.uid);
+        const doc = await userRef.get();
+        let saved = doc.data()?.savedPosts || [];
+        
+        if (saved.includes(postId)) {
+            saved = saved.filter(id => id !== postId);
+            showToast('Removed from saved', 'info');
+        } else {
+            saved.push(postId);
+            showToast('Post saved! 🔖', 'success');
+        }
+        
+        await userRef.update({ savedPosts: saved });
+        
+        if (profileTab === 'saved') loadSavedPosts();
+    } catch (e) {
+        showToast('Failed to save post', 'error');
+    }
+}
 
-// PROFILE
-function openEditProfile(){if(!currentUser)return;document.getElementById('editName').value=document.getElementById('profileName').innerText;document.getElementById('editLocation').value=document.getElementById('profileLocation').innerText;document.getElementById('editBio').value=document.getElementById('profileBio').innerText;document.getElementById('editProfilePicPreview').src=document.getElementById('profilePic').src;document.getElementById('editProfileModal').classList.add('active');}
-function closeEditProfile(){document.getElementById('editProfileModal').classList.remove('active');}
-function saveProfile(){const n=document.getElementById('editName').value.trim();if(!n)return showToast('Name required','error');db.collection('users').doc(currentUser.uid).update({name:n,location:document.getElementById('editLocation').value.trim(),bio:document.getElementById('editBio').value.trim()}).then(()=>{loadUserData();closeEditProfile();showToast('Updated!','success');});}
-function loadUserData(){if(!currentUser)return;db.collection('users').doc(currentUser.uid).get().then(doc=>{if(doc.exists){const d=doc.data();document.getElementById('profileName').innerText=d.name||'User';document.getElementById('profileBio').innerText=d.bio||'';document.getElementById('profileLocation').innerText=d.location||'Unknown';document.getElementById('followerCount').innerText=d.followers||0;document.getElementById('followingCount').innerText=d.following||0;if(d.photoURL){document.getElementById('profilePic').src=d.photoURL;}}setProfBg();});}
-document.getElementById('profileUpload')?.addEventListener('change',async(e)=>{const f=e.target.files[0];if(!f||!currentUser)return;const fd=new FormData();fd.append("image",f);try{const r=await fetch("https://api.imgbb.com/1/upload?key=78883b1360bb85b347b444b05aa56826",{method:"POST",body:fd});const d=await r.json();if(d.success){const u=d.data.url;document.getElementById('profilePic').src=u;await db.collection('users').doc(currentUser.uid).update({photoURL:u});showToast('Photo updated!','success');}}catch{showToast('Upload failed','error');}});
+// ==================== DELETE POST ====================
+async function deletePost(postId) {
+    if (!confirm('Are you sure you want to delete this post?')) return;
+    
+    try {
+        await db.collection('posts').doc(postId).delete();
+        showToast('Post deleted', 'info');
+    } catch (e) {
+        showToast('Failed to delete post', 'error');
+    }
+}
 
-// STORIES
-function openCreateStory(){showToast('Coming soon!','info');}
-function loadStories(){db.collection('stories').where('expiresAt','>',new Date()).onSnapshot(snap=>{const row=document.getElementById('storiesRow');if(!row)return;row.innerHTML='<div style="text-align:center;flex-shrink:0;cursor:pointer" onclick="openCreateStory()"><div class="story-circle add-story"><i class="fa fa-plus"></i></div><div style="font-size:0.6rem">Story</div></div>';snap.forEach(doc=>{const s=doc.data();row.innerHTML+=`<div style="text-align:center;flex-shrink:0;cursor:pointer"><div class="story-circle"><img src="${s.imageUrl||'https://placehold.co/60'}" style="width:100%;height:100%;border-radius:50%;object-fit:cover;border:3px solid var(--bg)"></div><div style="font-size:0.6rem">${sanitize(s.userName||'')}</div></div>`;});});}
+// ==================== LOAD POSTS (WITH ALL STATS) ====================
+function loadPosts() {
+    if (!currentUser) return;
+    cleanupListeners();
+    
+    const unsubscribe = db.collection('posts')
+        .orderBy('time', 'desc')
+        .limit(50)
+        .onSnapshot(snapshot => {
+            allPosts = [];
+            const reelsViewer = document.getElementById('reelsViewer');
+            const profileGrid = document.getElementById('profileGrid');
+            
+            if (reelsViewer) reelsViewer.innerHTML = '';
+            if (profileGrid) profileGrid.innerHTML = '';
+            
+            let postCount = 0;
+            let totalLikes = 0;
+            
+            if (snapshot.empty && reelsViewer) {
+                reelsViewer.innerHTML = `
+                    <div style="text-align:center;padding:5rem;color:var(--muted)">
+                        <i class="fa fa-camera-retro" style="font-size:4rem;display:block;margin-bottom:1.5rem"></i>
+                        <h2 style="font-weight:700">No Reels Yet</h2>
+                        <p style="margin-top:0.5rem">Be the first to share an inspiring quote!</p>
+                        <button class="btn" onclick="openCreatePostModal()" style="margin-top:1.5rem;width:auto">
+                            <i class="fa fa-plus"></i> Create Your First Quote
+                        </button>
+                    </div>
+                `;
+            }
+            
+            snapshot.forEach(doc => {
+                const post = doc.data();
+                post.id = doc.id;
+                allPosts.push(post);
+                
+                if (reelsViewer) reelsViewer.innerHTML += buildReelHTML(post, doc.id);
+                
+                if (post.authorId === currentUser?.uid && profileGrid) {
+                    profileGrid.innerHTML += `
+                        <div class="post-grid-item" style="background:${post.bg};font-family:${post.font || 'Poppins'}" 
+                             onclick="showPage('reelsPage')">
+                            ${sanitize((post.text || '').substring(0, 35))}${(post.text || '').length > 35 ? '...' : ''}
+                            <div class="post-stats-overlay">
+                                <span><i class="fa fa-eye"></i> ${post.views || 0}</span>
+                                <span><i class="fa fa-heart"></i> ${post.likes || 0}</span>
+                                <span><i class="fa fa-share"></i> ${post.shares || 0}</span>
+                            </div>
+                            <div class="post-delete-btn" onclick="event.stopPropagation();deletePost('${doc.id}')">
+                                <i class="fa fa-trash"></i>
+                            </div>
+                        </div>
+                    `;
+                    postCount++;
+                    totalLikes += (post.likes || 0);
+                }
+                
+                loadCommentsForPost(doc.id);
+                checkUserLike(doc.id);
+            });
+            
+            if (document.getElementById('postCount')) document.getElementById('postCount').innerText = postCount;
+            if (document.getElementById('totalLikes')) document.getElementById('totalLikes').innerText = totalLikes;
+        }, error => {
+            console.error('Posts listener error:', error);
+            showToast('Connection issue. Retrying...', 'warning');
+        });
+    
+    unsubscribers.push(unsubscribe);
+}
 
-// FEED
-function loadCommunityFeed(){db.collection('feedPosts').orderBy('time','desc').limit(30).onSnapshot(snap=>{const feed=document.getElementById('communityFeed');if(!feed)return;feed.innerHTML=snap.empty?'<p style="text-align:center;padding:2rem;color:var(--muted)">No posts yet</p>':'';snap.forEach(doc=>{const p=doc.data();feed.innerHTML+=`<div class="feed-card glass"><div class="feed-card-header"><img src="${p.authorPic||'https://placehold.co/38'}" class="feed-card-avatar"><div><b>${sanitize(p.authorName||'User')}</b><div style="font-size:0.7rem;color:var(--muted)">${p.time?.toDate?.()?new Date(p.time.toDate()).toLocaleString():''}</div></div></div><div class="feed-card-body">${sanitize(p.text||'')}</div>${p.imageUrl?`<div class="feed-card-image" style="background-image:url(${p.imageUrl})"></div>`:''}<div class="feed-card-actions"><span><i class="fa fa-heart"></i> ${p.likes||0}</span><span><i class="fa fa-comment"></i> Comment</span><span><i class="fa fa-share"></i> Share</span></div></div>`;});});}
-function openCreateFeedPost(){if(!currentUser)return showToast('Login first','error');document.getElementById('createFeedModal').classList.add('active');}
-function previewFeedImage(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>{const img=document.getElementById('feedImagePreview');img.src=ev.target.result;img.style.display='block';};r.readAsDataURL(f);}
-async function submitFeedPost(){const text=document.getElementById('feedPostText').value.trim();const imgFile=document.getElementById('feedImageUpload').files[0];if(!text&&!imgFile)return showToast('Add text or image','error');let imageUrl='';if(imgFile){const fd=new FormData();fd.append("image",imgFile);try{const r=await fetch("https://api.imgbb.com/1/upload?key=78883b1360bb85b347b444b05aa56826",{method:"POST",body:fd});const d=await r.json();if(d.success)imageUrl=d.data.url;}catch{}}db.collection('feedPosts').add({text:text||'',imageUrl,authorId:currentUser.uid,authorName:currentUser.email.split('@')[0],authorPic:currentUser.photoURL||'https://placehold.co/38',time:firebase.firestore.FieldValue.serverTimestamp(),likes:0}).then(()=>{document.getElementById('createFeedModal').classList.remove('active');document.getElementById('feedPostText').value='';document.getElementById('feedImagePreview').style.display='none';showToast('Posted!','success');}).catch(()=>showToast('Failed','error'));}
+function buildReelHTML(post, id) {
+    const safeText = sanitize(post.text || '');
+    const safeAuthor = sanitize(post.authorName || 'Anonymous');
+    const tagsHTML = (post.tags || []).map(t => 
+        `<span class="reel-tag-badge">#${sanitize(t)}</span>`
+    ).join('');
+    
+    const musicHTML = post.songTitle ? `
+        <div class="reel-music-display" onclick="playReelMusic('${post.songPreview || ''}')">
+            <i class="fa fa-music"></i>
+            <div>
+                <div class="reel-music-text">${sanitize(post.songTitle)}</div>
+                ${post.songArtist ? `<div class="reel-music-artist">${sanitize(post.songArtist)}</div>` : ''}
+            </div>
+            <div class="music-wave"><span></span><span></span><span></span><span></span></div>
+        </div>
+    ` : '';
+    
+    return `
+        <div class="reel-slide" style="background:${post.bg}">
+            <div class="reel-overlay"></div>
+            <div class="reel-content-area">
+                <div class="reel-quote-text" style="font-family:${post.font || 'Poppins'}">${safeText}</div>
+                <div class="reel-tags-row">${tagsHTML}</div>
+                <div class="reel-user-row">
+                    <img src="${post.authorPic || 'https://placehold.co/38'}" class="reel-user-pic" 
+                         onerror="this.src='https://placehold.co/38'">
+                    <div>
+                        <div class="reel-user-name">${safeAuthor}</div>
+                        <div class="reel-user-handle">@${safeAuthor.toLowerCase().replace(/\s/g, '')}</div>
+                    </div>
+                </div>
+                <div class="reel-stats-row">
+                    <span><i class="fa fa-eye"></i> ${post.views || 0}</span>
+                    <span><i class="fa fa-heart"></i> ${post.likes || 0}</span>
+                    <span><i class="fa fa-share"></i> ${post.shares || 0}</span>
+                    <span><i class="fa fa-comment"></i> ${post.commentsCount || 0}</span>
+                </div>
+                ${musicHTML}
+            </div>
+            <div class="reel-actions-sidebar">
+                <div class="reel-action-btn" onclick="likePost('${id}')" id="likeBtn_${id}">
+                    <div class="action-icon"><i class="fa fa-heart"></i></div>
+                    <span class="action-label">${post.likes || 0}</span>
+                </div>
+                <div class="reel-action-btn" onclick="toggleComments('${id}')">
+                    <div class="action-icon"><i class="fa fa-comment"></i></div>
+                    <span class="action-label">Comment</span>
+                </div>
+                <div class="reel-action-btn" onclick="sharePost('${id}')">
+                    <div class="action-icon"><i class="fa fa-download"></i></div>
+                    <span class="action-label">Save</span>
+                </div>
+                <div class="reel-action-btn" onclick="savePost('${id}')" id="saveBtn_${id}">
+                    <div class="action-icon"><i class="fa fa-bookmark"></i></div>
+                    <span class="action-label">Keep</span>
+                </div>
+            </div>
+            <div class="comments-panel" id="comments_${id}">
+                <div class="comments-panel-header">
+                    <h4><i class="fa fa-comments"></i> Comments</h4>
+                    <button onclick="toggleComments('${id}')"><i class="fa fa-times"></i></button>
+                </div>
+                <div class="comments-list" id="commentList_${id}"></div>
+                <div class="comment-input-row">
+                    <input type="text" id="commentInput_${id}" placeholder="Add a comment..." 
+                           onkeypress="if(event.key==='Enter')addComment('${id}')">
+                    <button onclick="addComment('${id}')"><i class="fa fa-paper-plane"></i></button>
+                </div>
+            </div>
+        </div>
+    `;
+}
 
-// GROUP CHATS
-function openNewGroupChat(){document.getElementById('newGroupModal').classList.add('active');}
-function createGroupChat(){const name=document.getElementById('groupName').value.trim();const desc=document.getElementById('groupDesc').value.trim();if(!name)return showToast('Enter group name','error');db.collection('groups').add({name,description:desc||'',createdBy:currentUser.uid,creatorName:currentUser.email.split('@')[0],members:[currentUser.uid],memberCount:1,pic:'https://placehold.co/38',lastMsg:'',time:firebase.firestore.FieldValue.serverTimestamp()}).then(docRef=>{document.getElementById('newGroupModal').classList.remove('active');showToast('Group created!','success');}).catch(()=>showToast('Failed','error'));}
-function loadChats(){if(!currentUser)return;db.collection('groups').where('members','array-contains',currentUser.uid).orderBy('time','desc').onSnapshot(snap=>{const cl=document.getElementById('chatList');if(!cl)return;cl.innerHTML=snap.empty?'<p style="text-align:center;padding:2rem;color:var(--muted)">No groups yet</p>':'';snap.forEach(doc=>{const g=doc.data();cl.innerHTML+=`<div class="chat-list-row" onclick="openChat('${doc.id}','${sanitize(g.name)}','${g.pic||'https://placehold.co/38'}')"><img src="${g.pic||'https://placehold.co/38'}" style="width:45px;height:45px;border-radius:50%"><div style="flex:1"><b>${sanitize(g.name)}</b><div style="font-size:0.75rem;color:var(--muted)">${sanitize(g.description||'')}</div><div style="font-size:0.8rem;color:var(--muted)">${sanitize(g.lastMsg||'No messages yet')}</div></div><div class="member-count">${g.memberCount||1}</div></div>`;});});}
-function openChat(id,name,pic){currentChat=id;document.getElementById('chatName').innerText=name;document.getElementById('chatAvatar').src=pic||'https://placehold.co/38';document.getElementById('chatWindow').classList.add('active');document.getElementById('chatMessages').innerHTML='<div style="text-align:center;padding:2rem"><div class="spinner"></div></div>';db.collection('groups').doc(id).get().then(doc=>{if(doc.exists)document.getElementById('chatMemberCount').innerText=doc.data().memberCount||1;});const unsub=db.collection('groups').doc(id).collection('messages').orderBy('time','asc').onSnapshot(snap=>{const msgs=document.getElementById('chatMessages');if(!msgs)return;msgs.innerHTML='';snap.forEach(doc=>{const m=doc.data();const isMe=m.from===currentUser?.uid;msgs.innerHTML+=`<div class="msg-bubble ${isMe?'me':'other'}"><div class="msg-sender">${isMe?'You':sanitize(m.senderName||'User')}</div>${sanitize(m.text)}</div>`;});msgs.scrollTop=msgs.scrollHeight;});unsubscribers.push(unsub);}
-function closeChat(){document.getElementById('chatWindow').classList.remove('active');currentChat=null;}
-function sendMsg(){const t=document.getElementById('chatInput')?.value?.trim();if(!t||!currentChat||!currentUser)return;const senderName=document.getElementById('profileName')?.innerText||currentUser.email.split('@')[0];db.collection('groups').doc(currentChat).collection('messages').add({text:t,from:currentUser.uid,senderName,time:firebase.firestore.FieldValue.serverTimestamp()}).then(()=>{db.collection('groups').doc(currentChat).update({lastMsg:t,time:firebase.firestore.FieldValue.serverTimestamp()});document.getElementById('chatInput').value='';});}
+function loadCommentsForPost(postId) {
+    db.collection('posts').doc(postId).collection('comments')
+        .orderBy('time', 'asc')
+        .onSnapshot(snap => {
+            const list = document.getElementById(`commentList_${postId}`);
+            if (!list) return;
+            
+            if (snap.empty) {
+                list.innerHTML = '<p style="text-align:center;color:rgba(255,255,255,0.3);padding:1.5rem;font-size:0.8rem">No comments yet. Be the first!</p>';
+                return;
+            }
+            
+            list.innerHTML = '';
+            snap.forEach(doc => {
+                const comment = doc.data();
+                list.innerHTML += `
+                    <div class="comment-item">
+                        <img src="https://placehold.co/30" class="comment-avatar" onerror="this.src='https://placehold.co/30'">
+                        <div class="comment-content">
+                            <div class="comment-author">${sanitize(comment.author || 'User')}</div>
+                            <div class="comment-text">${sanitize(comment.text)}</div>
+                            <div class="comment-time">${timeAgo(comment.time)}</div>
+                        </div>
+                    </div>
+                `;
+            });
+        });
+}
 
-// SEARCH ACCOUNTS
-function loadAllAccounts(){db.collection('users').onSnapshot(snap=>{window.allAccounts=[];snap.forEach(doc=>{const d=doc.data();d.uid=doc.id;window.allAccounts.push(d);});});}
-function searchAccounts(){const q=document.getElementById('accountSearchInput')?.value?.toLowerCase()||'';const filtered=(window.allAccounts||[]).filter(a=>(a.name||'').toLowerCase().includes(q)||(a.location||'').toLowerCase().includes(q));const list=document.getElementById('accountsList');if(!list)return;list.innerHTML=filtered.map(a=>`<div class="user-card glass"><img src="${a.photoURL||'https://placehold.co/48'}" onerror="this.src='https://placehold.co/48'" style="width:48px;height:48px;border-radius:50%;object-fit:cover"><div style="flex:1"><b>${sanitize(a.name||'Unknown')}</b><div style="font-size:0.8rem;color:var(--muted)"><i class="fa fa-location-dot"></i> ${sanitize(a.location||'Unknown')}</div></div><div style="text-align:right"><b style="color:var(--accent)">${a.followers||0}</b><div style="font-size:0.7rem;color:var(--muted)">followers</div></div></div>`).join('')||'<p style="text-align:center;padding:2rem;color:var(--muted)">No users found</p>';}
+async function checkUserLike(postId) {
+    if (!currentUser) return;
+    try {
+        const doc = await db.collection('likes').doc(`${currentUser.uid}_${postId}`).get();
+        if (doc.exists) {
+            const btn = document.getElementById(`likeBtn_${postId}`);
+            if (btn) btn.classList.add('liked');
+        }
+    } catch (e) { /* ignore */ }
+}
 
-// ADMIN PANEL
-async function loadAdminPanel(){if(currentUser?.uid!==ADMIN_UID)return;const totalUsers=(await db.collection('users').get()).size;const totalPosts=(await db.collection('posts').get()).size;const totalGroups=(await db.collection('groups').get()).size;document.getElementById('adminStats').innerHTML=`<div class="admin-stat-card"><h2>${totalUsers}</h2><p>Total Users</p></div><div class="admin-stat-card"><h2>${totalPosts}</h2><p>Total Posts</p></div><div class="admin-stat-card"><h2>${totalGroups}</h2><p>Groups</p></div><div class="admin-stat-card"><h2>5</h2><p>Dummy Bots</p></div>`;const userSnap=await db.collection('users').get();let userRows='';userSnap.forEach(doc=>{const u=doc.data();userRows+=`<tr><td><b>${sanitize(u.name||'Unknown')}</b></td><td>${doc.id.substring(0,10)}...</td><td>0</td><td>${u.followers||0}</td><td>${u.isDummy?'<span style="color:var(--admin-accent)">🤖 Bot</span>':'<span style="color:var(--success)">Active</span>'}</td><td><button class="btn btn-small btn-danger" onclick="adminDeleteUser('${doc.id}')"><i class="fa fa-trash"></i></button></td></tr>`;});document.getElementById('adminUserTable').innerHTML=userRows;const postSnap=await db.collection('posts').orderBy('time','desc').limit(20).get();let postHTML='';postSnap.forEach(doc=>{const p=doc.data();postHTML+=`<div class="feed-card" style="margin:0.5rem 0"><div class="feed-card-header"><b>${sanitize(p.authorName||'Unknown')}</b></div><div>${sanitize((p.text||'').substring(0,100))}</div><div style="font-size:0.75rem;color:var(--muted)">❤️ ${p.likes||0} | 👁️ ${p.views||0} | 💬 ${p.commentsCount||0}</div></div>`;});document.getElementById('adminPostsList').innerHTML=postHTML;document.getElementById('adminAnalytics').innerHTML=`<p><b>Platform:</b> BROXENME v4.0</p><p><b>Dummy Bots:</b> 5 active</p><p><b>Auto-post:</b> Every 12 hours</p><p><b>Free Music:</b> iTunes Preview API</p><p><b>Images:</b> ImgBB + Unsplash</p>`;}
-async function adminDeleteUser(uid){if(!confirm('Delete this user?'))return;await db.collection('users').doc(uid).delete();showToast('User deleted','info');loadAdminPanel();}
+function playReelMusic(url) {
+    if (!url) return;
+    if (audioPlayer) {
+        audioPlayer.pause();
+        audioPlayer.remove();
+        audioPlayer = null;
+    }
+    audioPlayer = new Audio(url);
+    audioPlayer.volume = 0.4;
+    audioPlayer.play().catch(() => {});
+    showToast('Now playing... 🎵', 'info');
+}
 
-// DUMMY ACCOUNTS
-const dummyAccounts=[{email:'dummy1@broxenme.com',pass:'dummy123',name:'Wisdom Warrior',location:'Nairobi, KE',photoURL:'https://placehold.co/100/ADFF2F/000?text=WW'},{email:'dummy2@broxenme.com',pass:'dummy123',name:'Dream Chaser',location:'Lagos, NG',photoURL:'https://placehold.co/100/FF6B6B/000?text=DC'},{email:'dummy3@broxenme.com',pass:'dummy123',name:'Soul Speaker',location:'Cape Town, ZA',photoURL:'https://placehold.co/100/4ECDC4/000?text=SS'},{email:'dummy4@broxenme.com',pass:'dummy123',name:'Mind Mentor',location:'Accra, GH',photoURL:'https://placehold.co/100/FFE66D/000?text=MM'},{email:'dummy5@broxenme.com',pass:'dummy123',name:'Star Gazer',location:'Kigali, RW',photoURL:'https://placehold.co/100/A78BFA/000?text=SG'}];
-async function setupDummyAccounts(){for(const acc of dummyAccounts){try{const cred=await auth.createUserWithEmailAndPassword(acc.email,acc.pass);await db.collection('users').doc(cred.user.uid).set({name:acc.name,location:acc.location,photoURL:acc.photoURL,bio:'Spreading positivity daily ✨',followers:Math.floor(Math.random()*500),following:Math.floor(Math.random()*50),savedPosts:[],createdAt:firebase.firestore.FieldValue.serverTimestamp(),isDummy:true});await auth.signOut();}catch(e){if(e.code!=='auth/email-already-in-use')console.log('Dummy:',e.message);}}if(!currentUser)await auth.signInAnonymously();}
-async function triggerDummyPosts(){document.getElementById('botStatus').innerText='Posting...';await autoPostDummyQuotes();document.getElementById('botStatus').innerText='✅ Done!';setTimeout(()=>document.getElementById('botStatus').innerText='',3000);}
-async function autoPostDummyQuotes(){const usersSnap=await db.collection('users').where('isDummy','==',true).get();const quotes=[{text:"The journey of a thousand miles begins with one step.",tags:['Motivation','Life']},{text:"Your vibe attracts your tribe.",tags:['Life','Love']},{text:"Dream big, work hard, stay focused.",tags:['Success','Business']},{text:"Every moment is a fresh beginning.",tags:['Life','Wisdom']},{text:"Create the life you can't wait to wake up to.",tags:['Success','Motivation']}];const songs=[{title:'Ambient Inspiration',artist:'Relaxing Music',artwork:'',preview:''}];usersSnap.forEach(async userDoc=>{const user=userDoc.data();const q=quotes[Math.floor(Math.random()*quotes.length)];const bg=gradients[Math.floor(Math.random()*gradients.length)];const font=fonts[Math.floor(Math.random()*fonts.length)];try{const r=await fetch('https://itunes.apple.com/search?term=inspiration+instrumental&limit=5');const d=await r.json();const song=d.results?.[Math.floor(Math.random()*d.results.length)];await db.collection('posts').add({text:q.text,bg,font,tags:q.tags,songTitle:song?.trackName||'',songArtist:song?.artistName||'',songArtwork:song?.artworkUrl100||'',songPreview:song?.previewUrl||'',authorId:userDoc.id,authorName:user.name,authorPic:user.photoURL,time:firebase.firestore.FieldValue.serverTimestamp(),likes:Math.floor(Math.random()*30),views:Math.floor(Math.random()*100),commentsCount:Math.floor(Math.random()*5),shares:Math.floor(Math.random()*10)});}catch(e){console.log('Auto-post error:',e);}});}
+// ==================== SAVED POSTS ====================
+function loadSavedPosts() {
+    if (!currentUser) return;
+    
+    db.collection('users').doc(currentUser.uid).get().then(doc => {
+        const saved = doc.data()?.savedPosts || [];
+        const grid = document.getElementById('savedGrid');
+        if (!grid) return;
+        
+        if (saved.length === 0) {
+            grid.innerHTML = '<p style="text-align:center;padding:3rem;color:var(--muted);grid-column:1/-1"><i class="fa fa-bookmark" style="font-size:3rem;display:block;margin-bottom:1rem"></i>No saved posts yet</p>';
+            return;
+        }
+        
+        grid.innerHTML = '';
+        saved.forEach(id => {
+            db.collection('posts').doc(id).get().then(postDoc => {
+                if (postDoc.exists) {
+                    const p = postDoc.data();
+                    grid.innerHTML += `
+                        <div class="post-grid-item" style="background:${p.bg};font-family:${p.font}" onclick="showPage('reelsPage')">
+                            ${sanitize((p.text || '').substring(0, 30))}
+                            <div class="post-stats-overlay">
+                                <span><i class="fa fa-heart"></i> ${p.likes || 0}</span>
+                                <span><i class="fa fa-eye"></i> ${p.views || 0}</span>
+                            </div>
+                            <div class="post-delete-btn" onclick="event.stopPropagation();savePost('${id}')">
+                                <i class="fa fa-times"></i>
+                            </div>
+                        </div>
+                    `;
+                }
+            });
+        });
+    });
+}
 
-// NAVIGATION
-function showPage(id){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));const page=document.getElementById(id);if(page)page.classList.add('active');document.getElementById('navMenu').classList.remove('active');if(id==='homePage')setHeroBg();if(id==='profilePage'){setProfBg();loadSavedPosts();}if(id==='adminPage'&&currentUser?.uid===ADMIN_UID)loadAdminPanel();if(id==='searchAccountsPage')searchAccounts();}
-function toggleMenu(){document.getElementById('navMenu').classList.toggle('active');}
-function switchCommTab(t){const ft=document.getElementById('feedTabContent'),ct=document.getElementById('chatsTabContent');if(ft)ft.style.display=t==='feed'?'block':'none';if(ct)ct.style.display=t==='chats'?'block':'none';document.getElementById('tabFeed')?.classList.toggle('active',t==='feed');document.getElementById('tabChats')?.classList.toggle('active',t==='chats');}
-function searchQuotes(){clearTimeout(searchTO);searchTO=setTimeout(()=>{const q=document.getElementById('searchInput')?.value?.toLowerCase()||'';if(!q){loadPosts();return;}const f=allPosts.filter(p=>(p.text||'').toLowerCase().includes(q)||(p.tags||[]).join(' ').toLowerCase().includes(q));const rv=document.getElementById('reelsViewer');if(rv)rv.innerHTML=f.length?f.map(p=>`<div class="reel-slide" style="background:${p.bg}"><div class="reel-overlay"></div><div class="reel-content-area"><div class="reel-quote-text" style="font-family:${p.font}">${sanitize(p.text)}</div></div></div>`).join(''):'<div style="text-align:center;padding:4rem"><h3>No results</h3></div>';},300);}
+function switchProfileTab(tab) {
+    profileTab = tab;
+    document.querySelectorAll('.profile-tab').forEach(t => t.classList.remove('active'));
+    if (event?.target) event.target.classList.add('active');
+    
+    const postsGrid = document.getElementById('profileGrid');
+    const savedGrid = document.getElementById('savedGrid');
+    
+    if (postsGrid) postsGrid.style.display = tab === 'posts' ? 'grid' : 'none';
+    if (savedGrid) savedGrid.style.display = tab === 'saved' ? 'grid' : 'none';
+    
+    if (tab === 'saved') loadSavedPosts();
+}
 
-// THEME
-document.getElementById('themeToggle').addEventListener('click',()=>{document.body.classList.toggle('light');const l=document.body.classList.contains('light');localStorage.setItem('theme',l?'light':'dark');document.getElementById('themeToggle').innerHTML=l?'<i class="fa fa-sun"></i>':'<i class="fa fa-moon"></i>';});
-if(localStorage.getItem('theme')==='light'){document.body.classList.add('light');document.getElementById('themeToggle').innerHTML='<i class="fa fa-sun"></i>';}
+// ==================== CREATE POST SYSTEM ====================
+function updatePreview() {
+    const preview = document.getElementById('quotePreview');
+    if (!preview) return;
+    
+    preview.style.background = selectedBg;
+    preview.style.fontFamily = selectedFont;
+    preview.innerHTML = `
+        ${document.getElementById('newPostText')?.value || 'Your quote preview'}
+        <div class="quote-preview-watermark"><i class="fa fa-quote-right"></i> BROXENME</div>
+    `;
+}
 
-// AUTO-POST SCHEDULE
-setInterval(async()=>{if(currentUser)await autoPostDummyQuotes();},43200000);
-setTimeout(async()=>{if(currentUser)await autoPostDummyQuotes();},10000);
+function toggleTag(element, tag) {
+    element.classList.toggle('active');
+    if (selectedTagsArr.includes(tag)) {
+        selectedTagsArr = selectedTagsArr.filter(t => t !== tag);
+    } else {
+        selectedTagsArr.push(tag);
+    }
+}
 
-window.addEventListener('beforeunload',cleanup);
-console.log('🚀 BROXENME v4.0 - Admin + Groups + Music + Analytics!');
+function selectBg(element, bg) {
+    document.querySelectorAll('#gradientPicker div').forEach(el => 
+        el.style.borderColor = 'transparent'
+    );
+    element.style.borderColor = 'var(--accent)';
+    selectedBg = bg;
+    updatePreview();
+}
+
+function selectFont(element, font) {
+    document.querySelectorAll('#fontPicker .tag-btn').forEach(el => 
+        el.classList.remove('active')
+    );
+    element.classList.add('active');
+    selectedFont = font;
+    updatePreview();
+}
+
+function openCreatePostModal() {
+    if (!currentUser) return showToast('Please login first!', 'error');
+    document.getElementById('createPostModal').classList.add('active');
+    updatePreview();
+}
+
+function closeCreatePostModal() {
+    document.getElementById('createPostModal').classList.remove('active');
+    selectedSong = { title: '', artist: '', artwork: '', preview: '' };
+    
+    const songSearch = document.getElementById('songSearch');
+    const songResults = document.getElementById('songResults');
+    const selectedDisplay = document.getElementById('selectedSongDisplay');
+    const previewPlayer = document.getElementById('songPreviewPlayer');
+    
+    if (songSearch) songSearch.value = '';
+    if (songResults) songResults.innerHTML = '';
+    if (selectedDisplay) selectedDisplay.innerHTML = '';
+    if (previewPlayer) previewPlayer.innerHTML = '';
+    
+    if (audioPlayer) {
+        audioPlayer.pause();
+        audioPlayer.remove();
+        audioPlayer = null;
+    }
+}
+
+async function submitPost() {
+    const text = document.getElementById('newPostText')?.value?.trim();
+    if (!text) return showToast('Please write a quote!', 'error');
+    if (text.length > 500) return showToast('Quote must be under 500 characters', 'error');
+    
+    try {
+        await db.collection('posts').add({
+            text,
+            bg: selectedBg,
+            font: selectedFont,
+            tags: selectedTagsArr,
+            songTitle: selectedSong.title || '',
+            songArtist: selectedSong.artist || '',
+            songArtwork: selectedSong.artwork || '',
+            songPreview: selectedSong.preview || '',
+            authorId: currentUser.uid,
+            authorName: currentUser.email.split('@')[0],
+            authorPic: currentUser.photoURL || 'https://placehold.co/38',
+            time: firebase.firestore.FieldValue.serverTimestamp(),
+            likes: 0,
+            views: 0,
+            commentsCount: 0,
+            shares: 0
+        });
+        
+        closeCreatePostModal();
+        showToast('Quote posted successfully! 🎉', 'success');
+        
+        // Reset form
+        document.getElementById('newPostText').value = '';
+        selectedTagsArr = [];
+        selectedBg = gradients[0];
+        selectedFont = 'Poppins';
+        updatePreview();
+    } catch (e) {
+        showToast('Failed to post quote. Please try again.', 'error');
+    }
+}
+
+// ==================== PROFILE SYSTEM ====================
+function openEditProfile() {
+    if (!currentUser) return showToast('Login to edit profile!', 'error');
+    
+    document.getElementById('editName').value = document.getElementById('profileName').innerText;
+    document.getElementById('editLocation').value = document.getElementById('profileLocation').innerText;
+    document.getElementById('editBio').value = document.getElementById('profileBio').innerText || '';
+    document.getElementById('editProfilePicPreview').src = document.getElementById('profilePic').src;
+    document.getElementById('editProfileModal').classList.add('active');
+}
+
+function closeEditProfile() {
+    document.getElementById('editProfileModal').classList.remove('active');
+}
+
+async function saveProfile() {
+    const name = document.getElementById('editName').value.trim();
+    const location = document.getElementById('editLocation').value.trim();
+    const bio = document.getElementById('editBio').value.trim();
+    
+    if (!name) return showToast('Name is required', 'error');
+    
+    try {
+        await db.collection('users').doc(currentUser.uid).update({
+            name,
+            username: name.toLowerCase().replace(/\s/g, ''),
+            location,
+            bio
+        });
+        
+        loadUserData();
+        closeEditProfile();
+        showToast('Profile updated! ✅', 'success');
+    } catch (e) {
+        showToast('Failed to update profile', 'error');
+    }
+}
+
+function loadUserData() {
+    if (!currentUser) return;
+    
+    db.collection('users').doc(currentUser.uid).get()
+        .then(doc => {
+            if (doc.exists) {
+                const data = doc.data();
+                document.getElementById('profileName').innerText = data.name || 'User';
+                document.getElementById('profileUsername').innerText = `@${data.username || data.name?.toLowerCase().replace(/\s/g, '') || 'user'}`;
+                document.getElementById('profileBio').innerText = data.bio || '';
+                document.getElementById('profileLocation').innerText = data.location || 'Unknown';
+                document.getElementById('followerCount').innerText = data.followers || 0;
+                document.getElementById('followingCount').innerText = data.following || 0;
+                
+                if (data.photoURL) {
+                    document.getElementById('profilePic').src = data.photoURL;
+                    const editPreview = document.getElementById('editProfilePicPreview');
+                    if (editPreview) editPreview.src = data.photoURL;
+                }
+                
+                setProfileBackground();
+            }
+        })
+        .catch(e => console.error('Load user error:', e));
+}
+
+// Profile photo upload
+document.getElementById('profileUpload')?.addEventListener('change', async (e) => {
+    const file = e.target.files[0];
+    if (!file || !currentUser) return;
+    
+    if (file.size > 5 * 1024 * 1024) return showToast('Image too large (max 5MB)', 'error');
+    
+    showToast('Uploading photo...', 'info');
+    
+    const formData = new FormData();
+    formData.append('image', file);
+    
+    try {
+        const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {
+            method: 'POST',
+            body: formData
+        });
+        
+        const data = await res.json();
+        
+        if (data.success) {
+            const url = data.data.url;
+            document.getElementById('profilePic').src = url;
+            const editPreview = document.getElementById('editProfilePicPreview');
+            if (editPreview) editPreview.src = url;
+            
+            await db.collection('users').doc(currentUser.uid).update({ photoURL: url });
+            showToast('Profile photo updated! 📸', 'success');
+        }
+    } catch (e) {
+        showToast('Upload failed', 'error');
+    }
+});
+
+// ==================== STORIES ====================
+function openCreateStory() {
+    showToast('Story feature coming soon! 📸', 'info');
+}
+
+function loadStories() {
+    db.collection('stories')
+        .where('expiresAt', '>', new Date())
+        .orderBy('expiresAt', 'desc')
+        .onSnapshot(snap => {
+            const row = document.getElementById('storiesRow');
+            if (!row) return;
+            
+            row.innerHTML = `
+                <div class="story-circle-item" onclick="openCreateStory()">
+                    <div class="story-circle-ring add-story-ring" style="display:flex;align-items:center;justify-content:center">
+                        <i class="fa fa-plus" style="font-size:1.5rem;color:var(--accent)"></i>
+                    </div>
+                    <div class="story-username-label">Add Story</div>
+                </div>
+            `;
+            
+            snap.forEach(doc => {
+                const story = doc.data();
+                row.innerHTML += `
+                    <div class="story-circle-item" onclick="showToast('Story viewed!','info')">
+                        <div class="story-circle-ring">
+                            <img src="${story.imageUrl || 'https://placehold.co/60'}" 
+                                 onerror="this.src='https://placehold.co/60'">
+                        </div>
+                        <div class="story-username-label">${sanitize(story.userName || 'User')}</div>
+                    </div>
+                `;
+            });
+        });
+}
+
+// ==================== COMMUNITY FEED ====================
+function loadCommunityFeed() {
+    db.collection('feedPosts')
+        .orderBy('time', 'desc')
+        .limit(30)
+        .onSnapshot(snap => {
+            const feed = document.getElementById('communityFeed');
+            if (!feed) return;
+            
+            if (snap.empty) {
+                feed.innerHTML = `
+                    <div style="text-align:center;padding:3rem;color:var(--muted)">
+                        <i class="fa fa-newspaper" style="font-size:3rem;display:block;margin-bottom:1rem"></i>
+                        <p>No posts in the feed yet</p>
+                        <p style="font-size:0.8rem">Be the first to share something!</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            feed.innerHTML = '';
+            snap.forEach(doc => {
+                const post = doc.data();
+                feed.innerHTML += `
+                    <div class="feed-post-card">
+                        <div class="feed-post-header">
+                            <img src="${post.authorPic || 'https://placehold.co/40'}" class="feed-post-avatar" 
+                                 onerror="this.src='https://placehold.co/40'">
+                            <div>
+                                <div class="feed-post-author">${sanitize(post.authorName || 'Anonymous')}</div>
+                                <div class="feed-post-time">${timeAgo(post.time)}</div>
+                            </div>
+                        </div>
+                        ${post.text ? `<div class="feed-post-body">${sanitize(post.text)}</div>` : ''}
+                        ${post.imageUrl ? `<div class="feed-post-image" style="background-image:url(${post.imageUrl})"></div>` : ''}
+                        <div class="feed-post-actions">
+                            <span><i class="fa fa-heart"></i> ${post.likes || 0}</span>
+                            <span><i class="fa fa-comment"></i> Comment</span>
+                            <span><i class="fa fa-share"></i> Share</span>
+                        </div>
+                    </div>
+                `;
+            });
+        });
+}
+
+function openCreateFeedPost() {
+    if (!currentUser) return showToast('Login to create posts!', 'error');
+    document.getElementById('createFeedModal').classList.add('active');
+}
+
+function previewFeedImage(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    
+    const reader = new FileReader();
+    reader.onload = ev => {
+        const preview = document.getElementById('feedImagePreview');
+        if (preview) {
+            preview.src = ev.target.result;
+            preview.style.display = 'block';
+        }
+    };
+    reader.readAsDataURL(file);
+}
+
+async function submitFeedPost() {
+    const text = document.getElementById('feedPostText')?.value?.trim() || '';
+    const imgFile = document.getElementById('feedImageUpload')?.files[0];
+    
+    if (!text && !imgFile) return showToast('Add text or an image', 'error');
+    
+    let imageUrl = '';
+    
+    if (imgFile) {
+        const formData = new FormData();
+        formData.append('image', imgFile);
+        
+        try {
+            const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {
+                method: 'POST',
+                body: formData
+            });
+            const data = await res.json();
+            if (data.success) imageUrl = data.data.url;
+        } catch (e) {
+            showToast('Image upload failed', 'error');
+            return;
+        }
+    }
+    
+    try {
+        await db.collection('feedPosts').add({
+            text,
+            imageUrl,
+            authorId: currentUser.uid,
+            authorName: currentUser.email.split('@')[0],
+            authorPic: currentUser.photoURL || 'https://placehold.co/40',
+            time: firebase.firestore.FieldValue.serverTimestamp(),
+            likes: 0
+        });
+        
+        document.getElementById('createFeedModal').classList.remove('active');
+        document.getElementById('feedPostText').value = '';
+        document.getElementById('feedImagePreview').style.display = 'none';
+        showToast('Posted to feed! 📰', 'success');
+    } catch (e) {
+        showToast('Failed to post', 'error');
+    }
+}
+
+// ==================== GROUP CHAT SYSTEM ====================
+function openNewGroupChat() {
+    document.getElementById('newGroupModal').classList.add('active');
+}
+
+async function createGroupChat() {
+    const name = document.getElementById('groupName')?.value?.trim();
+    const desc = document.getElementById('groupDesc')?.value?.trim();
+    
+    if (!name) return showToast('Enter a group name', 'error');
+    
+    try {
+        await db.collection('groups').add({
+            name,
+            description: desc || '',
+            createdBy: currentUser.uid,
+            creatorName: currentUser.email.split('@')[0],
+            members: [currentUser.uid],
+            memberCount: 1,
+            pic: 'https://placehold.co/38',
+            lastMsg: '',
+            lastMsgTime: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        
+        document.getElementById('newGroupModal').classList.remove('active');
+        document.getElementById('groupName').value = '';
+        document.getElementById('groupDesc').value = '';
+        showToast('Group created! 🎉', 'success');
+    } catch (e) {
+        showToast('Failed to create group', 'error');
+    }
+}
+
+function loadGroupChats() {
+    if (!currentUser) return;
+    
+    db.collection('groups')
+        .where('members', 'array-contains', currentUser.uid)
+        .orderBy('lastMsgTime', 'desc')
+        .onSnapshot(snap => {
+            const chatList = document.getElementById('chatList');
+            if (!chatList) return;
+            
+            if (snap.empty) {
+                chatList.innerHTML = `
+                    <div style="text-align:center;padding:3rem;color:var(--muted)">
+                        <i class="fa fa-comments" style="font-size:3rem;display:block;margin-bottom:1rem"></i>
+                        <p>No groups yet</p>
+                        <p style="font-size:0.8rem">Create or join a group to start chatting!</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            chatList.innerHTML = '';
+            snap.forEach(doc => {
+                const group = doc.data();
+                const lastMsgTime = group.lastMsgTime?.toDate?.() 
+                    ? new Date(group.lastMsgTime.toDate()).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+                    : '';
+                
+                chatList.innerHTML += `
+                    <div class="chat-list-item-row" onclick="openGroupChatWindow('${doc.id}', '${sanitize(group.name)}', '${group.pic || 'https://placehold.co/48'}')">
+                        <img src="${group.pic || 'https://placehold.co/48'}" class="chat-list-avatar" 
+                             onerror="this.src='https://placehold.co/48'">
+                        <div class="chat-list-info">
+                            <div class="chat-list-name">${sanitize(group.name)}</div>
+                            <div class="chat-list-preview">${sanitize(group.lastMsg || 'No messages yet')}</div>
+                        </div>
+                        <div class="chat-list-meta">
+                            <div class="chat-list-time">${lastMsgTime}</div>
+                            <div class="chat-list-badge">${group.memberCount || 1}</div>
+                        </div>
+                    </div>
+                `;
+            });
+        });
+}
+
+function openGroupChatWindow(id, name, pic) {
+    currentChat = id;
+    document.getElementById('chatName').innerText = name;
+    document.getElementById('chatAvatar').src = pic || 'https://placehold.co/38';
+    document.getElementById('chatWindow').classList.add('active');
+    document.getElementById('chatMessages').innerHTML = '<div style="text-align:center;padding:2rem"><div class="loading-spinner"></div></div>';
+    
+    // Load member count
+    db.collection('groups').doc(id).get().then(doc => {
+        if (doc.exists) {
+            document.getElementById('chatMemberCount').innerText = doc.data().memberCount || 0;
+        }
+    });
+    
+    // Join group if not member
+    db.collection('groups').doc(id).get().then(doc => {
+        if (doc.exists) {
+            const members = doc.data().members || [];
+            if (!members.includes(currentUser.uid)) {
+                db.collection('groups').doc(id).update({
+                    members: firebase.firestore.FieldValue.arrayUnion(currentUser.uid),
+                    memberCount: firebase.firestore.FieldValue.increment(1)
+                });
+            }
+        }
+    });
+    
+    // Load messages
+    const unsub = db.collection('groups').doc(id)
+        .collection('messages')
+        .orderBy('time', 'asc')
+        .onSnapshot(snap => {
+            const msgContainer = document.getElementById('chatMessages');
+            if (!msgContainer) return;
+            
+            msgContainer.innerHTML = '';
+            
+            if (snap.empty) {
+                msgContainer.innerHTML = `
+                    <div style="text-align:center;padding:3rem;color:rgba(255,255,255,0.3)">
+                        <i class="fa fa-lock" style="font-size:2rem;display:block;margin-bottom:0.5rem"></i>
+                        <p style="font-size:0.85rem">Messages are secure</p>
+                        <p style="font-size:0.75rem">Start the conversation!</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            snap.forEach(doc => {
+                const msg = doc.data();
+                const isMe = msg.from === currentUser?.uid;
+                const timeStr = msg.time?.toDate?.() 
+                    ? new Date(msg.time.toDate()).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+                    : '';
+                
+                msgContainer.innerHTML += `
+                    <div class="msg-bubble ${isMe ? 'me' : 'other'}">
+                        <div class="msg-sender-name">${isMe ? 'You' : sanitize(msg.senderName || 'User')}</div>
+                        ${sanitize(msg.text)}
+                        <div class="msg-time-stamp">${timeStr} ${isMe ? '✓✓' : ''}</div>
+                    </div>
+                `;
+            });
+            
+            msgContainer.scrollTop = msgContainer.scrollHeight;
+        });
+    
+    unsubscribers.push(unsub);
+}
+
+function closeChat() {
+    document.getElementById('chatWindow').classList.remove('active');
+    currentChat = null;
+}
+
+function sendMsg() {
+    const input = document.getElementById('chatInput');
+    const text = input?.value?.trim();
+    
+    if (!text || !currentChat || !currentUser) return;
+    
+    const senderName = document.getElementById('profileName')?.innerText || currentUser.email.split('@')[0];
+    
+    db.collection('groups').doc(currentChat).collection('messages').add({
+        text,
+        from: currentUser.uid,
+        senderName,
+        time: firebase.firestore.FieldValue.serverTimestamp()
+    }).then(() => {
+        db.collection('groups').doc(currentChat).update({
+            lastMsg: text,
+            lastMsgTime: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        if (input) input.value = '';
+    });
+}
+
+// ==================== SEARCH ACCOUNTS ====================
+function loadAllAccounts() {
+    db.collection('users').onSnapshot(snap => {
+        window.allAccounts = [];
+        snap.forEach(doc => {
+            const userData = doc.data();
+            userData.uid = doc.id;
+            window.allAccounts.push(userData);
+        });
+    });
+}
+
+function searchAccounts() {
+    const query = document.getElementById('accountSearchInput')?.value?.toLowerCase() || '';
+    const filtered = (window.allAccounts || []).filter(user => 
+        (user.name || '').toLowerCase().includes(query) ||
+        (user.location || '').toLowerCase().includes(query) ||
+        (user.username || '').toLowerCase().includes(query)
+    );
+    
+    const list = document.getElementById('accountsList');
+    if (!list) return;
+    
+    if (filtered.length === 0) {
+        list.innerHTML = '<p style="text-align:center;padding:3rem;color:var(--muted)">No users found</p>';
+        return;
+    }
+    
+    list.innerHTML = filtered.map(user => `
+        <div class="user-result-card" onclick="showToast('Viewing ${sanitize(user.name || 'User')}','info')">
+            <img src="${user.photoURL || 'https://placehold.co/50'}" onerror="this.src='https://placehold.co/50'">
+            <div class="user-result-info">
+                <div class="user-result-name">${sanitize(user.name || 'Unknown')}</div>
+                <div class="user-result-location">
+                    <i class="fa fa-location-dot"></i> ${sanitize(user.location || 'Unknown')}
+                </div>
+            </div>
+            <div class="user-result-stats">
+                <b>${user.followers || 0}</b>
+                <span>followers</span>
+            </div>
+        </div>
+    `).join('');
+}
+
+// ==================== ADMIN PANEL SYSTEM ====================
+async function loadAdminPanel() {
+    if (currentUser?.uid !== ADMIN_UID) return;
+    
+    // Stats
+    const totalUsersSnap = await db.collection('users').get();
+    const totalPostsSnap = await db.collection('posts').get();
+    const totalGroupsSnap = await db.collection('groups').get();
+    
+    const totalUsers = totalUsersSnap.size;
+    const totalPosts = totalPostsSnap.size;
+    const totalGroups = totalGroupsSnap.size;
+    
+    const statsGrid = document.getElementById('adminStatsGrid');
+    if (statsGrid) {
+        statsGrid.innerHTML = `
+            <div class="admin-stat-box glass"><h2>${totalUsers}</h2><p>Total Users</p></div>
+            <div class="admin-stat-box glass"><h2>${totalPosts}</h2><p>Total Posts</p></div>
+            <div class="admin-stat-box glass"><h2>${totalGroups}</h2><p>Groups</p></div>
+            <div class="admin-stat-box glass"><h2>5</h2><p>Dummy Bots</p></div>
+        `;
+    }
+    
+    // User table
+    let userRows = '';
+    totalUsersSnap.forEach(doc => {
+        const user = doc.data();
+        userRows += `
+            <tr>
+                <td><b>${sanitize(user.name || 'Unknown')}</b></td>
+                <td style="font-size:0.7rem">${doc.id.substring(0, 12)}...</td>
+                <td>0</td>
+                <td>${user.isDummy ? '<span style="color:#FFD700">🤖 Bot</span>' : '<span style="color:#2ed573">Active</span>'}</td>
+                <td>
+                    <button class="btn btn-small btn-danger" onclick="adminDeleteUser('${doc.id}')">
+                        <i class="fa fa-trash"></i>
+                    </button>
+                </td>
+            </tr>
+        `;
+    });
+    const userTable = document.getElementById('adminUserTableBody');
+    if (userTable) userTable.innerHTML = userRows;
+    
+    // Recent posts
+    let postsHTML = '';
+    totalPostsSnap.forEach(doc => {
+        const post = doc.data();
+        postsHTML += `
+            <div class="feed-post-card" style="margin:0.5rem 0">
+                <div class="feed-post-header">
+                    <b>${sanitize(post.authorName || 'Unknown')}</b>
+                </div>
+                <div>${sanitize((post.text || '').substring(0, 100))}${(post.text || '').length > 100 ? '...' : ''}</div>
+                <div style="font-size:0.75rem;color:var(--muted);margin-top:0.5rem">
+                    ❤️ ${post.likes || 0} | 👁️ ${post.views || 0} | 💬 ${post.commentsCount || 0} | 🔄 ${post.shares || 0}
+                </div>
+            </div>
+        `;
+    });
+    const postsContainer = document.getElementById('adminPostsContainer');
+    if (postsContainer) postsContainer.innerHTML = postsHTML || '<p style="color:var(--muted)">No posts yet</p>';
+}
+
+async function adminDeleteUser(uid) {
+    if (!confirm('Delete this user? This cannot be undone.')) return;
+    try {
+        await db.collection('users').doc(uid).delete();
+        showToast('User deleted', 'info');
+        loadAdminPanel();
+    } catch (e) {
+        showToast('Failed to delete user', 'error');
+    }
+}
+
+// ==================== DUMMY BOT SYSTEM ====================
+async function setupDummyAccounts() {
+    for (const acc of dummyAccounts) {
+        try {
+            const cred = await auth.createUserWithEmailAndPassword(acc.email, acc.pass);
+            await db.collection('users').doc(cred.user.uid).set({
+                name: acc.name,
+                username: acc.name.toLowerCase().replace(/\s/g, ''),
+                location: acc.location,
+                photoURL: acc.photoURL,
+                bio: 'Spreading positivity daily ✨',
+                followers: Math.floor(Math.random() * 500),
+                following: Math.floor(Math.random() * 50),
+                savedPosts: [],
+                likedPosts: [],
+                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                isDummy: true
+            });
+            await auth.signOut();
+        } catch (e) {
+            if (e.code !== 'auth/email-already-in-use') console.log('Bot setup:', e.message);
+        }
+    }
+    
+    // Sign back in if needed
+    if (!currentUser) {
+        try {
+            await auth.signInAnonymously();
+        } catch (e) { /* ignore */ }
+    }
+}
+
+async function triggerDummyPosts() {
+    const statusEl = document.getElementById('botStatusMsg');
+    if (statusEl) statusEl.innerText = '🤖 Bots posting...';
+    
+    await autoPostDummyQuotes();
+    
+    if (statusEl) {
+        statusEl.innerText = '✅ Posts published!';
+        setTimeout(() => { if (statusEl) statusEl.innerText = ''; }, 3000);
+    }
+}
+
+async function autoPostDummyQuotes() {
+    const usersSnap = await db.collection('users').where('isDummy', '==', true).get();
+    
+    for (const userDoc of usersSnap.docs) {
+        const user = userDoc.data();
+        const quote = dummyQuoteBank[Math.floor(Math.random() * dummyQuoteBank.length)];
+        const bg = gradients[Math.floor(Math.random() * gradients.length)];
+        const font = fonts[Math.floor(Math.random() * fonts.length)];
+        
+        let songTitle = '', songArtist = '', songArtwork = '', songPreview = '';
+        
+        try {
+            const res = await fetch('https://itunes.apple.com/search?term=inspiration+instrumental&limit=5&media=music');
+            const data = await res.json();
+            if (data.results?.length > 0) {
+                const song = data.results[Math.floor(Math.random() * data.results.length)];
+                songTitle = song.trackName || '';
+                songArtist = song.artistName || '';
+                songArtwork = song.artworkUrl100 || '';
+                songPreview = song.previewUrl || '';
+            }
+        } catch (e) { /* use empty song */ }
+        
+        await db.collection('posts').add({
+            text: quote.text,
+            bg,
+            font,
+            tags: quote.tags,
+            songTitle,
+            songArtist,
+            songArtwork,
+            songPreview,
+            authorId: userDoc.id,
+            authorName: user.name,
+            authorPic: user.photoURL,
+            time: firebase.firestore.FieldValue.serverTimestamp(),
+            likes: Math.floor(Math.random() * 40),
+            views: Math.floor(Math.random() * 150),
+            commentsCount: Math.floor(Math.random() * 8),
+            shares: Math.floor(Math.random() * 15)
+        });
+    }
+}
+
+// ==================== NAVIGATION SYSTEM ====================
+function showPage(pageId) {
+    document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+    
+    const page = document.getElementById(pageId);
+    if (page) page.classList.add('active');
+    
+    // Update nav active states
+    document.querySelectorAll('nav ul li a').forEach(link => link.classList.remove('active-nav'));
+    const navLinks = document.querySelectorAll('nav ul li a');
+    navLinks.forEach(link => {
+        if (link.getAttribute('onclick')?.includes(pageId)) {
+            link.classList.add('active-nav');
+        }
+    });
+    
+    // Close mobile menu
+    document.getElementById('navMenu')?.classList.remove('active');
+    
+    // Page-specific actions
+    if (pageId === 'homePage') setHeroBackground();
+    if (pageId === 'profilePage') {
+        setProfileBackground();
+        loadSavedPosts();
+    }
+    if (pageId === 'adminPage' && currentUser?.uid === ADMIN_UID) loadAdminPanel();
+    if (pageId === 'searchAccountsPage') searchAccounts();
+}
+
+function toggleMenu() {
+    document.getElementById('navMenu')?.classList.toggle('active');
+}
+
+function switchCommTab(tab) {
+    const feedContent = document.getElementById('feedTabContent');
+    const groupsContent = document.getElementById('groupsTabContent');
+    const feedTab = document.getElementById('tabFeed');
+    const groupsTab = document.getElementById('tabGroups');
+    
+    if (feedContent) feedContent.style.display = tab === 'feed' ? 'block' : 'none';
+    if (groupsContent) groupsContent.style.display = tab === 'groups' ? 'block' : 'none';
+    if (feedTab) feedTab.classList.toggle('active', tab === 'feed');
+    if (groupsTab) groupsTab.classList.toggle('active', tab === 'groups');
+}
+
+function searchQuotes() {
+    clearTimeout(searchTimeout);
+    
+    searchTimeout = setTimeout(() => {
+        const query = document.getElementById('searchInput')?.value?.toLowerCase() || '';
+        
+        if (!query) {
+            loadPosts();
+            return;
+        }
+        
+        const filtered = allPosts.filter(post =>
+            (post.text || '').toLowerCase().includes(query) ||
+            (post.tags || []).join(' ').toLowerCase().includes(query) ||
+            (post.authorName || '').toLowerCase().includes(query)
+        );
+        
+        const viewer = document.getElementById('reelsViewer');
+        if (!viewer) return;
+        
+        if (filtered.length === 0) {
+            viewer.innerHTML = `
+                <div style="text-align:center;padding:5rem;color:var(--muted)">
+                    <i class="fa fa-search" style="font-size:4rem;display:block;margin-bottom:1rem"></i>
+                    <h3>No results found</h3>
+                    <p>Try different keywords</p>
+                </div>
+            `;
+        } else {
+            viewer.innerHTML = filtered.map(post => `
+                <div class="reel-slide" style="background:${post.bg}">
+                    <div class="reel-overlay"></div>
+                    <div class="reel-content-area">
+                        <div class="reel-quote-text" style="font-family:${post.font || 'Poppins'}">
+                            ${sanitize(post.text)}
+                        </div>
+                        <div class="reel-user-row">
+                            <img src="${post.authorPic || 'https://placehold.co/38'}" class="reel-user-pic">
+                            <span class="reel-user-name">${sanitize(post.authorName || 'Anonymous')}</span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+    }, 350);
+}
+
+// ==================== THEME SYSTEM ====================
+document.getElementById('themeToggle')?.addEventListener('click', () => {
+    document.body.classList.toggle('light');
+    const isLight = document.body.classList.contains('light');
+    localStorage.setItem('theme', isLight ? 'light' : 'dark');
+    document.getElementById('themeToggle').innerHTML = isLight 
+        ? '<i class="fa fa-sun"></i>' 
+        : '<i class="fa fa-moon"></i>';
+});
+
+// Load saved theme
+if (localStorage.getItem('theme') === 'light') {
+    document.body.classList.add('light');
+    const themeToggle = document.getElementById('themeToggle');
+    if (themeToggle) themeToggle.innerHTML = '<i class="fa fa-sun"></i>';
+}
+
+// ==================== AUTO-POST SCHEDULE ====================
+// Every 12 hours
+setInterval(async () => {
+    if (currentUser) await autoPostDummyQuotes();
+}, 43200000);
+
+// Initial post after 15 seconds
+setTimeout(async () => {
+    if (currentUser) await autoPostDummyQuotes();
+}, 15000);
+
+// ==================== CLEANUP ====================
+window.addEventListener('beforeunload', () => {
+    cleanupListeners();
+    if (audioPlayer) {
+        audioPlayer.pause();
+        audioPlayer.remove();
+    }
+});
+
+console.log('🚀 BROXENME v5.0 ULTIMATE - All Systems Integrated & Operational!');
+console.log('📊 Admin Panel | 🎵 Music System | 💬 Group Chats | 🤖 Auto-Bots');
+console.log('❤️ Likes | 💬 Comments | 🔖 Saves | 📤 Shares | 👁️ Views');
+console.log('🔍 Search | 📱 Responsive | 🎨 Glass Morphism | 🌓 Dark/Light Theme');
 </script>
 </body>
 </html>
