@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>BROXENME - Quote Social Platform</title>
+<title>BROXENME – Quote Social Platform</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
@@ -19,7 +19,6 @@
     --purple: #8B5CF6;
     --danger: #ff4757;
     --success: #2ed573;
-    --warning: #ffa502;
     --glass-border: rgba(255,255,255,0.08);
 }
 
@@ -38,11 +37,9 @@ body { background: var(--bg); color: var(--text); min-height: 100vh; transition:
 ::-webkit-scrollbar { width: 5px; }
 ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 10px; }
 
-/* GLASS */
-.glass { background: var(--card); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: 16px; }
-.glass-heavy { background: var(--card); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px); border: 1px solid var(--glass-border); border-radius: 20px; }
+.glass { background: var(--card); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: 16px; }
+.glass-heavy { background: var(--card); backdrop-filter: blur(30px); border: 1px solid var(--glass-border); border-radius: 20px; }
 
-/* NAV */
 nav { display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 3%; background: var(--nav-bg); backdrop-filter: blur(25px); position: fixed; top: 0; width: 100%; z-index: 1000; border-bottom: 1px solid var(--glass-border); }
 .nav-logo { display: flex; align-items: center; gap: 8px; cursor: pointer; font-weight: 900; font-size: 1.3rem; }
 .nav-logo .icon { background: linear-gradient(135deg, var(--accent), var(--purple)); width: 35px; height: 35px; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #000; font-size: 1rem; }
@@ -55,12 +52,10 @@ nav ul li a:hover { color: var(--accent); background: rgba(173,255,47,0.06); }
 #themeToggle { background: none; border: 2px solid var(--accent); color: var(--accent); border-radius: 50%; cursor: pointer; width: 35px; height: 35px; display: flex; align-items: center; justify-content: center; }
 .hamburger { display: none; cursor: pointer; font-size: 1.3rem; }
 
-/* PAGES */
 .page { display: none; min-height: 85vh; animation: fadeIn 0.4s ease; }
 .page.active { display: block; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-/* HERO */
 .hero-full { display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; min-height: calc(100vh - 60px); background-size: cover; background-position: center; position: relative; }
 .hero-full::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); z-index: 1; }
 .hero-full > * { position: relative; z-index: 2; }
@@ -70,16 +65,14 @@ nav ul li a:hover { color: var(--accent); background: rgba(173,255,47,0.06); }
 #dailyQuote { font-size: clamp(1rem, 2.5vw, 1.3rem); color: white; font-weight: 600; line-height: 1.6; }
 .hero-full .author { color: var(--accent); margin-top: 0.8rem; }
 
-/* BUTTONS */
 .btn { background: var(--accent); color: #000; padding: 0.7rem 1.5rem; border: none; border-radius: 12px; cursor: pointer; font-weight: 700; transition: 0.2s; font-size: 0.88rem; display: inline-flex; align-items: center; gap: 0.4rem; justify-content: center; }
 .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(173,255,47,0.25); }
-.btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
 .btn-outline { background: transparent; border: 2px solid var(--accent); color: var(--accent); padding: 0.7rem 1.5rem; border-radius: 12px; cursor: pointer; font-weight: 600; }
 .btn-outline:hover { background: var(--accent); color: #000; }
 .btn-small { padding: 0.4rem 0.9rem; font-size: 0.78rem; width: auto; border-radius: 8px; }
 .btn-danger { background: var(--danger); color: white; }
 
-/* REELS */
 .reels-container { height: calc(100vh - 60px); overflow-y: scroll; scroll-snap-type: y mandatory; }
 .reels-container::-webkit-scrollbar { width: 0; }
 .reel-slide { height: calc(100vh - 60px); width: 100%; scroll-snap-align: start; position: relative; display: flex; align-items: center; justify-content: center; background-size: cover; background-position: center; }
@@ -105,7 +98,6 @@ nav ul li a:hover { color: var(--accent); background: rgba(173,255,47,0.06); }
 .reels-search input { width: 100%; max-width: 400px; padding: 0.6rem 1.2rem; border-radius: 22px; border: 1px solid rgba(255,255,255,0.2); background: rgba(0,0,0,0.4); backdrop-filter: blur(15px); color: white; outline: none; font-size: 0.85rem; }
 .reels-search input::placeholder { color: rgba(255,255,255,0.4); }
 
-/* COMMENTS PANEL */
 .comments-panel { position: absolute; bottom: 0; left: 0; width: 100%; max-height: 50%; background: rgba(0,0,0,0.96); backdrop-filter: blur(20px); border-radius: 18px 18px 0 0; padding: 1rem; display: none; flex-direction: column; z-index: 20; animation: slideUp 0.3s ease; }
 @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
 .comments-panel.active { display: flex; }
@@ -122,7 +114,6 @@ nav ul li a:hover { color: var(--accent); background: rgba(173,255,47,0.06); }
 .comment-input-row input { flex: 1; padding: 0.55rem 0.8rem; border-radius: 15px; border: 1px solid rgba(255,255,255,0.15); background: rgba(255,255,255,0.06); color: white; outline: none; font-size: 0.8rem; }
 .comment-input-row button { background: var(--accent); color: #000; border: none; border-radius: 50%; width: 34px; height: 34px; cursor: pointer; flex-shrink: 0; font-size: 0.85rem; }
 
-/* PROFILE */
 .profile-wrapper { max-width: 700px; margin: 0.5rem auto; border-radius: 20px; overflow: hidden; }
 .profile-cover { height: 150px; background-size: cover; background-position: center; position: relative; }
 .profile-cover-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(135deg, rgba(0,255,136,0.2), rgba(0,212,255,0.2)); }
@@ -144,7 +135,6 @@ nav ul li a:hover { color: var(--accent); background: rgba(173,255,47,0.06); }
 .grid-item .delete-btn { position: absolute; top: 4px; right: 4px; background: rgba(255,0,0,0.7); border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 0.5rem; opacity: 0; transition: 0.2s; z-index: 5; color: white; border: none; }
 .grid-item:hover .delete-btn { opacity: 1; }
 
-/* FEED */
 .feed-card { background: var(--card); backdrop-filter: blur(15px); border: 1px solid var(--glass-border); border-radius: 14px; padding: 1rem; margin: 0.7rem 0; }
 .feed-header { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.6rem; }
 .feed-avatar { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; }
@@ -154,7 +144,6 @@ nav ul li a:hover { color: var(--accent); background: rgba(173,255,47,0.06); }
 .feed-actions span { cursor: pointer; display: flex; align-items: center; gap: 0.3rem; }
 .feed-actions span:hover { color: var(--accent); }
 
-/* CHAT */
 .chat-window { display: none; position: fixed; top: 60px; left: 0; width: 100%; height: calc(100vh - 60px); background: var(--bg); z-index: 999; flex-direction: column; }
 .chat-window.active { display: flex; }
 .chat-header { display: flex; align-items: center; gap: 0.6rem; padding: 0.7rem; background: #075E54; color: white; }
@@ -169,7 +158,6 @@ nav ul li a:hover { color: var(--accent); background: rgba(173,255,47,0.06); }
 .chat-list-item { display: flex; gap: 0.7rem; padding: 0.7rem; cursor: pointer; transition: 0.2s; border-radius: 10px; align-items: center; }
 .chat-list-item:hover { background: rgba(255,255,255,0.02); }
 
-/* MODALS */
 .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 2000; align-items: center; justify-content: center; padding: 0.5rem; }
 .modal.active { display: flex; }
 .modal-content { background: var(--card); backdrop-filter: blur(25px); border: 1px solid var(--glass-border); padding: 1.5rem; border-radius: 18px; width: 100%; max-width: 460px; max-height: 85vh; overflow-y: auto; }
@@ -179,14 +167,12 @@ nav ul li a:hover { color: var(--accent); background: rgba(173,255,47,0.06); }
 .form-input:focus { border-color: var(--accent); }
 .form-label { display: block; font-weight: 600; margin-top: 0.7rem; margin-bottom: 0.2rem; color: var(--muted); font-size: 0.78rem; }
 
-/* SONG SEARCH */
 .song-results { max-height: 160px; overflow-y: auto; border-radius: 10px; background: rgba(0,0,0,0.3); margin-top: 0.3rem; }
 .song-item { display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 0.7rem; cursor: pointer; transition: 0.2s; border-bottom: 1px solid rgba(255,255,255,0.02); }
 .song-item:hover { background: rgba(173,255,47,0.08); }
 .song-item img { width: 38px; height: 38px; border-radius: 6px; object-fit: cover; }
 .selected-song { display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem; background: rgba(173,255,47,0.08); border-radius: 10px; margin-top: 0.3rem; }
 
-/* TOAST */
 .toast-container { position: fixed; top: 70px; right: 15px; z-index: 5000; display: flex; flex-direction: column; gap: 6px; }
 .toast { padding: 0.7rem 1.1rem; border-radius: 10px; color: white; font-weight: 600; backdrop-filter: blur(20px); animation: slideIn 0.3s ease; font-size: 0.8rem; display: flex; align-items: center; gap: 0.4rem; }
 .toast.success { background: rgba(46,213,115,0.9); }
@@ -196,7 +182,6 @@ nav ul li a:hover { color: var(--accent); background: rgba(173,255,47,0.06); }
 .spinner { border: 3px solid rgba(255,255,255,0.08); border-top: 3px solid var(--accent); border-radius: 50%; width: 26px; height: 26px; animation: spin 0.8s linear infinite; margin: 1rem auto; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
-/* RESPONSIVE */
 @media (max-width: 768px) {
     nav ul { position: fixed; top: 60px; left: -100%; width: 100%; height: calc(100vh - 60px); background: var(--bg); flex-direction: column; align-items: center; padding-top: 2rem; transition: 0.3s; gap: 1.2rem; z-index: 999; }
     nav ul.active { left: 0; }
@@ -220,7 +205,6 @@ nav ul li a:hover { color: var(--accent); background: rgba(173,255,47,0.06); }
         <li><a onclick="showPage('communityPage')"><i class="fa fa-users"></i> Community</a></li>
         <li><a onclick="showPage('searchPage')"><i class="fa fa-search"></i> Discover</a></li>
         <li><a onclick="showPage('profilePage')"><i class="fa fa-user"></i> Profile</a></li>
-        <li id="adminNavLink" style="display:none"><a onclick="showPage('adminPage')"><i class="fa fa-crown"></i> Admin</a></li>
     </ul>
     <div class="nav-right">
         <button class="nav-btn" id="authBtn" onclick="showPage('loginPage')">Login</button>
@@ -229,30 +213,31 @@ nav ul li a:hover { color: var(--accent); background: rgba(173,255,47,0.06); }
     </div>
 </nav>
 
-<!-- HOME -->
+<!-- PAGES -->
 <div id="homePage" class="page active">
     <section class="hero-full" id="heroSection">
         <h1>BROX<span>ENME</span></h1>
         <p style="color:rgba(255,255,255,0.7)">Daily Inspiration For Your Soul</p>
         <div class="daily-quote-box"><p id="dailyQuote">Loading...</p><p class="author" id="quoteAuthor"></p></div>
         <button class="btn" id="newQuoteBtn" onclick="newDailyQuote()"><i class="fa fa-refresh"></i> New Quote</button>
+        <div style="margin-top:2rem;color:var(--muted)">
+            <h3 style="margin-bottom:0.5rem">Trending Quotes</h3>
+            <div id="trendingQuotes" style="display:flex;gap:1rem;flex-wrap:wrap;justify-content:center"></div>
+        </div>
     </section>
 </div>
 
-<!-- REELS -->
 <div id="reelsPage" class="page" style="padding:0">
     <div class="reels-search"><input type="text" id="searchInput" placeholder="🔍 Search quotes..." oninput="searchQuotes()"></div>
     <div class="reels-container" id="reelsViewer"><div style="text-align:center;padding:4rem"><div class="spinner"></div></div></div>
 </div>
 
-<!-- SEARCH -->
 <div id="searchPage" class="page" style="max-width:600px;margin:0 auto;padding:1rem">
     <h2><i class="fa fa-search"></i> Discover People</h2>
     <input type="text" id="accountSearch" placeholder="Search users..." class="form-input" oninput="searchAccounts()" style="margin:1rem 0">
     <div id="accountsList"></div>
 </div>
 
-<!-- COMMUNITY -->
 <div id="communityPage" class="page" style="max-width:650px;margin:0 auto;padding:0.5rem">
     <div style="display:flex;gap:0.4rem;margin-bottom:0.8rem;border-bottom:1px solid var(--glass-border);padding-bottom:0.4rem">
         <button class="btn btn-small active" id="tabFeedBtn" onclick="switchCommTab('feed')"><i class="fa fa-newspaper"></i> Feed</button>
@@ -260,7 +245,9 @@ nav ul li a:hover { color: var(--accent); background: rgba(173,255,47,0.06); }
     </div>
     <div id="feedSection">
         <button class="btn btn-outline" onclick="openCreateFeed()" style="width:100%;margin-bottom:0.8rem"><i class="fa fa-plus"></i> Create Post</button>
+        <button class="btn btn-outline" onclick="openCreateStory()" style="width:100%;margin-bottom:0.8rem"><i class="fa fa-camera"></i> Add Story</button>
         <div id="communityFeed"><div class="spinner"></div></div>
+        <div id="loadMoreFeed" style="text-align:center;margin:1rem"><button class="btn btn-small" onclick="loadMoreFeed()">Load More</button></div>
     </div>
     <div id="chatsSection" style="display:none">
         <button class="btn btn-outline" onclick="openNewGroup()" style="width:100%;margin-bottom:0.8rem"><i class="fa fa-plus"></i> New Group</button>
@@ -268,7 +255,6 @@ nav ul li a:hover { color: var(--accent); background: rgba(173,255,47,0.06); }
     </div>
 </div>
 
-<!-- PROFILE -->
 <div id="profilePage" class="page" style="max-width:700px;margin:0 auto">
     <div class="profile-wrapper glass">
         <div class="profile-cover" id="profileCover"><div class="profile-cover-overlay"></div>
@@ -281,6 +267,7 @@ nav ul li a:hover { color: var(--accent); background: rgba(173,255,47,0.06); }
             <h2 class="profile-name" id="profileName">Guest</h2>
             <p style="color:var(--muted);font-size:0.8rem"><i class="fa fa-location-dot"></i> <span id="profileLocation">Harare, ZW</span></p>
             <p id="profileBio" style="color:var(--muted);font-size:0.8rem"></p>
+            <button id="followBtn" class="btn btn-small" style="display:none" onclick="toggleFollow()"><i class="fa fa-user-plus"></i> Follow</button>
             <div class="profile-stats"><div class="stat-card"><h3 id="postCount">0</h3><p>Posts</p></div><div class="stat-card"><h3 id="followerCount">0</h3><p>Followers</p></div><div class="stat-card"><h3 id="followingCount">0</h3><p>Following</p></div><div class="stat-card"><h3 id="totalLikes">0</h3><p>Likes</p></div></div>
             <button class="btn btn-small" onclick="openEditProfile()"><i class="fa fa-pen"></i> Edit</button>
             <button class="btn btn-small" onclick="openCreatePost()"><i class="fa fa-plus"></i> New Quote</button>
@@ -291,18 +278,6 @@ nav ul li a:hover { color: var(--accent); background: rgba(173,255,47,0.06); }
     </div>
 </div>
 
-<!-- ADMIN -->
-<div id="adminPage" class="page" style="max-width:900px;margin:0 auto;padding:1rem">
-    <div class="glass-heavy" style="padding:2rem;text-align:center;margin-bottom:1rem;background:linear-gradient(135deg,#1a1a2e,#16213e)">
-        <h1 style="color:#FFD700"><i class="fa fa-crown"></i> Admin Dashboard</h1>
-    </div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:0.8rem;margin-bottom:1rem" id="adminStats"></div>
-    <div class="glass" style="padding:1rem;margin-bottom:1rem"><h3>Users</h3><div style="overflow-x:auto"><table style="width:100%;font-size:0.8rem" id="adminUsers"></table></div></div>
-    <div class="glass" style="padding:1rem;margin-bottom:1rem"><h3>Posts</h3><div id="adminPosts" style="max-height:350px;overflow-y:auto"></div></div>
-    <div class="glass" style="padding:1rem"><button class="btn" onclick="triggerBots()" style="background:#FFD700;color:#000">🤖 Trigger Bot Posts</button> <span id="botStatus"></span></div>
-</div>
-
-<!-- LOGIN -->
 <div id="loginPage" class="page"><div style="max-width:400px;margin:2rem auto"><div class="modal-content glass-heavy"><div class="modal-title"><i class="fa fa-lock"></i> Welcome</div><input type="email" id="loginEmail" placeholder="Email" class="form-input"><input type="password" id="loginPass" placeholder="Password" class="form-input"><button class="btn" onclick="login()" style="width:100%;margin-top:0.8rem"><span id="loginBtnText">Login</span></button><button class="btn-outline" onclick="signup()" style="width:100%;margin-top:0.4rem"><span id="signupBtnText">Sign Up</span></button></div></div></div>
 
 <!-- MODALS -->
@@ -346,6 +321,12 @@ nav ul li a:hover { color: var(--accent); background: rgba(173,255,47,0.06); }
     <button class="btn-outline" onclick="document.getElementById('newGroupModal').classList.remove('active')" style="width:100%;margin-top:0.3rem">Cancel</button>
 </div></div>
 
+<div id="storyModal" class="modal"><div class="modal-content glass-heavy"><div class="modal-title"><i class="fa fa-camera"></i> Add Story</div>
+    <input type="file" id="storyImage" accept="image/*" class="form-input">
+    <button class="btn" onclick="submitStory()" style="width:100%;margin-top:0.8rem">Post Story</button>
+    <button class="btn-outline" onclick="document.getElementById('storyModal').classList.remove('active')" style="width:100%;margin-top:0.3rem">Cancel</button>
+</div></div>
+
 <!-- CHAT WINDOW -->
 <div id="chatWindow" class="chat-window">
     <div class="chat-header"><button onclick="closeChat()" style="background:none;border:none;color:white;font-size:1.1rem;cursor:pointer"><i class="fa fa-arrow-left"></i></button><b id="chatTitle">Group</b></div>
@@ -358,7 +339,7 @@ nav ul li a:hover { color: var(--accent); background: rgba(173,255,47,0.06); }
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 
 <script>
-// ==================== FIREBASE ====================
+// ==================== CONFIGURATION ====================
 const firebaseConfig = {
     apiKey: "AIzaSyDC7MtlDi8Sl7ai3GjEnh06AoR7hZV_4Vs",
     authDomain: "broxenme-quotes.firebaseapp.com",
@@ -372,19 +353,15 @@ const db = firebase.firestore();
 const auth = firebase.auth();
 db.enablePersistence().catch(()=>{});
 
-const ADMIN_UID = 'lGCfuMhmsdSh1yBcXrtrgStsvq13';
-const IMGBB_KEY = '78883b1360bb85b347b444b05aa56826';
+const IMGBB_KEY = '78883b1360bb85b347b444b05aa56826'; // ← YOUR KEY
 
-// ==================== DATA ====================
 const gradients=['linear-gradient(135deg,#667eea,#764ba2)','linear-gradient(135deg,#f093fb,#f5576c)','linear-gradient(135deg,#43e97b,#38f9d7)','linear-gradient(135deg,#fa709a,#fee140)','linear-gradient(135deg,#30cfd0,#330867)','linear-gradient(135deg,#a8edea,#fed6e3)','linear-gradient(135deg,#ff9a9e,#fecfef)','linear-gradient(135deg,#ffecd2,#fcb69f)','linear-gradient(135deg,#ff6a00,#ee0979)','linear-gradient(135deg,#4facfe,#00f2fe)','linear-gradient(135deg,#8B5CF6,#EC4899)','linear-gradient(135deg,#00ff88,#00d4ff)'];
 const fonts=['Poppins','Georgia','Arial','Impact','Courier New','Trebuchet MS','Verdana','Times New Roman','Comic Sans MS','Roboto'];
 const wallpapers=['https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200','https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=1200','https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=1200','https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=1200'];
 const fallbackQuotes=[{c:"The only way to do great work is to love what you do.",a:"Steve Jobs"},{c:"In the middle of difficulty lies opportunity.",a:"Albert Einstein"},{c:"Believe you can and you're halfway there.",a:"Theodore Roosevelt"}];
 
-// ==================== STATE ====================
-let currentUser=null,selectedBg=gradients[0],selectedFont='Poppins',selectedTags=[],currentChat=null,allPosts=[],unsubs=[],searchTO=null,songTO=null,selectedSong={t:'',a:'',aw:'',pv:''},loading=false,profileTab='posts',audio=null;
+let currentUser=null,selectedBg=gradients[0],selectedFont='Poppins',selectedTags=[],currentChat=null,allPosts=[],unsubs=[],searchTO=null,songTO=null,selectedSong={t:'',a:'',aw:'',pv:''},loading=false,profileTab='posts',audio=null,lastFeedDoc=null,profileUid=null;
 
-// ==================== INIT ====================
 document.getElementById('fontPicker').innerHTML=fonts.map(f=>`<button class="tag-btn" style="font-family:${f}" onclick="selectFont(this,'${f}')">${f.split(' ')[0]}</button>`).join('');
 document.getElementById('gradientPicker').innerHTML=gradients.map(g=>`<div style="width:100%;aspect-ratio:1;border-radius:8px;cursor:pointer;border:2px solid transparent;background:${g}" onclick="selectBg(this,'${g}')"></div>`).join('');
 
@@ -396,59 +373,45 @@ function setHero(){const h=document.getElementById('heroSection');if(h)h.style.b
 function setProf(){const h=document.getElementById('profileCover');if(h)h.style.backgroundImage=`url(${rw()})`;}
 setHero();setProf();setInterval(setHero,40000);setInterval(setProf,80000);
 
-// ==================== AUTH ====================
 auth.onAuthStateChanged(u=>{
-    if(u){currentUser=u;document.getElementById('authBtn').innerText='Logout';document.getElementById('authBtn').onclick=logout;document.getElementById('adminNavLink').style.display=u.uid===ADMIN_UID?'block':'none';loadUser();loadPosts();loadGroups();loadFeed();loadAccounts();showPage('reelsPage');if(u.uid===ADMIN_UID)loadAdmin();setupBots();}
-    else{clean();currentUser=null;document.getElementById('authBtn').innerText='Login';document.getElementById('authBtn').onclick=()=>showPage('loginPage');document.getElementById('adminNavLink').style.display='none';showPage('homePage');}
+    if(u){currentUser=u;document.getElementById('authBtn').innerText='Logout';document.getElementById('authBtn').onclick=logout;loadUser();loadPosts();loadGroups();loadFeed();loadAccounts();showPage('reelsPage');setupBots();loadTrending();}
+    else{clean();currentUser=null;document.getElementById('authBtn').innerText='Login';document.getElementById('authBtn').onclick=()=>showPage('loginPage');showPage('homePage');}
 });
 function login(){const e=document.getElementById('loginEmail').value.trim(),p=document.getElementById('loginPass').value;if(!e||!p)return toast('Fill all fields','error');auth.signInWithEmailAndPassword(e,p).then(()=>toast('Welcome!','success')).catch(err=>toast(err.message,'error'));}
 function signup(){const e=document.getElementById('loginEmail').value.trim(),p=document.getElementById('loginPass').value;if(!e||!p)return toast('Fill all fields','error');if(p.length<6)return toast('Password too short','error');auth.createUserWithEmailAndPassword(e,p).then(c=>{db.collection('users').doc(c.user.uid).set({name:e.split('@')[0],username:e.split('@')[0].toLowerCase(),bio:'',location:'Harare, ZW',photoURL:'',followers:0,following:0,savedPosts:[],createdAt:firebase.firestore.FieldValue.serverTimestamp()});toast('Account created!','success');}).catch(err=>toast(err.message,'error'));}
 function logout(){clean();if(audio){audio.pause();audio.remove();audio=null;}auth.signOut();}
 
-// ==================== DAILY QUOTE ====================
 async function newDailyQuote(){if(loading)return;loading=true;const b=document.getElementById('newQuoteBtn');b.disabled=true;b.innerHTML='<div class="spinner" style="width:18px;height:18px;margin:0"></div>';try{const c=new AbortController();setTimeout(()=>c.abort(),5000);const r=await fetch('https://api.quotable.io/random',{signal:c.signal});const d=await r.json();document.getElementById('dailyQuote').innerText=`"${d.content}"`;document.getElementById('quoteAuthor').innerText=`— ${d.author}`;}catch(e){const f=fallbackQuotes[Math.floor(Math.random()*fallbackQuotes.length)];document.getElementById('dailyQuote').innerText=`"${f.c}"`;document.getElementById('quoteAuthor').innerText=`— ${f.a}`;}b.disabled=false;b.innerHTML='<i class="fa fa-refresh"></i> New Quote';loading=false;}
 newDailyQuote();
 
-// ==================== SONG SEARCH (ITUNES FREE) ====================
 async function searchSong(q){clearTimeout(songTO);if(!q||q.length<2){document.getElementById('songResults').innerHTML='';return;}songTO=setTimeout(async()=>{try{const r=await fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(q)}&limit=6&media=music&entity=song`);const d=await r.json();document.getElementById('songResults').innerHTML=d.results?.length?d.results.map(s=>`<div class="song-item" onclick="pickSong('${s.trackName.replace(/'/g,"\\'")}','${s.artistName.replace(/'/g,"\\'")}','${s.artworkUrl100||''}','${s.previewUrl||''}')"><img src="${s.artworkUrl100||'https://placehold.co/38'}" onerror="this.src='https://placehold.co/38'"><div style="flex:1"><b style="font-size:0.8rem">${s.trackName}</b><div style="font-size:0.7rem;color:var(--muted)">${s.artistName}</div></div><i class="fa fa-play-circle" style="color:var(--accent)"></i></div>`).join(''):'<div style="padding:0.6rem;color:var(--muted)">No songs found</div>';}catch(e){document.getElementById('songResults').innerHTML='<div style="padding:0.6rem;color:var(--muted)">Search failed</div>';}},400);}
 function pickSong(t,a,aw,pv){selectedSong={t,a,aw,pv};document.getElementById('songSearch').value=`${t} - ${a}`;document.getElementById('songResults').innerHTML='';document.getElementById('selectedSong').innerHTML=`<div class="selected-song"><img src="${aw||'https://placehold.co/38'}" onerror="this.src='https://placehold.co/38'" style="width:38px;height:38px;border-radius:6px"><div style="flex:1"><b style="font-size:0.8rem">${t}</b><div style="font-size:0.7rem;color:var(--muted)">${a}</div></div><button class="btn btn-small" onclick="playPrev('${pv}')"><i class="fa fa-play"></i></button></div>`;if(pv)playPrev(pv);}
 function playPrev(u){if(!u)return;if(audio){audio.pause();audio.remove();audio=null;}audio=new Audio(u);audio.volume=0.4;audio.play().catch(()=>{});}
 
-// ==================== IMAGE UPLOAD (ImgBB) ====================
 async function uploadBg(e){const f=e.target.files[0];if(!f)return;if(f.size>5*1024*1024)return toast('Max 5MB','error');const fd=new FormData();fd.append('image',f);try{const r=await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_KEY}`,{method:'POST',body:fd});const d=await r.json();if(d.success){selectedBg=`url(${d.data.url})`;updatePreview();toast('Uploaded!','success');}}catch(e){toast('Upload failed','error');}}
 async function uploadImage(file){const fd=new FormData();fd.append('image',file);const r=await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_KEY}`,{method:'POST',body:fd});const d=await r.json();return d.success?d.data.url:'';}
 
-// ==================== LIKE ====================
 async function likePost(id){if(!currentUser)return toast('Login first','error');const ref=db.collection('likes').doc(currentUser.uid+'_'+id);const d=await ref.get();if(d.exists){await ref.delete();await db.collection('posts').doc(id).update({likes:firebase.firestore.FieldValue.increment(-1)});}else{await ref.set({uid:currentUser.uid});await db.collection('posts').doc(id).update({likes:firebase.firestore.FieldValue.increment(1)});}}
 
-// ==================== COMMENTS ====================
 function toggleComments(id){document.querySelectorAll('.comments-panel.active').forEach(p=>{if(p.id!=='c_'+id)p.classList.remove('active')});const p=document.getElementById('c_'+id);if(p)p.classList.toggle('active');}
 async function addComment(id){const inp=document.getElementById('ci_'+id);const txt=inp?.value?.trim();if(!txt||!currentUser)return;try{inp.disabled=true;await db.collection('posts').doc(id).collection('comments').add({text:txt,author:currentUser.email.split('@')[0],authorId:currentUser.uid,time:firebase.firestore.FieldValue.serverTimestamp()});inp.value='';await db.collection('posts').doc(id).update({commentsCount:firebase.firestore.FieldValue.increment(1)});}catch(e){toast('Failed','error');}finally{if(inp)inp.disabled=false;}}
 
-// ==================== SHARE ====================
-async function sharePost(id){const p=allPosts.find(x=>x.id===id);if(!p)return;const cv=document.createElement('canvas');cv.width=1080;cv.height=1080;const cx=cv.getContext('2d');cx.fillStyle='#1a1a2e';cx.fillRect(0,0,1080,1080);cx.fillStyle='rgba(0,0,0,0.5)';cx.fillRect(0,0,1080,1080);cx.fillStyle='white';cx.font=`bold 50px ${p.font||'Poppins'}`;cx.textAlign='center';wrapText(cx,`"${p.text}"`,540,400,800,60);cx.fillStyle='#ADFF2F';cx.font='bold 30px Poppins';cx.fillText('BROXENME',540,700);cx.font='20px Poppins';cx.fillStyle='rgba(255,255,255,0.6)';cx.fillText(`@${p.authorName}`,540,750);cx.font='50px Poppins';cx.fillStyle='rgba(255,255,255,0.2)';cx.fillText('"',510,250);cx.fillText('"',570,250);cv.toBlob(b=>{const u=URL.createObjectURL(b);const a=document.createElement('a');a.href=u;a.download=`broxenme-${Date.now()}.png`;a.click();toast('Saved!','success');db.collection('posts').doc(id).update({shares:firebase.firestore.FieldValue.increment(1)});});}
+async function sharePost(id){const p=allPosts.find(x=>x.id===id);if(!p)return;const cv=document.createElement('canvas');cv.width=1080;cv.height=1080;const cx=cv.getContext('2d');cx.fillStyle='#1a1a2e';cx.fillRect(0,0,1080,1080);cx.fillStyle='rgba(0,0,0,0.5)';cx.fillRect(0,0,1080,1080);cx.fillStyle='white';cx.font=`bold 50px ${p.font||'Poppins'}`;cx.textAlign='center';wrapText(cx,`"${p.text}"`,540,400,800,60);cx.fillStyle='#ADFF2F';cx.font='bold 30px Poppins';cx.fillText('BROXENME',540,700);cx.font='20px Poppins';cx.fillStyle='rgba(255,255,255,0.6)';cx.fillText(`@${p.authorName}`,540,750);cv.toBlob(b=>{const u=URL.createObjectURL(b);const a=document.createElement('a');a.href=u;a.download=`broxenme-${Date.now()}.png`;a.click();toast('Saved!','success');db.collection('posts').doc(id).update({shares:firebase.firestore.FieldValue.increment(1)});});}
 function wrapText(cx,t,x,y,mw,lh){const w=t.split(' ');let l='',cy=y;for(const wd of w){const tl=l+wd+' ';if(cx.measureText(tl).width>mw&&l){cx.fillText(l.trim(),x,cy);l=wd+' ';cy+=lh;}else{l=tl;}}cx.fillText(l.trim(),x,cy);}
 
-// ==================== SAVE ====================
 async function savePost(id){if(!currentUser)return;const ref=db.collection('users').doc(currentUser.uid);const d=await ref.get();let s=d.data()?.savedPosts||[];s.includes(id)?s=s.filter(x=>x!==id):s.push(id);await ref.update({savedPosts:s});toast(s.includes(id)?'Saved!':'Removed','info');if(profileTab==='saved')loadSaved();}
-
-// ==================== DELETE POST ====================
 async function deletePost(id){if(!confirm('Delete this post?'))return;await db.collection('posts').doc(id).delete();toast('Deleted','info');}
-
-// ==================== DELETE FEED ====================
 async function deleteFeed(id){if(!confirm('Delete this post?'))return;await db.collection('feedPosts').doc(id).delete();toast('Deleted','info');}
 
-// ==================== LOAD POSTS ====================
 function loadPosts(){if(!currentUser)return;clean();const u=db.collection('posts').orderBy('time','desc').limit(50).onSnapshot(s=>{allPosts=[];const rv=document.getElementById('reelsViewer'),pg=document.getElementById('profileGrid');if(rv)rv.innerHTML='';if(pg)pg.innerHTML='';let pc=0,tl=0;if(s.empty&&rv)rv.innerHTML='<div style="text-align:center;padding:4rem;color:var(--muted)"><i class="fa fa-camera-retro" style="font-size:3rem"></i><h3>No reels yet</h3><p>Create one!</p></div>';s.forEach(doc=>{const p=doc.data();p.id=doc.id;allPosts.push(p);if(rv)rv.innerHTML+=buildReel(p,doc.id);if(p.authorId===currentUser?.uid&&pg){pg.innerHTML+=`<div class="grid-item" style="background:${p.bg};font-family:${p.font}" onclick="showPage('reelsPage')">${san((p.text||'').substring(0,30))}<div class="stats-bar"><span>👁${p.views||0}</span><span>❤${p.likes||0}</span><span>↗${p.shares||0}</span></div><button class="delete-btn" onclick="event.stopPropagation();deletePost('${doc.id}')"><i class="fa fa-trash"></i></button></div>`;pc++;tl+=(p.likes||0);}loadComments(doc.id);checkLike(doc.id);});document.getElementById('postCount').innerText=pc;document.getElementById('totalLikes').innerText=tl;});unsubs.push(u);}
-function buildReel(p,id){const t=san(p.text||''),a=san(p.authorName||'Anon');const m=p.songTitle?`<div class="reel-music" onclick="playPrev('${p.songPreview||''}')"><i class="fa fa-music"></i><span>${san(p.songTitle)}</span></div>`:'';return`<div class="reel-slide" style="background:${p.bg}"><div class="reel-overlay"></div><div class="reel-content"><div class="reel-text" style="font-family:${p.font||'Poppins'}">${t}</div><div class="reel-tags">${(p.tags||[]).map(tg=>`<span class="reel-tag">#${san(tg)}</span>`).join('')}</div><div class="reel-user"><img src="${p.authorPic||'https://placehold.co/34'}" onerror="this.src='https://placehold.co/34'"><div><div class="reel-username">${a}</div><div class="reel-stats"><span>👁${p.views||0}</span><span>❤${p.likes||0}</span><span>💬${p.commentsCount||0}</span><span>↗${p.shares||0}</span></div></div></div>${m}</div><div class="reel-actions"><div class="reel-action" onclick="likePost('${id}')" id="lb_${id}"><div class="icon-circle"><i class="fa fa-heart"></i></div><span class="label">${p.likes||0}</span></div><div class="reel-action" onclick="toggleComments('${id}')"><div class="icon-circle"><i class="fa fa-comment"></i></div><span class="label">Comment</span></div><div class="reel-action" onclick="sharePost('${id}')"><div class="icon-circle"><i class="fa fa-download"></i></div><span class="label">Save</span></div><div class="reel-action" onclick="savePost('${id}')"><div class="icon-circle"><i class="fa fa-bookmark"></i></div><span class="label">Keep</span></div></div><div class="comments-panel" id="c_${id}"><div class="comments-header"><h4>Comments</h4><button onclick="toggleComments('${id}')"><i class="fa fa-times"></i></button></div><div class="comments-list" id="cl_${id}"></div><div class="comment-input-row"><input id="ci_${id}" placeholder="Add comment..." onkeypress="if(event.key==='Enter')addComment('${id}')"><button onclick="addComment('${id}')"><i class="fa fa-paper-plane"></i></button></div></div></div>`;}
+function buildReel(p,id){const t=san(p.text||''),a=san(p.authorName||'Anon');const m=p.songTitle?`<div class="reel-music" onclick="playReelSong('${p.songPreview||''}')"><i class="fa fa-music"></i><span>${san(p.songTitle)}</span></div>`:'';return`<div class="reel-slide" style="background:${p.bg}"><div class="reel-overlay"></div><div class="reel-content"><div class="reel-text" style="font-family:${p.font||'Poppins'}">${t}</div><div class="reel-tags">${(p.tags||[]).map(tg=>`<span class="reel-tag">#${san(tg)}</span>`).join('')}</div><div class="reel-user"><img src="${p.authorPic||'https://placehold.co/34'}" onerror="this.src='https://placehold.co/34'"><div><div class="reel-username">${a}</div><div class="reel-stats"><span>👁${p.views||0}</span><span>❤${p.likes||0}</span><span>💬${p.commentsCount||0}</span><span>↗${p.shares||0}</span></div></div></div>${m}</div><div class="reel-actions"><div class="reel-action" onclick="likePost('${id}')" id="lb_${id}"><div class="icon-circle"><i class="fa fa-heart"></i></div><span class="label">${p.likes||0}</span></div><div class="reel-action" onclick="toggleComments('${id}')"><div class="icon-circle"><i class="fa fa-comment"></i></div><span class="label">Comment</span></div><div class="reel-action" onclick="sharePost('${id}')"><div class="icon-circle"><i class="fa fa-download"></i></div><span class="label">Save</span></div><div class="reel-action" onclick="savePost('${id}')"><div class="icon-circle"><i class="fa fa-bookmark"></i></div><span class="label">Keep</span></div></div><div class="comments-panel" id="c_${id}"><div class="comments-header"><h4>Comments</h4><button onclick="toggleComments('${id}')"><i class="fa fa-times"></i></button></div><div class="comments-list" id="cl_${id}"></div><div class="comment-input-row"><input id="ci_${id}" placeholder="Add comment..." onkeypress="if(event.key==='Enter')addComment('${id}')"><button onclick="addComment('${id}')"><i class="fa fa-paper-plane"></i></button></div></div></div>`;}
+function playReelSong(url){if(!url)return;if(audio){audio.pause();audio.remove();audio=null;}audio=new Audio(url);audio.volume=0.5;audio.play().catch(()=>{});toast('Now playing ♪','info');}
 function loadComments(id){db.collection('posts').doc(id).collection('comments').orderBy('time','asc').onSnapshot(s=>{const l=document.getElementById('cl_'+id);if(!l)return;l.innerHTML=s.empty?'<p style="text-align:center;color:rgba(255,255,255,0.3);padding:1rem;font-size:0.75rem">No comments</p>':'';s.forEach(doc=>{const c=doc.data();l.innerHTML+=`<div class="comment-item"><img src="https://placehold.co/26"><div class="comment-body"><div class="comment-author">${san(c.author||'User')}</div><div class="comment-text">${san(c.text)}</div></div></div>`;});});}
 async function checkLike(id){if(!currentUser)return;const d=await db.collection('likes').doc(currentUser.uid+'_'+id).get();if(d.exists)document.getElementById('lb_'+id)?.classList.add('liked');}
 
-// ==================== SAVED ====================
 function loadSaved(){if(!currentUser)return;db.collection('users').doc(currentUser.uid).get().then(doc=>{const s=doc.data()?.savedPosts||[];const g=document.getElementById('savedGrid');if(!g)return;g.innerHTML=s.length===0?'<p style="text-align:center;padding:2rem;color:var(--muted);grid-column:1/-1">No saved posts</p>':'';s.forEach(id=>{db.collection('posts').doc(id).get().then(pd=>{if(pd.exists){const p=pd.data();g.innerHTML+=`<div class="grid-item" style="background:${p.bg};font-family:${p.font}">${san((p.text||'').substring(0,25))}<button class="delete-btn" onclick="event.stopPropagation();savePost('${id}')"><i class="fa fa-times"></i></button></div>`;}});});});}
 function switchProfileTab(t){profileTab=t;document.querySelectorAll('.profile-tab').forEach(x=>x.classList.remove('active'));event.target.classList.add('active');document.getElementById('profileGrid').style.display=t==='posts'?'grid':'none';document.getElementById('savedGrid').style.display=t==='saved'?'grid':'none';if(t==='saved')loadSaved();}
 
-// ==================== CREATE POST ====================
 function updatePreview(){const p=document.getElementById('quotePreview');p.style.background=selectedBg;p.style.fontFamily=selectedFont;p.innerHTML=(document.getElementById('newPostText')?.value||'Preview')+'<div style="position:absolute;bottom:6px;right:8px;font-size:0.55rem;color:rgba(255,255,255,0.5)"><i class="fa fa-quote-right"></i> BROXENME</div>';}
 function toggleTag(el,tag){el.classList.toggle('active');selectedTags.includes(tag)?selectedTags=selectedTags.filter(t=>t!==tag):selectedTags.push(tag);}
 function selectBg(el,bg){document.querySelectorAll('#gradientPicker div').forEach(x=>x.style.borderColor='transparent');el.style.borderColor='var(--accent)';selectedBg=bg;updatePreview();}
@@ -457,20 +420,35 @@ function openCreatePost(){if(!currentUser)return toast('Login first','error');do
 function closeCreatePost(){document.getElementById('createPostModal').classList.remove('active');selectedSong={t:'',a:'',aw:'',pv:''};document.getElementById('selectedSong').innerHTML='';if(audio){audio.pause();audio.remove();audio=null;}}
 async function submitPost(){const txt=document.getElementById('newPostText')?.value?.trim();if(!txt)return toast('Write a quote!','error');await db.collection('posts').add({text:txt,bg:selectedBg,font:selectedFont,tags:selectedTags,songTitle:selectedSong.t,songArtist:selectedSong.a,songArtwork:selectedSong.aw,songPreview:selectedSong.pv,authorId:currentUser.uid,authorName:currentUser.email.split('@')[0],authorPic:currentUser.photoURL||'https://placehold.co/34',time:firebase.firestore.FieldValue.serverTimestamp(),likes:0,views:0,commentsCount:0,shares:0});closeCreatePost();toast('Posted!','success');document.getElementById('newPostText').value='';selectedTags=[];selectedBg=gradients[0];selectedFont='Poppins';}
 
-// ==================== PROFILE ====================
 function openEditProfile(){document.getElementById('editName').value=document.getElementById('profileName').innerText;document.getElementById('editLocation').value=document.getElementById('profileLocation').innerText;document.getElementById('editBio').value=document.getElementById('profileBio').innerText||'';document.getElementById('editProfilePic').src=document.getElementById('profilePic').src;document.getElementById('editProfileModal').classList.add('active');}
 function closeEditProfile(){document.getElementById('editProfileModal').classList.remove('active');}
 async function saveProfile(){const n=document.getElementById('editName').value.trim();if(!n)return toast('Name required','error');await db.collection('users').doc(currentUser.uid).update({name:n,username:n.toLowerCase().replace(/\s/g,''),location:document.getElementById('editLocation').value.trim(),bio:document.getElementById('editBio').value.trim()});loadUser();closeEditProfile();toast('Updated!','success');}
 function loadUser(){if(!currentUser)return;db.collection('users').doc(currentUser.uid).get().then(doc=>{if(doc.exists){const d=doc.data();document.getElementById('profileName').innerText=d.name||'User';document.getElementById('profileBio').innerText=d.bio||'';document.getElementById('profileLocation').innerText=d.location||'';document.getElementById('followerCount').innerText=d.followers||0;document.getElementById('followingCount').innerText=d.following||0;if(d.photoURL){document.getElementById('profilePic').src=d.photoURL;document.getElementById('editProfilePic').src=d.photoURL;}setProf();}});}
 document.getElementById('profileUpload')?.addEventListener('change',async(e)=>{const f=e.target.files[0];if(!f||!currentUser)return;const u=await uploadImage(f);if(u){document.getElementById('profilePic').src=u;document.getElementById('editProfilePic').src=u;await db.collection('users').doc(currentUser.uid).update({photoURL:u});toast('Photo updated!','success');}});
 
-// ==================== FEED ====================
-function loadFeed(){db.collection('feedPosts').orderBy('time','desc').limit(30).onSnapshot(s=>{const f=document.getElementById('communityFeed');if(!f)return;f.innerHTML=s.empty?'<p style="text-align:center;padding:2rem;color:var(--muted)">No posts yet</p>':'';s.forEach(doc=>{const p=doc.data();f.innerHTML+=`<div class="feed-card"><div class="feed-header"><img src="${p.authorPic||'https://placehold.co/36'}" class="feed-avatar" onerror="this.src='https://placehold.co/36'"><div><b>${san(p.authorName||'User')}</b><div style="font-size:0.7rem;color:var(--muted)">${p.time?.toDate?.()?new Date(p.time.toDate()).toLocaleString():''}</div></div></div><div class="feed-body">${san(p.text||'')}</div>${p.imageUrl?`<img src="${p.imageUrl}" class="feed-image" onerror="this.style.display='none'">`:''}<div class="feed-actions"><span><i class="fa fa-heart"></i> ${p.likes||0}</span><span><i class="fa fa-comment"></i> Comment</span><span><i class="fa fa-trash" style="color:var(--danger);cursor:pointer" onclick="deleteFeed('${doc.id}')"></i> Delete</span></div></div>`;});});}
+function loadFeed(){db.collection('feedPosts').orderBy('time','desc').limit(10).onSnapshot(s=>{const f=document.getElementById('communityFeed');if(!f)return;f.innerHTML=s.empty?'<p style="text-align:center;padding:2rem;color:var(--muted)">No posts yet</p>':'';s.forEach(doc=>{const p=doc.data();f.innerHTML+=`<div class="feed-card"><div class="feed-header"><img src="${p.authorPic||'https://placehold.co/36'}" class="feed-avatar" onerror="this.src='https://placehold.co/36'"><div><b>${san(p.authorName||'User')}</b><div style="font-size:0.7rem;color:var(--muted)">${p.time?.toDate?.()?new Date(p.time.toDate()).toLocaleString():''}</div></div></div><div class="feed-body">${san(p.text||'')}</div>${p.imageUrl?`<img src="${p.imageUrl}" class="feed-image" onerror="this.style.display='none'">`:''}<div class="feed-actions"><span><i class="fa fa-heart"></i> ${p.likes||0}</span><span><i class="fa fa-comment"></i> Comment</span><span><i class="fa fa-trash" style="color:var(--danger);cursor:pointer" onclick="deleteFeed('${doc.id}')"></i> Delete</span></div></div>`;});lastFeedDoc=s.docs[s.docs.length-1];});}
+function loadMoreFeed(){if(!lastFeedDoc)return;db.collection('feedPosts').orderBy('time','desc').startAfter(lastFeedDoc).limit(10).get().then(s=>{const f=document.getElementById('communityFeed');s.forEach(doc=>{const p=doc.data();f.innerHTML+=`<div class="feed-card"><div class="feed-header"><img src="${p.authorPic||'https://placehold.co/36'}" class="feed-avatar"><div><b>${san(p.authorName||'User')}</b></div></div><div class="feed-body">${san(p.text||'')}</div>${p.imageUrl?`<img src="${p.imageUrl}" class="feed-image">`:''}</div>`;});lastFeedDoc=s.docs[s.docs.length-1];});}
 function openCreateFeed(){if(!currentUser)return toast('Login first','error');document.getElementById('createFeedModal').classList.add('active');}
 function previewFeedImg(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>{const p=document.getElementById('feedPreview');p.src=ev.target.result;p.style.display='block';};r.readAsDataURL(f);}
 async function submitFeed(){const txt=document.getElementById('feedText')?.value?.trim();const img=document.getElementById('feedImage')?.files[0];if(!txt&&!img)return toast('Add text or image','error');let iu='';if(img)iu=await uploadImage(img);await db.collection('feedPosts').add({text:txt||'',imageUrl:iu,authorId:currentUser.uid,authorName:currentUser.email.split('@')[0],authorPic:currentUser.photoURL||'https://placehold.co/36',time:firebase.firestore.FieldValue.serverTimestamp(),likes:0});document.getElementById('createFeedModal').classList.remove('active');document.getElementById('feedText').value='';document.getElementById('feedPreview').style.display='none';toast('Posted!','success');}
 
-// ==================== GROUPS ====================
+// Stories
+function openCreateStory(){document.getElementById('storyModal').classList.add('active');}
+async function submitStory(){const img=document.getElementById('storyImage')?.files[0];if(!img)return toast('Select an image','error');const iu=await uploadImage(img);await db.collection('stories').add({imageUrl:iu,userId:currentUser.uid,userName:currentUser.email.split('@')[0],createdAt:firebase.firestore.FieldValue.serverTimestamp(),expiresAt:new Date(Date.now()+86400000)});document.getElementById('storyModal').classList.remove('active');toast('Story added!','success');}
+
+// Follow system
+async function toggleFollow(){if(!currentUser||!profileUid)return;const ref=db.collection('users').doc(profileUid);const meRef=db.collection('users').doc(currentUser.uid);const d=await ref.get();const followers=d.data()?.followers||0;const isFollowing=followers.includes?.(currentUser.uid); // simplified – we'll use a separate collection
+// For simplicity, using a 'follows' collection
+const followRef=db.collection('follows').doc(currentUser.uid+'_'+profileUid);
+const fDoc=await followRef.get();
+if(fDoc.exists){await followRef.delete();await ref.update({followers:firebase.firestore.FieldValue.increment(-1)});await meRef.update({following:firebase.firestore.FieldValue.increment(-1)});document.getElementById('followBtn').innerHTML='<i class="fa fa-user-plus"></i> Follow';}
+else{await followRef.set({follower:currentUser.uid,following:profileUid});await ref.update({followers:firebase.firestore.FieldValue.increment(1)});await meRef.update({following:firebase.firestore.FieldValue.increment(1)});document.getElementById('followBtn').innerHTML='<i class="fa fa-user-check"></i> Following';}
+}
+
+// Trending quotes
+async function loadTrending(){const snap=await db.collection('posts').orderBy('likes','desc').limit(4).get();const container=document.getElementById('trendingQuotes');snap.forEach(doc=>{const p=doc.data();container.innerHTML+=`<div class="grid-item" style="background:${p.bg};width:120px;height:120px;font-size:0.6rem" onclick="showPage('reelsPage')">${san(p.text.substring(0,20))}</div>`;});}
+
+// Groups
 function openNewGroup(){document.getElementById('newGroupModal').classList.add('active');}
 async function createGroup(){const n=document.getElementById('groupName')?.value?.trim();if(!n)return toast('Enter name','error');await db.collection('groups').add({name:n,description:document.getElementById('groupDesc')?.value?.trim()||'',createdBy:currentUser.uid,members:[currentUser.uid],memberCount:1,lastMsg:'',lastTime:firebase.firestore.FieldValue.serverTimestamp()});document.getElementById('newGroupModal').classList.remove('active');toast('Group created!','success');}
 function loadGroups(){if(!currentUser)return;db.collection('groups').where('members','array-contains',currentUser.uid).orderBy('lastTime','desc').onSnapshot(s=>{const c=document.getElementById('chatListContainer');if(!c)return;c.innerHTML=s.empty?'<p style="text-align:center;padding:2rem;color:var(--muted)">No groups</p>':'';s.forEach(doc=>{const g=doc.data();c.innerHTML+=`<div class="chat-list-item" onclick="openChat('${doc.id}','${san(g.name)}')"><div style="background:var(--accent);color:#000;border-radius:50%;width:40px;height:40px;display:flex;align-items:center;justify-content:center;font-weight:700">${(g.name||'G')[0].toUpperCase()}</div><div style="flex:1"><b>${san(g.name)}</b><div style="font-size:0.75rem;color:var(--muted)">${san(g.lastMsg||'No messages')}</div></div><span style="background:var(--accent);color:#000;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:0.65rem;font-weight:700">${g.memberCount||1}</span></div>`;});});}
@@ -478,35 +456,30 @@ function openChat(id,n){currentChat=id;document.getElementById('chatTitle').inne
 function closeChat(){document.getElementById('chatWindow').classList.remove('active');currentChat=null;}
 function sendMsg(){const t=document.getElementById('chatInput')?.value?.trim();if(!t||!currentChat)return;const sn=document.getElementById('profileName')?.innerText||currentUser.email.split('@')[0];db.collection('groups').doc(currentChat).collection('messages').add({text:t,from:currentUser.uid,sn,time:firebase.firestore.FieldValue.serverTimestamp()}).then(()=>{db.collection('groups').doc(currentChat).update({lastMsg:t,lastTime:firebase.firestore.FieldValue.serverTimestamp()});document.getElementById('chatInput').value='';});}
 
-// ==================== SEARCH ====================
+// Search accounts
 function loadAccounts(){db.collection('users').onSnapshot(s=>{window.allAccounts=[];s.forEach(doc=>{const d=doc.data();d.uid=doc.id;window.allAccounts.push(d);});});}
-function searchAccounts(){const q=document.getElementById('accountSearch')?.value?.toLowerCase()||'';const f=(window.allAccounts||[]).filter(a=>(a.name||'').toLowerCase().includes(q)||(a.location||'').toLowerCase().includes(q));document.getElementById('accountsList').innerHTML=f.map(a=>`<div style="display:flex;align-items:center;gap:0.8rem;padding:0.8rem;background:var(--card);border-radius:10px;margin:0.4rem 0;cursor:pointer"><img src="${a.photoURL||'https://placehold.co/44'}" style="width:44px;height:44px;border-radius:50%;object-fit:cover"><div style="flex:1"><b>${san(a.name||'Unknown')}</b><div style="font-size:0.75rem;color:var(--muted)">${san(a.location||'')}</div></div><div style="text-align:right"><b style="color:var(--accent)">${a.followers||0}</b><div style="font-size:0.65rem;color:var(--muted)">followers</div></div></div>`).join('')||'<p style="text-align:center;color:var(--muted)">No users found</p>';}
+function searchAccounts(){const q=document.getElementById('accountSearch')?.value?.toLowerCase()||'';const f=(window.allAccounts||[]).filter(a=>(a.name||'').toLowerCase().includes(q)||(a.location||'').toLowerCase().includes(q));document.getElementById('accountsList').innerHTML=f.map(a=>`<div style="display:flex;align-items:center;gap:0.8rem;padding:0.8rem;background:var(--card);border-radius:10px;margin:0.4rem 0;cursor:pointer" onclick="viewProfile('${a.uid}')"><img src="${a.photoURL||'https://placehold.co/44'}" style="width:44px;height:44px;border-radius:50%;object-fit:cover"><div style="flex:1"><b>${san(a.name||'Unknown')}</b><div style="font-size:0.75rem;color:var(--muted)">${san(a.location||'')}</div></div></div>`).join('')||'<p style="text-align:center;color:var(--muted)">No users found</p>';}
+function viewProfile(uid){profileUid=uid;showPage('profilePage');db.collection('users').doc(uid).get().then(doc=>{if(doc.exists){const d=doc.data();document.getElementById('profileName').innerText=d.name;document.getElementById('profileBio').innerText=d.bio||'';document.getElementById('profileLocation').innerText=d.location||'';document.getElementById('followerCount').innerText=d.followers||0;document.getElementById('followingCount').innerText=d.following||0;document.getElementById('profilePic').src=d.photoURL||'https://placehold.co/85';document.getElementById('followBtn').style.display='block';checkFollowStatus();}});}
+async function checkFollowStatus(){const ref=db.collection('follows').doc(currentUser.uid+'_'+profileUid);const d=await ref.get();const btn=document.getElementById('followBtn');if(d.exists){btn.innerHTML='<i class="fa fa-user-check"></i> Following';}else{btn.innerHTML='<i class="fa fa-user-plus"></i> Follow';}}
 
-// ==================== ADMIN ====================
-async function loadAdmin(){if(currentUser?.uid!==ADMIN_UID)return;const us=(await db.collection('users').get()).size;const ps=(await db.collection('posts').get()).size;const gs=(await db.collection('groups').get()).size;document.getElementById('adminStats').innerHTML=`<div class="glass" style="padding:1rem;text-align:center"><h2 style="color:#FFD700">${us}</h2><p>Users</p></div><div class="glass" style="padding:1rem;text-align:center"><h2 style="color:#FFD700">${ps}</h2><p>Posts</p></div><div class="glass" style="padding:1rem;text-align:center"><h2 style="color:#FFD700">${gs}</h2><p>Groups</p></div><div class="glass" style="padding:1rem;text-align:center"><h2 style="color:#FFD700">5</h2><p>Bots</p></div>`;const uSnap=await db.collection('users').get();let ur='';uSnap.forEach(doc=>{const u=doc.data();ur+=`<tr><td><b>${san(u.name||'?')}</b></td><td style="font-size:0.7rem">${doc.id.substring(0,10)}...</td><td>${u.isDummy?'🤖':'👤'}</td><td><button class="btn btn-small btn-danger" onclick="adminDelUser('${doc.id}')"><i class="fa fa-trash"></i></button></td></tr>`;});document.getElementById('adminUsers').innerHTML=`<thead><tr><th>Name</th><th>UID</th><th>Type</th><th>Act</th></tr></thead><tbody>${ur}</tbody>`;const pSnap=await db.collection('posts').orderBy('time','desc').limit(20).get();let ph='';pSnap.forEach(doc=>{const p=doc.data();ph+=`<div style="padding:0.4rem 0;border-bottom:1px solid var(--glass-border)"><b>${san(p.authorName||'?')}</b>: ${san((p.text||'').substring(0,60))} | ❤${p.likes||0} 👁${p.views||0}</div>`;});document.getElementById('adminPosts').innerHTML=ph;}
-async function adminDelUser(uid){if(!confirm('Delete?'))return;await db.collection('users').doc(uid).delete();toast('Deleted','info');loadAdmin();}
-
-// ==================== BOTS ====================
+// Bots
 const bots=[{e:'dummy1@broxenme.com',p:'dummy123',n:'Wisdom Warrior',l:'Nairobi, KE',pic:'https://placehold.co/100/ADFF2F/000?text=WW'},{e:'dummy2@broxenme.com',p:'dummy123',n:'Dream Chaser',l:'Lagos, NG',pic:'https://placehold.co/100/FF6B6B/000?text=DC'},{e:'dummy3@broxenme.com',p:'dummy123',n:'Soul Speaker',l:'Cape Town, ZA',pic:'https://placehold.co/100/4ECDC4/000?text=SS'},{e:'dummy4@broxenme.com',p:'dummy123',n:'Mind Mentor',l:'Accra, GH',pic:'https://placehold.co/100/FFE66D/000?text=MM'},{e:'dummy5@broxenme.com',p:'dummy123',n:'Star Gazer',l:'Kigali, RW',pic:'https://placehold.co/100/A78BFA/000?text=SG'}];
 const botQuotes=[{t:"The journey of a thousand miles begins with one step.",tg:['Motivation','Life']},{t:"Your vibe attracts your tribe.",tg:['Life','Love']},{t:"Dream big, work hard, stay focused.",tg:['Success','Business']},{t:"Every moment is a fresh beginning.",tg:['Life','Wisdom']},{t:"Create the life you can't wait to wake up to.",tg:['Success','Motivation']}];
 async function setupBots(){for(const b of bots){try{const c=await auth.createUserWithEmailAndPassword(b.e,b.p);await db.collection('users').doc(c.user.uid).set({name:b.n,username:b.n.toLowerCase().replace(/\s/g,''),location:b.l,photoURL:b.pic,bio:'Spreading positivity ✨',followers:Math.floor(Math.random()*400),following:Math.floor(Math.random()*40),savedPosts:[],isDummy:true,createdAt:firebase.firestore.FieldValue.serverTimestamp()});await auth.signOut();}catch(e){if(e.code!=='auth/email-already-in-use')console.log('Bot:',e.message);}}if(!currentUser)try{await auth.signInAnonymously();}catch(e){}}
-async function triggerBots(){document.getElementById('botStatus').innerText='Posting...';const us=await db.collection('users').where('isDummy','==',true).get();for(const doc of us.docs){const u=doc.data();const q=botQuotes[Math.floor(Math.random()*botQuotes.length)];const bg=gradients[Math.floor(Math.random()*gradients.length)];const f=fonts[Math.floor(Math.random()*fonts.length)];let st='',sa='',saw='',spv='';try{const r=await fetch('https://itunes.apple.com/search?term=inspiration&limit=5&media=music');const d=await r.json();if(d.results?.length){const s=d.results[Math.floor(Math.random()*d.results.length)];st=s.trackName||'';sa=s.artistName||'';saw=s.artworkUrl100||'';spv=s.previewUrl||'';}}catch(e){}await db.collection('posts').add({text:q.t,bg,f,tags:q.tg,songTitle:st,songArtist:sa,songArtwork:saw,songPreview:spv,authorId:doc.id,authorName:u.name,authorPic:u.photoURL,time:firebase.firestore.FieldValue.serverTimestamp(),likes:Math.floor(Math.random()*30),views:Math.floor(Math.random()*100),commentsCount:Math.floor(Math.random()*5),shares:Math.floor(Math.random()*10)});}document.getElementById('botStatus').innerText='✅ Done!';setTimeout(()=>document.getElementById('botStatus').innerText='',3000);}
+async function autoPost(){const us=await db.collection('users').where('isDummy','==',true).get();for(const doc of us.docs){const u=doc.data();const q=botQuotes[Math.floor(Math.random()*botQuotes.length)];const bg=gradients[Math.floor(Math.random()*gradients.length)];const f=fonts[Math.floor(Math.random()*fonts.length)];let st='',sa='',saw='',spv='';try{const r=await fetch('https://itunes.apple.com/search?term=inspiration&limit=5&media=music');const d=await r.json();if(d.results?.length){const s=d.results[Math.floor(Math.random()*d.results.length)];st=s.trackName||'';sa=s.artistName||'';saw=s.artworkUrl100||'';spv=s.previewUrl||'';}}catch(e){}await db.collection('posts').add({text:q.t,bg:f,tags:q.tg,songTitle:st,songArtist:sa,songArtwork:saw,songPreview:spv,authorId:doc.id,authorName:u.name,authorPic:u.photoURL,time:firebase.firestore.FieldValue.serverTimestamp(),likes:Math.floor(Math.random()*30),views:Math.floor(Math.random()*100),commentsCount:Math.floor(Math.random()*5),shares:Math.floor(Math.random()*10)});}}
 
-// ==================== NAVIGATION ====================
-function showPage(id){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));const pg=document.getElementById(id);if(pg)pg.classList.add('active');document.getElementById('navMenu').classList.remove('active');if(id==='homePage')setHero();if(id==='profilePage'){setProf();loadSaved();}if(id==='adminPage'&&currentUser?.uid===ADMIN_UID)loadAdmin();}
+function showPage(id){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));const pg=document.getElementById(id);if(pg)pg.classList.add('active');document.getElementById('navMenu').classList.remove('active');if(id==='homePage')setHero();if(id==='profilePage'){setProf();loadSaved();}}
 function toggleMenu(){document.getElementById('navMenu').classList.toggle('active');}
 function switchCommTab(t){document.getElementById('feedSection').style.display=t==='feed'?'block':'none';document.getElementById('chatsSection').style.display=t==='chats'?'block':'none';document.getElementById('tabFeedBtn').classList.toggle('active',t==='feed');document.getElementById('tabChatsBtn').classList.toggle('active',t==='chats');}
 function searchQuotes(){clearTimeout(searchTO);searchTO=setTimeout(()=>{const q=document.getElementById('searchInput')?.value?.toLowerCase()||'';if(!q){loadPosts();return;}const f=allPosts.filter(p=>(p.text||'').toLowerCase().includes(q)||(p.tags||[]).join(' ').toLowerCase().includes(q));document.getElementById('reelsViewer').innerHTML=f.length?f.map(p=>`<div class="reel-slide" style="background:${p.bg}"><div class="reel-overlay"></div><div class="reel-content"><div class="reel-text" style="font-family:${p.font}">${san(p.text)}</div></div></div>`).join(''):'<div style="text-align:center;padding:4rem"><h3>No results</h3></div>';},300);}
 
-// ==================== THEME ====================
 document.getElementById('themeToggle').addEventListener('click',()=>{document.body.classList.toggle('light');const l=document.body.classList.contains('light');localStorage.setItem('theme',l?'light':'dark');document.getElementById('themeToggle').innerHTML=l?'<i class="fa fa-sun"></i>':'<i class="fa fa-moon"></i>';});
 if(localStorage.getItem('theme')==='light'){document.body.classList.add('light');document.getElementById('themeToggle').innerHTML='<i class="fa fa-sun"></i>';}
 
-// ==================== AUTO ====================
-setInterval(async()=>{if(currentUser)await triggerBots();},43200000);
-setTimeout(async()=>{if(currentUser)await triggerBots();},20000);
+setInterval(async()=>{if(currentUser)await autoPost();},43200000);
+setTimeout(async()=>{if(currentUser)await autoPost();},20000);
 window.addEventListener('beforeunload',()=>{clean();if(audio){audio.pause();audio.remove();}});
-console.log('🚀 BROXENME - Complete & Working!');
+console.log('🚀 BROXENME Ultimate – all features active!');
 </script>
 </body>
 </html>
